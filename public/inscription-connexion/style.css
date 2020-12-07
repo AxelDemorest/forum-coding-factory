@@ -1,42 +1,5 @@
-.hr-body {
-    height: 5px;
-    width: 8em;
-    border-radius: 10px;
-    background-color: #dc3545;
-}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 
-.navbar {
-    font-size: 17px;
-}
-
-.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
-    color: #dc3545;
-}
-
-.navbar-light .navbar-toggler {
-    color: black;
-    border: none;
-}
-
-.navbar-light .navbar-toggler:focus {
-    outline: none;
-}
-
-.nav-link:hover, .nav-link:focus {
-    text-decoration: underline;
-}
-
-.header {
-    background: no-repeat center/cover url(../../img/carousel/carousel2.jpg);
-    height: 500px;
-}
-
-.header h1 {
-    font-size: 70px;
-    letter-spacing: 5px;
-}
-
-.opacity-bg {
-    opacity: .5;
-    border-radius: 10px;
+.fz-text {
+    font-family: 'Quicksand', sans-serif;
 }

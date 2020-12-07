@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
+
 .fz-text {
     font-family: 'Quicksand', sans-serif;
 }
@@ -11,27 +11,6 @@
     width: 8em;
     border-radius: 10px;
     background-color: #dc3545;
-}
-
-.navbar {
-    font-size: 17px;
-}
-
-.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
-    color: #dc3545;
-}
-
-.navbar-light .navbar-toggler {
-    color: black;
-    border: none;
-}
-
-.navbar-light .navbar-toggler:focus {
-    outline: none;
-}
-
-.nav-link:hover, .nav-link:focus {
-    text-decoration: underline;
 }
 
 .header {
@@ -48,16 +27,3 @@
     opacity: .5;
     border-radius: 10px;
 }
-
-/* ------------------ BODY ---------------------- */
-
-.footer-bg {
-    background-color: #EEEEEE;
-}
-
-.footer-fm {
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* ------------------ CHAT EN DIRECT ---------------------- */
-
