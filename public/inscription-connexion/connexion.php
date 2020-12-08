@@ -15,9 +15,9 @@
 <body class="bg-light">
 
     <!-- Navbar -->
-    <?php include "../header/header.html"; ?>
-
     <?php session_start();
+    
+    include "../header/header.php";
 
     if (isset($_SESSION['auth'])) : ?>
 

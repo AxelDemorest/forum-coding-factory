@@ -40,7 +40,9 @@
 <body class="bg-light">
 
     <!-- Navbar -->
-    <?php include "../header/header.html"; ?>
+    <?php session_start();
+    
+    include "../header/header.php"; ?>
 
     <!-- Traitement du formulaire en php -->
     <?php
