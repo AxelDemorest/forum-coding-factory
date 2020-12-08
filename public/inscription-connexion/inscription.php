@@ -42,6 +42,137 @@
     <!-- Navbar -->
     <?php include "../header/header.html"; ?>
 
+    <!-- Traitement du formulaire en php -->
+    <?php
+
+    if (!empty($_POST)) {
+
+        require_once '../../database/db.php';
+
+        $errors = array();
+
+        $valid = true;
+
+        if (isset($_POST['formSubmit'])) {
+
+            $pseudo  = htmlspecialchars(trim($_POST['pseudo'])); // On récupère le nom
+            $mail = htmlspecialchars(strtolower(trim($_POST['email']))); // On récupère le mail
+            $password = trim($_POST['password']); // On récupère le mot de passe 
+            $confirmPassword = trim($_POST['confirmPassword']); //  On récupère la confirmation du mot de passe
+            $age = $_POST['age']; //  On récupère l'âge
+            $position = $_POST['position']; //  On récupère la position
+            $status = $_POST['status']; //  On récupère le statut
+
+            // On vérifie le nom d'utilisateur
+            if ((empty($pseudo) || !preg_match('/^[a-zA-Z0-9_]{3,16}$/', $pseudo))) {
+                $errors['pseudo'] = "Le nom d'utilisateur est incorrect.";
+                $valid = false;
+            } else {
+
+                $req = $pdo->prepare('SELECT id FROM users WHERE pseudo = ?');
+
+                $req->execute([$pseudo]);
+
+                $user = $req->fetch();
+
+                if ($user) {
+                    $errors['usePseudo'] = 'Ce nom d\'utilisateur est déjà utilisé.';
+                    $valid = false;
+                }
+            }
+
+            // On vérifie l'adresse email
+            if (empty($mail) || !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                $errors['mail'] = "L'email est incorrect.";
+                $valid = false;
+            } else {
+
+                $req = $pdo->prepare('SELECT id FROM users WHERE mail = ?');
+
+                $req->execute([$mail]);
+
+                $user = $req->fetch();
+
+                if ($user) {
+                    $errors['useEmail'] = 'Cet email est déjà utilisé.';
+                    $valid = false;
+                }
+            }
+
+            // On vérifie le mot de passe et le mot de passe de confirmation
+            if (empty($password)) {
+                $errors['password'] = "Le mot de passe est incorrect.";
+                $valid = false;
+            } else {
+
+                if (empty($confirmPassword)) {
+                    $errors['emptyConfirmPassword'] = "La confirmation du mot de passe est incorrect.";
+                    $valid = false;
+                } else {
+                    if ($password != $confirmPassword) {
+                        $errors['confirmPassword'] = "Les deux mots de passe sont différents.";
+                        $valid = false;
+                    }
+                }
+            }
+
+            // On vérifie l'âge
+            if (empty($age)) {
+                $errors['age'] = "L'âge est incorrect.";
+                $valid = false;
+            }
+
+            // On vérifie la position
+            if (empty($position)) {
+                $errors['position'] = "Le choix de l'école est incorrect.";
+                $valid = false;
+            }
+
+            // On vérifie le status
+            if (empty($status)) {
+                $errors['status'] = "Le choix du statut est incorrect.";
+                $valid = false;
+            }
+
+            // Si $valid = true, on envoie tout dans la base de donnée
+            if ($valid && empty($errors)) {
+
+                $req = $pdo->prepare("
+                        INSERT INTO users(pseudo,mail,password,age,position,status)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    ");
+
+                $password = password_hash($password, PASSWORD_BCRYPT);
+
+                $req->bindValue(1, $pseudo);
+                $req->bindValue(2, $mail);
+                $req->bindValue(3, $password);
+                $req->bindValue(4, $age);
+                $req->bindValue(5, $position);
+                $req->bindValue(6, $status);
+
+                $req->execute();
+
+                $req2 = $pdo->prepare("SELECT * FROM users WHERE mail = ?");
+
+                $req2->execute(array($mail));
+
+                $userConnexion = $req2->fetch();
+
+                session_start();
+
+                $_SESSION['auth'] = $userConnexion;
+
+                header('Location: /forum-coding-factory/public/home/home.php');
+
+                exit;
+            }
+        }
+    }
+
+    ?>
+
+
     <!-- Body -->
     <div class="d-flex align-items-center" style="height: 130vh">
         <div class="container-fluid bg-light pt-4 pb-5">
@@ -50,10 +181,25 @@
                     <h1 class="pb-3">S'inscrire</h1>
                     <form action="" method="POST" class="w-50 fz-text p-5 rounded border border-secondary">
 
+                        <?php if (!empty($errors)) : ?>
+                            <div class="alert alert-danger pb-0">
+                                <ul>
+
+                                    <?php foreach ($errors as $error) : ?>
+
+                                        <li><?= $error; ?></li>
+
+                                    <?php endforeach; ?>
+
+                                </ul>
+                            </div>
+
+                        <?php endif; ?>
+
                         <!-- Pseudo -->
                         <div class="form-group">
                             <label for="pseudoUser">Nom d'utilisateur</label>
-                            <input type="text" class="form-control" pattern="^[a-zA-Z0-9_]{3,16}$" id="pseudoUser" aria-describedby="pseudoHelp" required>
+                            <input name="pseudo" type="text" class="form-control" pattern="^[a-zA-Z0-9_]{3,16}$" id="pseudoUser" aria-describedby="pseudoHelp" required>
                             <small id="pseudoHelp" class="form-text text-muted">
                                 Le nom d'utilisateur ne doit pas contenir de caractères spéciaux. Il doit être compris entre 3 et 16 caractères.
                             </small>
@@ -62,7 +208,7 @@
                         <!-- Email -->
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" pattern="^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$" id="exampleInputEmail1" placeholder="name@example.com" aria-describedby="emailHelp" required>
+                            <input name="email" type="email" class="form-control" pattern="^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$" id="exampleInputEmail1" placeholder="name@example.com" aria-describedby="emailHelp" required>
                             <small id="emailHelp" class="form-text text-muted">
                                 Exemple d'adresse email : <strong>abc123@cde456.fr</strong>
                             </small>
@@ -71,33 +217,30 @@
                         <!-- Mot de passe -->
                         <div class="form-group">
                             <label for="exampleInputPassword1">Mot de passe</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" aria-describedby="passwordHelp" required>
-                            <small id="passwordHelp" class="form-text text-muted">
-                                8 caractères au moins, au moins une lettre, un chiffre et un caractère spécial.
-                            </small>
+                            <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" aria-describedby="passwordHelp" required>
                         </div>
 
                         <!-- Confirmer le mot de passe -->
                         <div class="form-group">
                             <label for="confirmInputPassword1">Confirme le mot de passe</label>
-                            <input type="password" class="form-control" id="confirmInputPassword1" required>
+                            <input name="confirmPassword" type="password" class="form-control" id="confirmInputPassword1" required>
                         </div>
 
                         <!-- Ton âge -->
                         <div class="form-group">
                             <label for="customRange2">Ton âge <span id="demo"></span></label>
-                            <input type="range" class="custom-range" min="15" max="100" value="18" id="customRange2" required>
+                            <input name="age" type="range" class="custom-range" min="15" max="100" value="18" id="customRange2" required>
                         </div>
 
                         <!-- Choix du campus -->
                         <p>À quelle école es-tu ?</p>
                         <div class="form-group">
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline1" value="paris" name="customRadioInline1" class="custom-control-input" required>
+                                <input name="position" type="radio" id="customRadioInline1" value="paris" name="customRadioInline1" class="custom-control-input" required>
                                 <label class="custom-control-label" for="customRadioInline1">Paris</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline2" value="cergy" name="customRadioInline1" class="custom-control-input" required>
+                                <input name="position" type="radio" id="customRadioInline2" value="cergy" name="customRadioInline1" class="custom-control-input" required>
                                 <label class="custom-control-label" for="customRadioInline2">Cergy</label>
                             </div>
                         </div>
@@ -105,7 +248,7 @@
                         <!-- Choix du statut -->
                         <p>Dans quelle formation es-tu ? (Si tu es PO, une option est faite pour toi !)</p>
                         <div class="form-group">
-                            <select class="custom-select">
+                            <select name="status" class="custom-select">
                                 <option value="bachelor" selected>Bachelor</option>
                                 <option value="master">Master</option>
                                 <option value="reconversion">Reconversion</option>
@@ -116,8 +259,13 @@
                             </small>
                         </div>
 
-                        <button type=" submit" class="btn btn-danger mt-3">S'inscrire</button>
+                        <input name="formSubmit" type="submit" class="btn btn-danger mt-3" value="S'inscrire">
                     </form>
+
+
+
+
+
                 </div>
             </div>
         </div>
