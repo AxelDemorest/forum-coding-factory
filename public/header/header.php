@@ -9,7 +9,7 @@ if (isset($_SESSION['auth'])) : ?>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/forum-coding-factory/public/home/home.php">
                     <img class="ml-4" src="../../img/logocodingfactory-ptt.jpg" width="190" alt="" loading="lazy">
                 </a>
             </div>
@@ -49,7 +49,7 @@ if (isset($_SESSION['auth'])) : ?>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/forum-coding-factory/public/home/home.php">
                     <img class="ml-4" src="../../img/logocodingfactory-ptt.jpg" width="190" alt="" loading="lazy">
                 </a>
             </div>

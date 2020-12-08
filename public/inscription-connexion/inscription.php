@@ -47,8 +47,6 @@
     <!-- Traitement du formulaire en php -->
     <?php
 
-    session_start();
-
     if (isset($_SESSION['auth'])) {
 
         header('Location: /forum-coding-factory/public/account/account.php');

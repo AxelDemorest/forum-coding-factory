@@ -52,25 +52,45 @@
         </div>
     </div>
 
-    <!-- Chat en direct -->
-    <div style="margin-top: 5em;" class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
+    <?php
 
-                </div>
-            </div>
-        </div>
-    </div>
+    require_once '../../database/db.php';
 
+    $req = $pdo->prepare("SELECT * FROM users ORDER BY dateInscription DESC LIMIT 0, 4");
+
+    $req->execute();
+
+    $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+
+    ?>
+
+    <!-- <?php foreach ($resultat as $listUser => $userParameter) : ?>
+
+                <div class="col-2">
+                <?php
+                echo $userParameter['mail'];
+                echo " - ";
+                echo $userParameter['dateInscription'];
+                echo "<br />";
+                ?>
+
+                <?php endforeach; ?>
+                </div> -->
 
     <!-- Container de la liste des nouveaux utilisateurs -->
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <h1 class="pt-5 mt-3">Les derniers utilisateurs inscrits</h1>
-            <!-- Liste des utilisateurs -->
-
-
+    <div class="bg-light">
+        <div class="container-fluid">
+            <h1 class="text-center py-4">Les derniers utilisateurs inscrits !</h1>
+            <div class="row justify-content-center">
+            <?php foreach ($resultat as $listUser => $userParameter) : ?>
+                <div class="col-2 mx-4 mb-4 mt-2 border border-secondary rounded fz-text" style="height: 10em;">
+                    <h5 class="text-center pt-3"><?php echo $userParameter['pseudo']; ?></h5>
+                    <div class="bg-danger mx-auto rounded-pill" style="height: 4px; width: 20%;"></div>
+                    <p class="text-center pt-2 mb-1">Date de création :</p>
+                    <p class="text-center pt-1"><?php echo $userParameter['dateInscription']; ?></p>
+                </div>
+            <?php endforeach; ?>
+            </div>
         </div>
     </div>
 
