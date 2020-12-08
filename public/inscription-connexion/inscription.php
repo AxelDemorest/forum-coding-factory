@@ -45,6 +45,15 @@
     <!-- Traitement du formulaire en php -->
     <?php
 
+    session_start();
+
+    if (isset($_SESSION['auth'])) {
+
+        header('Location: /forum-coding-factory/public/account/account.php');
+
+        exit;
+    }
+
     if (!empty($_POST)) {
 
         require_once '../../database/db.php';
@@ -158,8 +167,6 @@
                 $req2->execute(array($mail));
 
                 $userConnexion = $req2->fetch();
-
-                session_start();
 
                 $_SESSION['auth'] = $userConnexion;
 

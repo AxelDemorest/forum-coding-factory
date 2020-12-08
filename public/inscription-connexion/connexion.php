@@ -27,7 +27,7 @@
 
         <?php
 
-        require '../database/db.php';
+        require_once '../../database/db.php';
 
         if (!empty($_POST)) {
 
@@ -50,21 +50,24 @@
                     $valid = false;
                 }
 
-                $req = $pdo->prepare('SELECT * FROM users WHERE mail = :username OR pseudo = :username');
+                if (empty($errors) && $valid) {
 
-                $req->execute(['username' => $identifiant]);
+                    $req = $pdo->prepare('SELECT * FROM users WHERE mail = :username OR pseudo = :username');
 
-                $result = $req->fetch();
+                    $req->execute(['username' => $identifiant]);
 
-                if (empty($result)) {
-                    $errors['error'] = "Utilisateur ou mot de passe incorrect.";
-                } else {
+                    $result = $req->fetch();
 
-                    if (password_verify($password, $result->password)) {
+                    if (empty($result)) {
+                        $errors['error'] = "Utilisateur ou mot de passe incorrect.";
+                    } else {
 
-                        $_SESSION['auth'] = $result;
+                        if (password_verify($password, $result->password)) {
 
-                        header('Location: /forum-coding-factory/public/home/home.php');
+                            $_SESSION['auth'] = $result;
+
+                            header('Location: /forum-coding-factory/public/home/home.php');
+                        }
                     }
                 }
             }
@@ -78,7 +81,7 @@
                 <div class="row">
                     <div class="col-12 d-flex flex-column align-items-center">
                         <h1 class="pb-3">Se connecter</h1>
-                        <form class="w-50 fz-text p-5 rounded border border-secondary">
+                        <form method="POST" class="w-50 fz-text p-5 rounded border border-secondary">
                             <?php if (!empty($errors)) : ?>
                                 <div class="alert alert-danger pb-0">
                                     <ul>
