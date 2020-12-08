@@ -206,7 +206,7 @@
                         <!-- Pseudo -->
                         <div class="form-group">
                             <label for="pseudoUser">Nom d'utilisateur</label>
-                            <input name="pseudo" type="text" class="form-control" pattern="^[a-zA-Z0-9_]{3,16}$" id="pseudoUser" aria-describedby="pseudoHelp" required>
+                            <input name="pseudo" type="text" class="form-control" pattern="^[a-zA-Z0-9_]{3,16}$" id="pseudoUser" value="<?php if(isset($_POST['pseudo'])){ echo $_POST['pseudo']; }?>" aria-describedby="pseudoHelp" required>
                             <small id="pseudoHelp" class="form-text text-muted">
                                 Le nom d'utilisateur ne doit pas contenir de caractères spéciaux. Il doit être compris entre 3 et 16 caractères.
                             </small>
@@ -215,7 +215,7 @@
                         <!-- Email -->
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email</label>
-                            <input name="email" type="email" class="form-control" pattern="^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$" id="exampleInputEmail1" placeholder="name@example.com" aria-describedby="emailHelp" required>
+                            <input name="email" type="email" class="form-control" pattern="^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$" value="<?php if(isset($_POST['email'])){ echo $_POST['email']; }?>" id="exampleInputEmail1" placeholder="name@example.com" aria-describedby="emailHelp" required>
                             <small id="emailHelp" class="form-text text-muted">
                                 Exemple d'adresse email : <strong>abc123@cde456.fr</strong>
                             </small>

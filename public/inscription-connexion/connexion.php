@@ -50,7 +50,7 @@
                     $valid = false;
                 }
 
-                if (empty($errors) && $valid) {
+                if ($valid) {
 
                     $req = $pdo->prepare('SELECT * FROM users WHERE mail = :username OR pseudo = :username');
 
@@ -59,7 +59,9 @@
                     $result = $req->fetch();
 
                     if (empty($result)) {
+
                         $errors['error'] = "Utilisateur ou mot de passe incorrect.";
+                        
                     } else {
 
                         if (password_verify($password, $result->password)) {
@@ -67,11 +69,17 @@
                             $_SESSION['auth'] = $result;
 
                             header('Location: /forum-coding-factory/public/home/home.php');
+
+                        } else {
+
+                            $errors['bddPassword'] = "Utilisateur ou mot de passe incorrect.";
+
                         }
                     }
                 }
             }
         }
+    
 
         ?>
 
@@ -98,7 +106,7 @@
                             <?php endif; ?>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email ou nom d'utilisateur</label>
-                                <input name="userId" type="text" class="form-control" id="exampleInputEmail1" placeholder="Adresse Email" aria-describedby="emailHelp" required>
+                                <input name="userId" type="text" class="form-control" id="exampleInputEmail1" value="<?php if(isset($_POST['userId'])){ echo $_POST['userId']; }?>" aria-describedby="identifiantHelp" required>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mot de passe</label>
