@@ -5,7 +5,7 @@ if (isset($_SESSION['auth'])) : ?>
     <?php $user = $_SESSION['auth']; ?>
 
     <!-- Navbar de l'utilisateur connecté -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-2 fz-text">
+    <nav class="navbar navbar-expand-xl navbar-light bg-white fixed-top py-2 fz-text">
         <div class="container-fluid">
             <a class="navbar-brand" href="/forum-coding-factory/public/home/home.php">
                 <img class="ms-4" src="../../img/logocodingfactory-ptt.jpg" width="190" alt="" loading="lazy">
@@ -28,12 +28,12 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link" href="#">Nouveautés</a>
                     </li>
                 </ul>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center flex-wrap">
                     <a href="/forum-coding-factory/public/account/account.php"><button type="button" class="btn btn-outline-secondary me-4">Profil</button></a>
                     <?php if ($user->rank == 1) : ?>
-                        <a href="/forum-coding-factory/admin/dashboard.php"><button type="button" class="btn btn-warning me-4">Administration</button></a>
+                        <a href="/forum-coding-factory/admin/dashboard.php"><button type="button" class="btn btn-warning me-0 me-sm-4">Administration</button></a>
                     <?php endif; ?>
-                    <a href="/forum-coding-factory/public/deconnexion/deconnexion.php"><button type="button" class="btn btn-danger me-md-4">Se déconnecter</button></a>
+                    <a href="/forum-coding-factory/public/deconnexion/deconnexion.php"><button type="button" class="btn btn-danger me-md-4 mt-2 mt-sm-0">Se déconnecter</button></a>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@ if (isset($_SESSION['auth'])) : ?>
 <?php else : ?>
 
     <!-- Navbar de l'utilisateur non connecté -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-2 fz-text">
+    <nav class="navbar navbar-expand-xl navbar-light bg-white fixed-top py-2 fz-text">
         <div class="container-fluid">
             <a class="navbar-brand" href="/forum-coding-factory/public/home/home.php">
                 <img class="ms-4" src="../../img/logocodingfactory-ptt.jpg" width="190" alt="" loading="lazy">

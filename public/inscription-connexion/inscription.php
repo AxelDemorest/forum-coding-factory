@@ -182,7 +182,7 @@
 
 
     <!-- Body -->
-    <div class="d-flex align-items-center" style="height: 130vh">
+    <div class="d-flex align-items-center" style="height: 140vh">
         <div class="container-fluid bg-light pt-4 pb-5">
             <div class="row">
                 <div class="col-12 pt-5 d-flex flex-column align-items-center">
