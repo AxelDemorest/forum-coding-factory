@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="inscription.css" rel="stylesheet" />
     <link href="../header/header.css" rel="stylesheet" />
@@ -147,8 +147,8 @@
             if ($valid && empty($errors)) {
 
                 $req = $pdo->prepare("
-                        INSERT INTO users(pseudo,mail,password,age,position,status)
-                        VALUES (?, ?, ?, ?, ?, ?)
+                        INSERT INTO users(pseudo,mail,password,age,position,status,rank)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
                     ");
 
                 $password = password_hash($password, PASSWORD_BCRYPT);
@@ -159,6 +159,7 @@
                 $req->bindValue(4, $age);
                 $req->bindValue(5, $position);
                 $req->bindValue(6, $status);
+                $req->bindValue(7, 0);
 
                 $req->execute();
 
@@ -189,7 +190,7 @@
                     <form action="" method="POST" class="w-50 fz-text p-5 rounded border border-secondary">
 
                         <?php if (!empty($errors)) : ?>
-                            <div class="alert alert-danger pb-0">
+                            <div class="alert alert-danger pb-0" role="alert">
                                 <ul>
 
                                     <?php foreach ($errors as $error) : ?>
@@ -204,66 +205,69 @@
                         <?php endif; ?>
 
                         <!-- Pseudo -->
-                        <div class="form-group">
-                            <label for="pseudoUser">Nom d'utilisateur</label>
+                        <div class="mb-3">
+                            <label for="pseudoUser" class="form-label">Nom d'utilisateur</label>
                             <input name="pseudo" type="text" class="form-control" pattern="^[a-zA-Z0-9_]{3,16}$" id="pseudoUser" value="<?php if(isset($_POST['pseudo'])){ echo $_POST['pseudo']; }?>" aria-describedby="pseudoHelp" required>
-                            <small id="pseudoHelp" class="form-text text-muted">
+                            <div id="pseudoHelp" class="form-text text-muted">
                                 Le nom d'utilisateur ne doit pas contenir de caractères spéciaux. Il doit être compris entre 3 et 16 caractères.
-                            </small>
+                            </div>
                         </div>
 
                         <!-- Email -->
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
                             <input name="email" type="email" class="form-control" pattern="^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$" value="<?php if(isset($_POST['email'])){ echo $_POST['email']; }?>" id="exampleInputEmail1" placeholder="name@example.com" aria-describedby="emailHelp" required>
-                            <small id="emailHelp" class="form-text text-muted">
+                            <div id="emailHelp" class="form-text text-muted">
                                 Exemple d'adresse email : <strong>abc123@cde456.fr</strong>
-                            </small>
+                            </div>
                         </div>
 
                         <!-- Mot de passe -->
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Mot de passe</label>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
                             <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe" aria-describedby="passwordHelp" required>
                         </div>
 
                         <!-- Confirmer le mot de passe -->
-                        <div class="form-group">
-                            <label for="confirmInputPassword1">Confirme le mot de passe</label>
+                        <div class="mb-3">
+                            <label for="confirmInputPassword1" class="form-label">Confirme le mot de passe</label>
                             <input name="confirmPassword" type="password" class="form-control" id="confirmInputPassword1" required>
                         </div>
 
                         <!-- Ton âge -->
-                        <div class="form-group">
-                            <label for="customRange2">Ton âge <span id="demo"></span></label>
-                            <input name="age" type="range" class="custom-range" min="15" max="100" value="18" id="customRange2" required>
+                        <div class="mb-3">
+                            <label for="customRange2" class="form-label">Ton âge <span id="demo"></span></label>
+                            <input name="age" type="range" class="form-range" min="15" max="100" value="18" id="customRange2" required>
                         </div>
 
                         <!-- Choix du campus -->
                         <p>À quelle école es-tu ?</p>
-                        <div class="form-group">
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input name="position" type="radio" id="customRadioInline1" value="paris" name="customRadioInline1" class="custom-control-input" required>
-                                <label class="custom-control-label" for="customRadioInline1">Paris</label>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input name="position" type="radio" id="customRadioInline1" value="paris" name="customRadioInline1" class="form-check-input" required>
+                                <label class="form-check-label" for="customRadioInline1">Paris</label>
                             </div>
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input name="position" type="radio" id="customRadioInline2" value="cergy" name="customRadioInline1" class="custom-control-input" required>
-                                <label class="custom-control-label" for="customRadioInline2">Cergy</label>
+                            <div class="form-check">
+                                <input name="position" type="radio" id="customRadioInline2" value="cergy" name="customRadioInline1" class="form-check-input" aria-describedby="positionHelp" required>
+                                <label class="form-check-label" for="customRadioInline2">Cergy</label>
+                            </div>
+                            <div id="positionHelp" class="form-text text-muted">
+                                 Si tu es un PO, choisis l'école où tu es le plus ou celle que tu préfères :)
                             </div>
                         </div>
 
                         <!-- Choix du statut -->
                         <p>Dans quelle formation es-tu ? (Si tu es PO, une option est faite pour toi !)</p>
-                        <div class="form-group">
-                            <select name="status" class="custom-select">
+                        <div class="mb-3">
+                            <select name="status" class="form-select">
                                 <option value="bachelor" selected>Bachelor</option>
                                 <option value="master">Master</option>
                                 <option value="reconversion">Reconversion</option>
                                 <option value="po">PO</option>
                             </select>
-                            <small id="passwordHelp" class="form-text text-muted">
+                            <div id="passwordHelp" class="form-text text-muted">
                                 Cela permettra au site d'afficher ton statut.
-                            </small>
+                            </div>
                         </div>
 
                         <input name="formSubmit" type="submit" class="btn btn-danger mt-3" value="S'inscrire">

@@ -62,6 +62,8 @@
 
     $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
 
+    require '../../functions/functions.php'
+
     ?>
 
     <!-- Container de la liste des nouveaux utilisateurs -->
@@ -69,14 +71,15 @@
         <div class="container-fluid">
             <h1 class="text-center py-4">Les derniers utilisateurs inscrits !</h1>
             <div class="row justify-content-center">
-            <?php foreach ($resultat as $listUser => $userParameter) : ?>
-                <div class="col-8 col-sm-4 col-lg-2 mx-4 mb-4 mt-2 border border-secondary rounded fz-text" style="height: 10em;">
-                    <h5 class="text-center pt-3"><?php echo $userParameter['pseudo']; ?></h5>
-                    <div class="bg-danger mx-auto rounded-pill" style="height: 4px; width: 20%;"></div>
-                    <p class="text-center pt-2 mb-1">Date de création :</p>
-                    <p class="text-center pt-1"><?php echo $userParameter['dateInscription']; ?></p>
-                </div>
-            <?php endforeach; ?>
+                <?php foreach ($resultat as $listUser => $userParameter) : ?>
+                    <div class="col-8 col-sm-4 col-lg-2 mx-4 mb-4 mt-2 border border-secondary rounded fz-text" style="height: 10em;">
+                        <h5 class="text-center pt-3"><?php echo $userParameter['pseudo']; ?></h5>
+                        <div class="bg-danger mx-auto rounded-pill" style="height: 4px; width: 20%;"></div>
+                        <p class="text-center pt-2 mb-1">Date de création :</p>
+                        <p class="text-center pt-1" style="margin-bottom: 5px;"><?php echo $userParameter['dateInscription']; ?></p>
+                        <p class="text-center"><?php badge_color($userParameter['status']) ?></p>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
