@@ -4,31 +4,6 @@
     font-family: 'Quicksand', sans-serif;
 }
 
-.hr-body {
-    height: 5px;
-    width: 8em;
-    border-radius: 10px;
-    background-color: #dc3545;
-}
-
 .navbar {
     font-size: 17px;
-    padding: 0;
-}
-
-.navbar-light .navbar-nav .show>.nav-link, .navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
-    color: #dc3545;
-}
-
-.navbar-light .navbar-toggler {
-    color: black;
-    border: none;
-}
-
-.navbar-light .navbar-toggler:focus {
-    outline: none;
-}
-
-.nav-link:hover, .nav-link:focus {
-    text-decoration: underline;
 }
