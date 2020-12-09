@@ -2,6 +2,8 @@
 
 if (isset($_SESSION['auth'])) : ?>
 
+    <?php $user = $_SESSION['auth']; ?>
+
     <!-- Navbar de l'utilisateur connecté -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-2 fz-text">
         <div class="container-fluid">
@@ -28,6 +30,9 @@ if (isset($_SESSION['auth'])) : ?>
                 </ul>
                 <div class="d-flex justify-content-center">
                     <a href="/forum-coding-factory/public/account/account.php"><button type="button" class="btn btn-outline-secondary me-4">Profil</button></a>
+                    <?php if ($user->rank == 1) : ?>
+                        <a href="/forum-coding-factory/admin/dashboard.php"><button type="button" class="btn btn-warning me-4">Administration</button></a>
+                    <?php endif; ?>
                     <a href="/forum-coding-factory/public/deconnexion/deconnexion.php"><button type="button" class="btn btn-danger me-md-4">Se déconnecter</button></a>
                 </div>
             </div>
