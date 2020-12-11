@@ -104,8 +104,6 @@
                                     VALUES (:name, :image)
                                 ");
 
-                                    $nameCategory = strtolower($nameCategory);
-
                                     $updateavatar->execute([
                                         'name' => $nameCategory,
                                         'image' => $nameCategory . '.' . $extensionUpload,
@@ -171,7 +169,7 @@
                     </div>
                 </div>
 
-                <hr class="mx-auto my-5 w-75" style="height: 10px; background-color: white !important;">
+                <hr class="mx-auto my-5 w-75 rounded" style="height: 10px; background-color: white !important;">
 
                 <div class="container">
                     <div class="row">
