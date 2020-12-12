@@ -22,7 +22,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link" href="#">Équipe</a>
                     </li>
                     <li class="nav-item px-lg-3">
-                        <a class="nav-link" href="/forum-coding-factory/public/forum/accueil-forum.php">Forum</a>
+                        <a class="nav-link" href="/forum-coding-factory/public/forum/forum.php">Forum</a>
                     </li>
                     <li class="nav-item px-lg-3">
                         <a class="nav-link" href="#">Nouveautés</a>
@@ -59,7 +59,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link" href="#">Équipe</a>
                     </li>
                     <li class="nav-item px-lg-3">
-                        <a class="nav-link" href="/forum-coding-factory/public/forum/accueil-forum.php">Forum</a>
+                        <a class="nav-link" href="/forum-coding-factory/public/forum/forum.php">Forum</a>
                     </li>
                     <li class="nav-item px-lg-3">
                         <a class="nav-link" href="#">Nouveautés</a>
