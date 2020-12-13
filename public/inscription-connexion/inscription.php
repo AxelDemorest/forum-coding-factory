@@ -153,15 +153,7 @@
 
                 $password = password_hash($password, PASSWORD_BCRYPT);
 
-                $req->bindValue(1, $pseudo);
-                $req->bindValue(2, $mail);
-                $req->bindValue(3, $password);
-                $req->bindValue(4, $age);
-                $req->bindValue(5, $position);
-                $req->bindValue(6, $status);
-                $req->bindValue(7, 0);
-
-                $req->execute();
+                $req->execute([$pseudo, $mail, $password, $age, $position, $status, 0]);
 
                 $req2 = $pdo->prepare("SELECT * FROM users WHERE mail = ?");
 

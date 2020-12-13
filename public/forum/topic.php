@@ -20,6 +20,11 @@
             border-radius: 10px;
             background-color: #dc3545;
         }
+
+        .link-owner-topic {
+            color: black;
+            text-decoration: none !important;
+        }
     </style>
 
 </head>
@@ -37,12 +42,6 @@
     require_once '../../functions/functions.php';
 
     require_once '../../database/db.php';
-
-    $req = $pdo->prepare("SELECT * FROM topics");
-
-    $req->execute();
-
-    $list_topics = $req->fetchAll(PDO::FETCH_ASSOC);
     ?>
 
     <div class="container-fluid" style="padding-top: 59px">
@@ -53,26 +52,138 @@
 
             <?php
 
-            $array_topics_id = [];
 
-            foreach ($list_topics as $key => $value) :
-
-                array_push($array_topics_id, $value['idTopic']);
-
-            endforeach;
 
             /* echo '<pre>';
-            echo print_r($array_topics_id);
-            echo '</pre>'; 
-            */
+            echo print_r($array_topics);
+            echo '</pre>';
+ */
 
-            if (in_array($_GET['id'], $array_topics_id)) : ?>
+            if (isset($_GET['id'])) :
 
-                <div class="col-6 mx-auto mt-5">
-                    <div class="border border-secondary">
-                        
+                $req = $pdo->prepare("SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id WHERE topics.idTopic = ?");
+
+                $req->execute([$_GET['id']]);
+
+                $list_topics = $req->fetchAll(PDO::FETCH_ASSOC);
+
+                $array_topics = [];
+
+                foreach ($list_topics as $key => $value) :
+
+                    /* echo '<pre>';
+                echo print_r($value);
+                echo '</pre>'; */
+
+                    foreach ($value as $a => $b) {
+
+                        /* echo '<pre>';
+                    echo print_r($a);
+                    echo '</pre>'; */
+
+                        $array_topics[$a] = $b;
+                    }
+
+                endforeach;
+
+                if (in_array($_GET['id'], $array_topics)) :
+
+
+            ?>
+
+                    <div class="col-9 mx-auto mt-5 d-flex flex-column">
+                        <h2 class="mb-5 ms-3"><?php echo $array_topics['titleTopic'] ?></h2>
+                        <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
+                            <div class="d-flex flex-row align-items-center">
+                                <a class="link-owner-topic" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?php echo $array_topics['pseudo'] ?></a>
+                                <div class="ms-2 fz-text">
+                                    <?php badge_color($array_topics['status']) ?>
+                                    <?php if_admin_user($array_topics['rank']) ?>
+                                </div>
+                                <!-- <span class="text-muted fz-text" style="font-size: 14px">
+                                (<?php echo $array_topics['numberMessage'];
+                                    echo ($array_topics['numberMessage'] > 0) ? " messages" : " message"; ?>)</span> -->
+                            </div>
+                            <hr>
+                            <p class="mt-2 fz-text"><?php echo $array_topics['contentTopic'] ?></p>
+                            <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($array_topics['creationDate']); ?></p>
+                        </div>
+
+                        <hr class="mb-4 mt-0">
+
+                        <div class="order-last">
+                            <hr>
+                            <?php
+
+                            if (isset($_POST['submitReplyPost'], $_POST['reponseText'])) {
+
+                                $replyContent = htmlspecialchars($_POST['reponseText']);
+
+                                if (isset($_SESSION['auth'])) {
+                                    if (!empty($replyContent)) {
+
+                                        $reqReply = $pdo->prepare("INSERT INTO messages(idTopicMessage, idUser, contentMessage) VALUES (?, ?, ?)");
+
+                                        $reqReply->execute([$_GET['id'], $_SESSION['auth']->id, $replyContent]);
+
+                                        echo '<div class="alert alert-success">Réponse envoyée avec succès.</div>';
+                                    } else {
+                                        echo '<div class="alert alert-danger">Tu dois indiquer une réponse.</div>';
+                                    }
+                                } else {
+                                    echo '<div class="alert alert-danger">Veuillez vous connecter ou vous inscrire afin d\'envoyer une réponse.</div>';
+                                }
+                            }
+
+                            if (isset($_SESSION['auth'])) :
+                            ?>
+                                <div class="mb-3">
+                                    <form method="POST">
+                                        <div class="mb-3">
+                                            <h5 class="mb-3">Répondre</h5>
+                                            <textarea name="reponseText" placeholder="Écrivez votre réponse" id="replyPost" class="form-control" rows="3" required></textarea>
+                                        </div>
+                                        <input type="submit" name="submitReplyPost" class="btn btn-danger mt-2" value="Répondre">
+                                    </form>
+                                </div>
+                        </div>
+
+                    <?php endif; ?>
+
+                    <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
+
+                    $reqListMessages->execute([$_GET['id']]);
+
+                    $list_messages_topic = $reqListMessages->fetchAll(PDO::FETCH_ASSOC); ?>
+
+                    <h5 class="mb-4"><?php echo (count($list_messages_topic) > 1) ? count($list_messages_topic) . " Réponses" : count($list_messages_topic) . " Réponse" ?></h5>
+
+                    <?php foreach ($list_messages_topic as $a => $b) : ?>
+
+                        <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
+
+                            <div class="d-flex flex-row align-items-center">
+                                <a class="link-owner-topic" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?php echo $b['pseudo'] ?></a>
+                                <div class="ms-2 fz-text">
+                                    <?php badge_color($b['status']) ?>
+                                    <?php if_admin_user($b['rank']) ?>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="mt-2 fz-text"><?php echo $b['contentMessage'] ?></p>
+                            <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($b['messageDate']); ?></p>
+                        </div>
+
+                    <?php endforeach; ?>
+
+
                     </div>
-                </div>
+
+                <?php else : ?>
+
+                    <h1 class="text-center">La catégorie est introuvable</h1>
+
+                <?php endif; ?>
 
             <?php else : ?>
 

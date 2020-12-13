@@ -19,6 +19,12 @@ function badge_color($user_status)
     }
 }
 
+function if_admin_user($user_rank) {
+    if ($user_rank == 1) {
+        echo '<span class="badge rounded-pill bg-warning text-dark">Administrateur</span>';
+    }
+}
+
 function timeAgo($date)
 {
     if (!ctype_digit($date))

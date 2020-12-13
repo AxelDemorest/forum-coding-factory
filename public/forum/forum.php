@@ -22,18 +22,6 @@
             background-color: #dc3545;
         }
 
-        /* .list-categories:nth-child(even) {
-            background-color: #FFF;
-        }
-
-        .list-categories:nth-child(odd) {
-            background-color: #EEE;
-        } */
-
-        .list-categories {
-            background-color: #EEE;
-        }
-
         .list-categories a:hover {
             text-decoration: underline !important;
         }
@@ -121,7 +109,7 @@
                     </div>
 
                     <div class="col-12 mt-5 d-flex flex-column">
-                    <h2 class="text-center py-2 px-4 mb-5 border border-danger border-3 rounded mx-auto" style="width: 10%">Agile</h2>
+                        <h2 class="text-center py-2 px-4 mb-5 border border-danger border-3 rounded mx-auto" style="width: 10%">Agile</h2>
                         <div class="alert alert-danger w-25 mx-auto">La catégorie est momentanément fermée.</div>
                     </div>
                 </div>
@@ -156,12 +144,18 @@
 
                         $display_topics = $req2->fetchAll(PDO::FETCH_ASSOC);
 
-                        /* echo '<pre>';
+                        /*  echo '<pre>';
                         echo print_r($display_topics);
                         echo '</pre>';  */
                         ?>
 
-                        <div class="table-responsive mt-5">
+
+                        <?php if (isset($_SESSION['auth'])) : ?>
+                            <a class="mt-5 d-flex justify-content-center" style="text-decoration: none !important" href="/forum-coding-factory/public/forum/askQuestion.php?id=<?= $_GET['id'] ?>">
+                                <div class="btn btn-outline-danger" style="width: 20%">Pose une question</div>
+                            </a>
+                        <?php endif; ?>
+                        <div class="table-responsive">
                             <table class="table table-striped table-hover w-75 table-bordered mx-auto border border-secondary shadow-sm fz-text caption-top">
                                 <caption>
                                     <nav aria-label="breadcrumb">
@@ -175,7 +169,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="col-1"></th>
-                                        <th scope="col" class="col-6">Sujet</th>
+                                        <th scope="col" class="col-6">Sujets (<?php echo count($display_topics) ?>)</th>
                                         <th scope="col" class="text-center col-2">Réponses</th>
                                         <th scope="col">Propriétaire</th>
                                     </tr>
@@ -184,7 +178,9 @@
                                     <?php foreach ($display_topics as $topic => $value) : ?>
 
                                         <tr>
-                                            <td>
+                                            <td style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                            echo "background: #D7E5FA";
+                                                        } ?>">
                                                 <?php
 
 
@@ -200,7 +196,9 @@
 
                                             </td>
 
-                                            <td class="align-middle"><a class="td-link" href="topic.php?id=<?= $value['idTopic'] ?>"><?php echo $value['titleTopic'] ?></a>
+                                            <td class="align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                                echo "background: #D7E5FA";
+                                                                            } ?>"><a class="td-link" href="topic.php?id=<?= $value['idTopic'] ?>"><?php echo $value['titleTopic'] ?></a>
 
                                                 <br />
                                                 <div class="text-muted" style="font-size: 13px">
@@ -209,8 +207,20 @@
 
                                             </td>
 
-                                            <td class="text-center align-middle"><?php echo $value['numberReply'] ?></td>
-                                            <td class="align-middle">
+                                            <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?"); 
+
+                                            $reqListMessages->execute([$value['idTopic']]);
+
+                                            $list_messages_topic = $reqListMessages->fetchAll(PDO::FETCH_ASSOC); ?>
+
+                                            <td class="text-center align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                                            echo "background: #D7E5FA";
+                                                                                        } ?>">
+                                                <?php echo count($list_messages_topic) ?>
+                                            </td>
+                                            <td class="align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                                echo "background: #D7E5FA";
+                                                                            } ?>">
                                                 <?php echo $value['pseudo'] ?>
                                                 <br />
                                                 <div class="text-muted" style="font-size: 13px">
