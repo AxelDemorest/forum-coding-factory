@@ -19,7 +19,8 @@ function badge_color($user_status)
     }
 }
 
-function if_admin_user($user_rank) {
+function if_admin_user($user_rank)
+{
     if ($user_rank == 1) {
         echo '<span class="badge rounded-pill bg-warning text-dark">Administrateur</span>';
     }
@@ -55,4 +56,22 @@ function timeAgo($date)
         return 'Il y a 7 jours à ' . date('H:i:s', $date);
     else
         return 'Le ' . date('d/m/Y à H:i:s', $date);
+}
+
+function tronque($chaine, $max)
+{
+    // Nombre de caractère
+    if (strlen($chaine) >= $max) {
+        // Met la portion de chaine dans $chaine
+        $chaine = substr($chaine, 0, $max);
+        // position du dernier espace
+        $espace = strrpos($chaine, " ");
+        // test si il ya un espace
+        if ($espace)
+            // si ya 1 espace, coupe de nouveau la chaine
+            $chaine = substr($chaine, 0, $espace);
+        // Ajoute ... à la chaine
+        $chaine .= '...';
+    }
+    return $chaine;
 }

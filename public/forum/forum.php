@@ -22,6 +22,10 @@
             background-color: #dc3545;
         }
 
+        .list-categories {
+            background-color: #EEE;
+        }
+
         .list-categories a:hover {
             text-decoration: underline !important;
         }
@@ -50,6 +54,10 @@
         .td-link:hover {
             text-decoration: underline !important;
         }
+
+        .link-content:hover {
+            opacity: 0.6;
+        }
     </style>
 </head>
 
@@ -74,6 +82,7 @@
     $req->execute();
 
     $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+
     ?>
 
     <!-- Design du forum -->
@@ -91,7 +100,24 @@
                         <h2 class="text-center py-2 px-4 mb-5 border border-danger border-3 rounded mx-auto w-25">Développement</h2>
 
                         <div class="d-flex flex-row flex-wrap justify-content-center">
+
+
+
                             <?php foreach ($resultat as $key => $value) : ?>
+
+                                <?php
+
+                                $req2 = $pdo->prepare("SELECT * FROM categories RIGHT JOIN topics ON categories.id = topics.idCategory WHERE categories.id = ? ORDER BY topics.creationDate DESC LIMIT 1");
+
+                                $req2->execute([$value['id']]);
+
+                                $resultat2 = $req2->fetch(PDO::FETCH_ASSOC);
+
+                                /* echo "<pre>";
+                                echo print_r($resultat2);
+                                echo "/<pre>";  */
+                                ?>
+
                                 <div class="list-categories d-flex flex-column py-3 px-2 m-3 rounded shadow-sm border border-secondary" style="width: 15%;">
                                     <div class="mx-auto mb-3" style="height: 70px;">
                                         <a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= strtolower($value['id']) ?>"><img class="imgCategory" src="../../img/imgCategory/<?= $value['image']; ?>" height="60"></a>
@@ -99,9 +125,13 @@
                                     <a class="text-dark text-decoration-none" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= strtolower($value['id']) ?>">
                                         <h5 class="text-center"><?= $value['name']; ?></h5>
                                     </a>
-                                    <a class="text-dark text-decoration-none" href="">
-                                        <p class="text-center">Dernier topic :</p>
-                                    </a>
+                                    <p class="text-center mb-0 mt-2 text-muted" style="font-size:15px">Dernier topic :</p>
+                                    <?php
+                                    if (isset($resultat2['contentTopic'])) : ?>
+                                        <a class="text-center text-muted link-content mt-2 text-break" style="font-size:13px; text-decoration: none !important;" href="/forum-coding-factory/public/forum/topic.php?id=<?= $resultat2['idTopic'] ?>"><?php echo tronque($resultat2['titleTopic'], 40) ?></a>
+                                    <?php else : ?>
+                                        <p class="text-center text-muted mt-2" style="font-size:13px">Aucun topic</p>
+                                    <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -207,7 +237,7 @@
 
                                             </td>
 
-                                            <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?"); 
+                                            <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
 
                                             $reqListMessages->execute([$value['idTopic']]);
 
