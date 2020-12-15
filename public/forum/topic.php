@@ -25,6 +25,10 @@
             color: black;
             text-decoration: none !important;
         }
+
+        .breadcrumb-item a {
+            text-decoration: none !important;
+        }
     </style>
 
 </head>
@@ -88,11 +92,23 @@
 
                 if (in_array($_GET['id'], $array_topics)) :
 
+                $name_categoryQuery = $pdo->prepare("SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id WHERE topics.idCategory = ? AND topics.idTopic = ?");
 
+                $name_categoryQuery->execute([$array_topics['idCategory'], $_GET['id']]);
+
+                $name_category = $name_categoryQuery->fetch(PDO::FETCH_ASSOC);
             ?>
-
                     <div class="col-9 mx-auto mt-5 d-flex flex-column">
                         <h2 class="mb-5 ms-3"><?php echo $array_topics['titleTopic'] ?></h2>
+                        <!-- BreadCrumb  -->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/forum-coding-factory/public/home/home.php">Home</a></li>
+                                <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php">Forum</a></li>
+                                <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($name_category['name']) ?>&id=<?= $name_category['id'] ?>"><?php echo $name_category['name'] ?></a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Topic n°<?php echo $_GET['id'] ?></li>
+                            </ol>
+                        </nav>
                         <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
                             <div class="d-flex flex-row align-items-center">
                                 <a class="link-owner-topic" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?php echo $array_topics['pseudo'] ?></a>
@@ -181,13 +197,13 @@
 
                 <?php else : ?>
 
-                    <h1 class="text-center">La catégorie est introuvable</h1>
+                    <h1 class="text-center">Le topic est introuvable</h1>
 
                 <?php endif; ?>
 
             <?php else : ?>
 
-                <h1 class="text-center">La catégorie est introuvable</h1>
+                <h1 class="text-center">Le topic est introuvable</h1>
 
             <?php endif; ?>
 

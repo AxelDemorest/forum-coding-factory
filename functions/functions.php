@@ -26,6 +26,7 @@ function if_admin_user($user_rank)
     }
 }
 
+
 function timeAgo($date)
 {
     if (!ctype_digit($date))
@@ -75,3 +76,47 @@ function tronque($chaine, $max)
     }
     return $chaine;
 }
+
+function advanced_pagination($perPageParameter, $totalItems, $pathFile) { ?>
+    <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+
+                        <?php
+                        $currentPage = (isset($_GET["page"])) ? $_GET["page"] : 1;
+                        $perPage = $perPageParameter;
+
+                        $totalPages = ceil($totalItems / $perPage);
+                        $currentPage = min(max(1, $currentPage), $totalPages);
+                        /* $firstHalf = ($currentPage < $totalPages / 2) ? 'true' : 'false'; */
+                        ?>
+
+                        <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
+                            <a href="<?= $pathFile ?>page=<?= $currentPage - 1 ?>" class="page-link">Précédente</a>
+                        </li>
+
+                        <!-- <li class="disabled"><a>...</a></li> -->
+
+                        <?php for ($i = 1; $i < $currentPage; ++$i) { ?>
+                            <?php if ($i < 3 || $i > $currentPage - 3 || $totalPages < 10) { ?>
+                                <li class="page-item"><a class="page-link" href="<?= $pathFile ?>page=<?= $i ?>"><?= $i ?></a></li>
+                            <?php } elseif ($i == $currentPage - 3) { ?>
+                                <li class="disabled"><a class="page-link">...</a></li>
+                            <?php } ?>
+                        <?php } ?>
+
+                        <li class="page-item disabled"><a class="page-link"><?= $currentPage ?></a></li>
+
+                        <?php for ($i = $currentPage + 1; $i <= $totalPages; ++$i) { ?>
+                            <?php if ($i < $currentPage + 3 || $i > $totalPages - 2 || $totalPages < 10) { ?>
+                                <li class="page-item"><a class="page-link" href="<?= $pathFile ?>page=<?= $i ?>"><?= $i ?></a></li>
+                            <?php } elseif ($i == $currentPage + 3) { ?>
+                                <li class="disabled"><a class="page-link">...</a></li>
+                            <?php } ?>
+                        <?php } ?>
+
+                        <li class="page-item <?= ($currentPage == $totalPages) ? "disabled" : "" ?>">
+                            <a href="<?= $pathFile ?>page=<?= $currentPage + 1 ?>" class="page-link">Suivante</a>
+                        </li>
+                    </ul>
+                </nav>
+<?php } ?>

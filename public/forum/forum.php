@@ -58,6 +58,14 @@
         .link-content:hover {
             opacity: 0.6;
         }
+
+        .page-link {
+            color: #dc3545;
+        }
+
+        .page-link:hover {
+            color: #dc3545;
+        }
     </style>
 </head>
 
@@ -166,25 +174,67 @@
 
                         <img class="imgCategory mx-auto mt-5" src="../../img/imgCategory/<?= $_GET['category']; ?>.png" style="width: 15%">
 
-                        <?php $req2 = $pdo->prepare("SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id 
-                        LEFT JOIN users ON topics.idCreator = users.id
-                        WHERE topics.idCategory = ?");
+                        <?php
 
-                        $req2->execute([$_GET['id']]);
+                        /* if (isset($_GET['page']) && !empty($_GET['page'])) {
+                            $currentPage = (int) strip_tags($_GET['page']);
+                        } else {
+                            $currentPage = 1;
+                        } */
+
+                        $sql = 'SELECT COUNT(*) AS nb_topics FROM `topics`';
+
+                        $query = $pdo->prepare($sql);
+
+                        $query->execute();
+
+                        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+                        $nbTopics = (int) $result['nb_topics'];
+
+                        $currentPage = (isset($_GET["page"])) ? $_GET["page"] : 1;
+
+                        $perPage = 15;
+
+                        $totalItems = $nbTopics;
+
+                        $totalPages = ceil($totalItems / $perPage);
+
+                        /* echo $totalPages; */
+
+                        $currentPage = min(max(1, $currentPage), $totalPages);
+
+                        $premier = ($currentPage * $perPage) - $perPage;
+
+                        $test = 'SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id 
+                        LEFT JOIN users ON topics.idCreator = users.id WHERE topics.idCategory = :id ORDER BY topics.creationDate DESC LIMIT :premier, :parpage';
+
+                        $req2 = $pdo->prepare($test);
+
+                        $req2->bindValue(':id', $_GET['id']);
+                        $req2->bindValue(':premier', $premier, PDO::PARAM_INT);
+                        $req2->bindValue(':parpage', $perPage, PDO::PARAM_INT);
+
+                        $req2->execute();
 
                         $display_topics = $req2->fetchAll(PDO::FETCH_ASSOC);
 
                         /*  echo '<pre>';
                         echo print_r($display_topics);
                         echo '</pre>';  */
+
                         ?>
 
 
                         <?php if (isset($_SESSION['auth'])) : ?>
                             <a class="mt-5 d-flex justify-content-center" style="text-decoration: none !important" href="/forum-coding-factory/public/forum/askQuestion.php?id=<?= $_GET['id'] ?>">
-                                <div class="btn btn-outline-danger" style="width: 20%">Pose une question</div>
+                                <div class="btn btn-outline-danger" style="width: 20%">Poser une question</div>
                             </a>
-                        <?php endif; ?>
+                        <?php endif;
+
+
+
+                        ?>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover w-75 table-bordered mx-auto border border-secondary shadow-sm fz-text caption-top">
                                 <caption>
@@ -199,13 +249,15 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="col-1"></th>
-                                        <th scope="col" class="col-6">Sujets (<?php echo count($display_topics) ?>)</th>
+                                        <th scope="col" class="col-6">Sujets (<?php echo $totalItems ?>)</th>
                                         <th scope="col" class="text-center col-2">Réponses</th>
                                         <th scope="col">Propriétaire</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($display_topics as $topic => $value) : ?>
+                                    <?php
+
+                                    foreach ($display_topics as $topic => $value) : ?>
 
                                         <tr>
                                             <td style="<?php if ($value['id'] == $_SESSION['auth']->id) {
@@ -233,7 +285,19 @@
                                                 <br />
                                                 <div class="text-muted" style="font-size: 13px">
 
-                                                    Dernier message : <?php  ?></div>
+                                                    <?php
+
+                                                    $lastActivityQuery = $pdo->prepare("SELECT messageDate FROM messages WHERE idTopicMessage = ? ORDER BY messageDate DESC LIMIT 1");
+
+                                                    $lastActivityQuery->execute([$value['idTopic']]);
+
+                                                    $lastActivity = $lastActivityQuery->fetch(PDO::FETCH_ASSOC);
+
+                                                    if (isset($lastActivity['messageDate'])) : ?>
+                                                        Dernière activité : <?php echo $lastActivity['messageDate'] ?></div>
+                                                    <?php else: ?>
+                                                        Aucune activités
+                                                    <?php endif; ?>
 
                                             </td>
 
@@ -264,6 +328,47 @@
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+
+                            <div class="d-flex justify-content-center my-5">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+
+                                        <!-- /forum-coding-factory/public/forum/forum.php?category=<?= $_GET['category'] ?>&id=<?= $_GET['id'] ?> -->
+
+                                        <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
+                                            <a href="?category=<?= $_GET['category'] ?>&id=<?= $_GET['id'] ?>&page=<?= $currentPage - 1 ?>" class="page-link">Précédente</a>
+                                        </li>
+
+                                        <!-- <li class="disabled"><a>...</a></li> -->
+
+                                        <?php for ($i = 1; $i < $currentPage; ++$i) { ?>
+                                            <?php if ($i < 3 || $i > $currentPage - 3 || $totalPages < 10) { ?>
+                                                <li class="page-item"><a class="page-link" href="?category=<?= $_GET['category'] ?>&id=<?= $_GET['id'] ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                            <?php } elseif ($i == $currentPage - 3) { ?>
+                                                <li class="disabled"><a class="page-link">...</a></li>
+                                            <?php } ?>
+                                        <?php } ?>
+
+                                        <li class="page-item disabled"><a class="page-link"><?= $currentPage ?></a></li>
+
+                                        <?php for ($i = $currentPage + 1; $i <= $totalPages; ++$i) { ?>
+                                            <?php if ($i < $currentPage + 3 || $i > $totalPages - 2 || $totalPages < 10) { ?>
+                                                <li class="page-item"><a class="page-link" href="?category=<?= $_GET['category'] ?>&id=<?= $_GET['id'] ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                            <?php } elseif ($i == $currentPage + 3) { ?>
+                                                <li class="disabled"><a class="page-link">...</a></li>
+                                            <?php } ?>
+                                        <?php } ?>
+
+                                        <li class="page-item <?= ($currentPage == $totalPages) ? "disabled" : "" ?>">
+                                            <a href="?category=<?= $_GET['category'] ?>&id=<?= $_GET['id'] ?>&page=<?= $currentPage + 1 ?>" class="page-link">Suivante</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+
+
+
                         </div>
 
                     <?php else : ?>

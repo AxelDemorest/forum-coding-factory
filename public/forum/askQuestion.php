@@ -31,6 +31,10 @@
             /* Safari 3-8 */
             transform: scale(1.2);
         }
+
+        .breadcrumb-item a {
+            text-decoration: none !important;
+        }
     </style>
 </head>
 
@@ -91,8 +95,8 @@
                         $redirect = $req2->fetch(PDO::FETCH_ASSOC);
 
                         echo $redirect['idTopic'];
-                        
-                        header('Location: /forum-coding-factory/public/forum/topic.php?id='.$redirect['idTopic']);
+
+                        header('Location: /forum-coding-factory/public/forum/topic.php?id=' . $redirect['idTopic']);
 
                         exit;
                     }
@@ -110,7 +114,16 @@
                 <img class="imgCategory" src="../../img/imgCategory/<?= strtolower($value['image']) ?>" style="width: 10%">
             </div>
 
-            <div class="col-6 border border-danger mx-auto mt-5 fz-text rounded shadow-sm">
+            <!-- BreadCrumb  -->
+            <nav aria-label="breadcrumb" class="d-flex justify-content-around mb-0 mt-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/forum-coding-factory/public/home/home.php">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php">Forum</a></li>
+                    <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= $value['id'] ?>"><?php echo $value['name'] ?></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Poser une question</li>
+                </ol>
+            </nav>
+            <div class="col-6 border border-danger mx-auto fz-text rounded shadow-sm">
 
                 <form action="" method="POST" class="mb-3 p-4">
 
@@ -140,7 +153,7 @@
 
                     <input type="submit" class="btn btn-danger" name="submitButtonQuestion" value="Envoyer la question">
                     <div class="form-text text-muted">
-                        La question sera envoyée dans la catégorie Python.
+                        La question sera envoyée dans la catégorie <?php echo $value['name'] ?>.
                     </div>
                 </form>
             </div>
