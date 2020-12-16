@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../header/header.css" rel="stylesheet" />
     <link href="../footer/footer.css" rel="stylesheet" />
+    <link href="../../prism/prism.css" rel="stylesheet" />
+    <script src="../../prism/prism.js"></script>
+    <script src="../../editor-simplemde/simplemde.min.js"></script>
+    <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" />
     <title>Forum - Coding Factory</title>
     <style>
+        
         .fz-text {
             font-family: 'Quicksand', sans-serif;
         }
@@ -29,6 +34,10 @@
         .breadcrumb-item a {
             text-decoration: none !important;
         }
+
+        img {
+            max-width: 100%;
+        }
     </style>
 
 </head>
@@ -46,6 +55,10 @@
     require_once '../../functions/functions.php';
 
     require_once '../../database/db.php';
+
+    require_once '../../parsedown/Parsedown.php';
+
+    $parsedown = new Parsedown();
     ?>
 
     <div class="container-fluid" style="padding-top: 59px">
@@ -92,11 +105,11 @@
 
                 if (in_array($_GET['id'], $array_topics)) :
 
-                $name_categoryQuery = $pdo->prepare("SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id WHERE topics.idCategory = ? AND topics.idTopic = ?");
+                    $name_categoryQuery = $pdo->prepare("SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id WHERE topics.idCategory = ? AND topics.idTopic = ?");
 
-                $name_categoryQuery->execute([$array_topics['idCategory'], $_GET['id']]);
+                    $name_categoryQuery->execute([$array_topics['idCategory'], $_GET['id']]);
 
-                $name_category = $name_categoryQuery->fetch(PDO::FETCH_ASSOC);
+                    $name_category = $name_categoryQuery->fetch(PDO::FETCH_ASSOC);
             ?>
                     <div class="col-9 mx-auto mt-5 d-flex flex-column">
                         <h2 class="mb-5 ms-3"><?php echo $array_topics['titleTopic'] ?></h2>
@@ -121,7 +134,7 @@
                                     echo ($array_topics['numberMessage'] > 0) ? " messages" : " message"; ?>)</span> -->
                             </div>
                             <hr>
-                            <p class="mt-2 fz-text"><?php echo $array_topics['contentTopic'] ?></p>
+                            <p class="mt-2 fz-text"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
                             <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($array_topics['creationDate']); ?></p>
                         </div>
 
@@ -157,7 +170,7 @@
                                     <form method="POST">
                                         <div class="mb-3">
                                             <h5 class="mb-3">Répondre</h5>
-                                            <textarea name="reponseText" placeholder="Écrivez votre réponse" id="replyPost" class="form-control" rows="3" required></textarea>
+                                            <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="replyPost" class="form-control" rows="1" ></textarea>
                                         </div>
                                         <input type="submit" name="submitReplyPost" class="btn btn-danger mt-2" value="Répondre">
                                     </form>
@@ -186,7 +199,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <p class="mt-2 fz-text"><?php echo $b['contentMessage'] ?></p>
+                            <p class="mt-2 fz-text"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
                             <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($b['messageDate']); ?></p>
                         </div>
 
@@ -213,7 +226,20 @@
 
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <script src="home.js"></script>
+    <script>
+        let codeBlockList = document.querySelectorAll("code");
+
+        codeBlockList.forEach(function(codeBlock) {
+            if (codeBlock.classList.length == 0) {
+                codeBlock.classList.add("language-markup");
+            }
+        });
+
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("replyPost"),
+            toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
+        });
+    </script>
 </body>
 
 </html>

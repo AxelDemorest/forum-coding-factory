@@ -77,6 +77,7 @@ function tronque($chaine, $max)
     return $chaine;
 }
 
+
 function advanced_pagination($perPageParameter, $totalItems, $pathFile) { ?>
     <nav aria-label="Page navigation example">
                     <ul class="pagination">

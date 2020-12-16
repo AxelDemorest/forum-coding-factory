@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../header/header.css" rel="stylesheet" />
     <link href="../footer/footer.css" rel="stylesheet" />
-    <link href="home.css" rel="stylesheet" />
     <title>Forum - Coding factory</title>
     <style>
         .fz-text {
@@ -152,6 +151,8 @@
                     </div>
                 </div>
 
+                <?php include "../footer/footer.html"; ?>
+
                 <!-- Si une catégorie a été choisie -->
             <?php else : ?>
 
@@ -204,20 +205,31 @@
 
                         $currentPage = min(max(1, $currentPage), $totalPages);
 
-                        $premier = ($currentPage * $perPage) - $perPage;
+                        $premier = ($currentPage * $perPage) - $perPage; ?>
 
-                        $test = 'SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id 
-                        LEFT JOIN users ON topics.idCreator = users.id WHERE topics.idCategory = :id ORDER BY topics.creationDate DESC LIMIT :premier, :parpage';
+                        <?php if (isset($_SESSION['auth'])) : ?>
+                            <a class="mt-5 d-flex justify-content-center" style="text-decoration: none !important" href="/forum-coding-factory/public/forum/askQuestion.php?id=<?= $_GET['id'] ?>">
+                                <div class="btn btn-outline-danger" style="width: 20%">Poser une question</div>
+                            </a>
+                        <?php endif; ?>
 
-                        $req2 = $pdo->prepare($test);
+                        <?php
 
-                        $req2->bindValue(':id', $_GET['id']);
-                        $req2->bindValue(':premier', $premier, PDO::PARAM_INT);
-                        $req2->bindValue(':parpage', $perPage, PDO::PARAM_INT);
+                        if ($nbTopics > 0) :
+                            $test = 'SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id 
+                            LEFT JOIN users ON topics.idCreator = users.id WHERE topics.idCategory = :id ORDER BY topics.creationDate DESC LIMIT :premier, :parpage';
 
-                        $req2->execute();
+                            $req2 = $pdo->prepare($test);
 
-                        $display_topics = $req2->fetchAll(PDO::FETCH_ASSOC);
+                            $req2->bindValue(':id', $_GET['id']);
+                            $req2->bindValue(':premier', $premier, PDO::PARAM_INT);
+                            $req2->bindValue(':parpage', $perPage, PDO::PARAM_INT);
+
+                            $req2->execute();
+
+                            $display_topics = $req2->fetchAll(PDO::FETCH_ASSOC);
+                        endif;
+
 
                         /*  echo '<pre>';
                         echo print_r($display_topics);
@@ -226,15 +238,6 @@
                         ?>
 
 
-                        <?php if (isset($_SESSION['auth'])) : ?>
-                            <a class="mt-5 d-flex justify-content-center" style="text-decoration: none !important" href="/forum-coding-factory/public/forum/askQuestion.php?id=<?= $_GET['id'] ?>">
-                                <div class="btn btn-outline-danger" style="width: 20%">Poser une question</div>
-                            </a>
-                        <?php endif;
-
-
-
-                        ?>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover w-75 table-bordered mx-auto border border-secondary shadow-sm fz-text caption-top">
                                 <caption>
@@ -257,77 +260,82 @@
                                 <tbody>
                                     <?php
 
-                                    foreach ($display_topics as $topic => $value) : ?>
+                                    if ($nbTopics > 0) :
 
-                                        <tr>
-                                            <td style="<?php if ($value['id'] == $_SESSION['auth']->id) {
-                                                            echo "background: #D7E5FA";
-                                                        } ?>">
-                                                <?php
+                                        foreach ($display_topics as $topic => $value) : ?>
 
-
-                                                if ($value['resolution'] == 0) : ?>
-
-                                                    <img class="px-4" src="../../img/communication.png" height="30">
-
-                                                <?php else : ?>
-
-                                                    <img src="../../img/lock.png" height="30">
-
-                                                <?php endif; ?>
-
-                                            </td>
-
-                                            <td class="align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
-                                                                                echo "background: #D7E5FA";
-                                                                            } ?>"><a class="td-link" href="topic.php?id=<?= $value['idTopic'] ?>"><?php echo $value['titleTopic'] ?></a>
-
-                                                <br />
-                                                <div class="text-muted" style="font-size: 13px">
-
+                                            <tr>
+                                                <td style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                echo "background: #D7E5FA";
+                                                            } ?>">
                                                     <?php
 
-                                                    $lastActivityQuery = $pdo->prepare("SELECT messageDate FROM messages WHERE idTopicMessage = ? ORDER BY messageDate DESC LIMIT 1");
 
-                                                    $lastActivityQuery->execute([$value['idTopic']]);
+                                                    if ($value['resolution'] == 0) : ?>
 
-                                                    $lastActivity = $lastActivityQuery->fetch(PDO::FETCH_ASSOC);
+                                                        <img class="px-4" src="../../img/communication.png" height="30">
 
-                                                    if (isset($lastActivity['messageDate'])) : ?>
-                                                        Dernière activité : <?php echo $lastActivity['messageDate'] ?></div>
-                                                    <?php else: ?>
-                                                        Aucune activités
+                                                    <?php else : ?>
+
+                                                        <img src="../../img/lock.png" height="30">
+
                                                     <?php endif; ?>
 
-                                            </td>
+                                                </td>
 
-                                            <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
+                                                <td class="align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                                    echo "background: #D7E5FA";
+                                                                                } ?>"><a class="td-link" href="topic.php?id=<?= $value['idTopic'] ?>"><?php echo $value['titleTopic'] ?></a>
 
-                                            $reqListMessages->execute([$value['idTopic']]);
+                                                    <br />
+                                                    <div class="text-muted" style="font-size: 13px">
 
-                                            $list_messages_topic = $reqListMessages->fetchAll(PDO::FETCH_ASSOC); ?>
+                                                        <?php
 
-                                            <td class="text-center align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
-                                                                                            echo "background: #D7E5FA";
-                                                                                        } ?>">
-                                                <?php echo count($list_messages_topic) ?>
-                                            </td>
-                                            <td class="align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
-                                                                                echo "background: #D7E5FA";
-                                                                            } ?>">
-                                                <?php echo $value['pseudo'] ?>
-                                                <br />
-                                                <div class="text-muted" style="font-size: 13px">
-                                                    <?php echo timeAgo($value['creationDate']); ?>
-                                                </div>
+                                                        $lastActivityQuery = $pdo->prepare("SELECT messageDate FROM messages WHERE idTopicMessage = ? ORDER BY messageDate DESC LIMIT 1");
+
+                                                        $lastActivityQuery->execute([$value['idTopic']]);
+
+                                                        $lastActivity = $lastActivityQuery->fetch(PDO::FETCH_ASSOC);
+
+                                                        if (isset($lastActivity['messageDate'])) : ?>
+                                                            Dernière activité : <?php echo ucfirst(timeAgo($lastActivity['messageDate'])) ?></div>
+                                                <?php else : ?>
+                                                    Aucune activités
+                                                <?php endif; ?>
 
 
-                                            </td>
-                                        </tr>
 
-                                    <?php endforeach; ?>
+                                                </td>
+
+                                                <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
+
+                                                $reqListMessages->execute([$value['idTopic']]);
+
+                                                $list_messages_topic = $reqListMessages->fetchAll(PDO::FETCH_ASSOC); ?>
+
+                                                <td class="text-center align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                                                echo "background: #D7E5FA";
+                                                                                            } ?>">
+                                                    <?php echo count($list_messages_topic) ?>
+                                                </td>
+                                                <td class="align-middle" style="<?php if ($value['id'] == $_SESSION['auth']->id) {
+                                                                                    echo "background: #D7E5FA";
+                                                                                } ?>">
+                                                    <?php echo $value['pseudo'] ?>
+                                                    <br />
+                                                    <div class="text-muted" style="font-size: 13px">
+                                                        <?php echo timeAgo($value['creationDate']); ?>
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+
+                                        <?php endforeach; ?>
                                 </tbody>
                             </table>
+
 
                             <div class="d-flex justify-content-center my-5">
                                 <nav aria-label="Page navigation example">
@@ -366,14 +374,7 @@
                                 </nav>
                             </div>
 
-
-
-
                         </div>
-
-                    <?php else : ?>
-
-                        <h1 class="text-center">La catégorie est introuvable</h1>
 
                     <?php endif; ?>
 
@@ -383,16 +384,20 @@
 
                 <?php endif; ?>
 
-            <?php endif; ?>
-        </div>
+            <?php else : ?>
 
+                <h1 class="text-center">La catégorie est introuvable</h1>
+
+            <?php endif; ?>
+
+        <?php endif; ?>
+        </div>
     </div>
 
-    <?php include "../footer/footer.html"; ?>
+    
 
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <script src="home.js"></script>
 </body>
 
 </html>
