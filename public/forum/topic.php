@@ -14,7 +14,6 @@
     <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" />
     <title>Forum - Coding Factory</title>
     <style>
-        
         .fz-text {
             font-family: 'Quicksand', sans-serif;
         }
@@ -45,22 +44,30 @@
 <body>
 
     <?php
+    //Date sous forme française
     date_default_timezone_set('Europe/Paris');
     setlocale(LC_TIME, 'fra_fra');
 
+    //Mise en place de la session
     session_start();
 
+    //J'inclus le header
     include "../header/header.php";
 
+    //J'inclus les fonctions
     require_once '../../functions/functions.php';
 
+    //J'inclus la base de donnée
     require_once '../../database/db.php';
 
+    //J'inclus le fichier permettant de parser le markdown
     require_once '../../parsedown/Parsedown.php';
 
+    //J'appelle l'objet parsedown
     $parsedown = new Parsedown();
     ?>
 
+    <!-- Création du container principal -->
     <div class="container-fluid" style="padding-top: 59px">
         <div class="row d-flex flex-column">
             <h1 class="pt-5 text-center">Espace forum</h1>
@@ -69,15 +76,10 @@
 
             <?php
 
-
-
-            /* echo '<pre>';
-            echo print_r($array_topics);
-            echo '</pre>';
- */
-
+            //Si la variable id existe
             if (isset($_GET['id'])) :
 
+                //J'effectue une jointure entre les topics et les users
                 $req = $pdo->prepare("SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id WHERE topics.idTopic = ?");
 
                 $req->execute([$_GET['id']]);
@@ -86,23 +88,17 @@
 
                 $array_topics = [];
 
+                //Je parcours les résultats
                 foreach ($list_topics as $key => $value) :
 
-                    /* echo '<pre>';
-                echo print_r($value);
-                echo '</pre>'; */
-
                     foreach ($value as $a => $b) {
-
-                        /* echo '<pre>';
-                    echo print_r($a);
-                    echo '</pre>'; */
 
                         $array_topics[$a] = $b;
                     }
 
                 endforeach;
 
+                //Si l'id existe dans les résultats de la jointure
                 if (in_array($_GET['id'], $array_topics)) :
 
                     $name_categoryQuery = $pdo->prepare("SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id WHERE topics.idCategory = ? AND topics.idTopic = ?");
@@ -111,6 +107,7 @@
 
                     $name_category = $name_categoryQuery->fetch(PDO::FETCH_ASSOC);
             ?>
+
                     <div class="col-9 mx-auto mt-5 d-flex flex-column">
                         <h2 class="mb-5 ms-3"><?php echo $array_topics['titleTopic'] ?></h2>
                         <!-- BreadCrumb  -->
@@ -122,6 +119,8 @@
                                 <li class="breadcrumb-item active" aria-current="page">Topic n°<?php echo $_GET['id'] ?></li>
                             </ol>
                         </nav>
+
+                        <!-- Création du bloc affichant le post de l'utilisateur -->
                         <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
                             <div class="d-flex flex-row align-items-center">
                                 <a class="link-owner-topic" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?php echo $array_topics['pseudo'] ?></a>
@@ -129,12 +128,11 @@
                                     <?php badge_color($array_topics['status']) ?>
                                     <?php if_admin_user($array_topics['rank']) ?>
                                 </div>
-                                <!-- <span class="text-muted fz-text" style="font-size: 14px">
-                                (<?php echo $array_topics['numberMessage'];
-                                    echo ($array_topics['numberMessage'] > 0) ? " messages" : " message"; ?>)</span> -->
                             </div>
                             <hr>
+                            <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
                             <p class="mt-2 fz-text"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
+                            <!-- J'affiche le temps du message depuis laquel il a été posté -->
                             <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($array_topics['creationDate']); ?></p>
                         </div>
 
@@ -142,8 +140,10 @@
 
                         <div class="order-last">
                             <hr>
+
                             <?php
 
+                            //Formulaire de réponse
                             if (isset($_POST['submitReplyPost'], $_POST['reponseText'])) {
 
                                 $replyContent = htmlspecialchars($_POST['reponseText']);
@@ -164,30 +164,35 @@
                                 }
                             }
 
+                            //Si l'utilisateur est connecté
                             if (isset($_SESSION['auth'])) :
                             ?>
                                 <div class="mb-3">
                                     <form method="POST">
                                         <div class="mb-3">
                                             <h5 class="mb-3">Répondre</h5>
-                                            <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="replyPost" class="form-control" rows="1" ></textarea>
+                                            <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="replyPost" class="form-control" rows="1"></textarea>
                                         </div>
                                         <input type="submit" name="submitReplyPost" class="btn btn-danger mt-2" value="Répondre">
                                     </form>
                                 </div>
                         </div>
 
-                    <?php endif; ?>
+                    <?php endif;
 
-                    <?php $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
+                            //J'effectue une jointure entre les messages des topics et les utilisateurs
+                            $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
 
-                    $reqListMessages->execute([$_GET['id']]);
+                            $reqListMessages->execute([$_GET['id']]);
 
-                    $list_messages_topic = $reqListMessages->fetchAll(PDO::FETCH_ASSOC); ?>
+                            $list_messages_topic = $reqListMessages->fetchAll(PDO::FETCH_ASSOC); ?>
 
                     <h5 class="mb-4"><?php echo (count($list_messages_topic) > 1) ? count($list_messages_topic) . " Réponses" : count($list_messages_topic) . " Réponse" ?></h5>
 
-                    <?php foreach ($list_messages_topic as $a => $b) : ?>
+                    <?php
+
+                    //Je parcours tous les résultats
+                    foreach ($list_messages_topic as $a => $b) : ?>
 
                         <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
 
@@ -227,16 +232,22 @@
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script>
+        //Je récupère toutes les balises <code>
         let codeBlockList = document.querySelectorAll("code");
 
+        //Je parcours tous la liste des balises <code>
         codeBlockList.forEach(function(codeBlock) {
+            //Si leurs nombre de classe = 0 alors on ajoute la classe "language-markup"
             if (codeBlock.classList.length == 0) {
                 codeBlock.classList.add("language-markup");
             }
         });
 
+        //Je crée l'éditeur markdown SimpleMDE
         var simplemde = new SimpleMDE({
+            //Je récupère la textArea ayant l'id "replyPost"
             element: document.getElementById("replyPost"),
+            //J'insère dans la toolbar tous boutons d'édition que je souhaite
             toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
         });
     </script>

@@ -1,24 +1,26 @@
 <?php
 
+//Choisir la couleur du badge à côté du pseudo selon le status de l'utilisateur 
 function badge_color($user_status)
 {
     if ($user_status == "bachelor") {
-        echo '<span class="badge rounded-pill bg-danger">Bachelor</span>';
+        echo '<span class="badge rounded-pill bg-danger">Bachelor</span>'; //Badge rouge
     }
 
     if ($user_status == "master") {
-        echo '<span class="badge rounded-pill bg-warning">Master</span>';
+        echo '<span class="badge rounded-pill bg-warning">Master</span>'; //Badge jaune
     }
 
     if ($user_status == "reconversion") {
-        echo '<span class="badge rounded-pill bg-info">Reconversion</span>';
+        echo '<span class="badge rounded-pill bg-info">Reconversion</span>'; //Badge bleu
     }
 
     if ($user_status == "po") {
-        echo '<span class="badge rounded-pill bg-success">PO</span>';
+        echo '<span class="badge rounded-pill bg-success">PO</span>'; //Badge vert
     }
 }
 
+//Si l'utilisateur est un adminsitrateur
 function if_admin_user($user_rank)
 {
     if ($user_rank == 1) {
