@@ -34,8 +34,17 @@
             text-decoration: none !important;
         }
 
-        img {
-            max-width: 100%;
+        .link-edit-topic a {
+            text-decoration: none !important;
+            color: black;
+        }
+
+        .link-edit-topic a:hover {
+            opacity: 0.6;
+        }
+
+        p > img {
+            max-width: 80%;
         }
     </style>
 
@@ -131,10 +140,39 @@
                             </div>
                             <hr>
                             <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                            <p class="mt-2 fz-text"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
+                            <p class="mt-2 fz-text text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
                             <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                            <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($array_topics['creationDate']); ?></p>
+                            <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($array_topics['creationDate']); ?>
+                                <span class="fz-text link-edit-topic" style="font-size: 13px">
+                                    <?php if ($array_topics['id'] == isset($_SESSION['auth']->id)) : ?>
+                                        <a onclick="" class="text-muted"> | <i class="fa fa-edit"></i> Éditer</a>
+                                        <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"> | <i class="fa fa-trash"></i> Supprimer</a>
+                                    <?php endif; ?>
+                                </span>
+                            </p>
+
                         </div>
+                        
+                        <!-- Modal suppression topic -->
+                        <div class="modal fade fz-text" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer le topic</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous certain de vouloir supprimer votre message ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <button onclick="<?php $test="coucou" ?>" type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php echo $test; ?>
 
                         <hr class="mb-4 mt-0">
 
