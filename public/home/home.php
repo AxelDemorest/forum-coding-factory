@@ -9,6 +9,7 @@
     <link href="../header/header.css" rel="stylesheet" />
     <link href="../footer/footer.css" rel="stylesheet" />
     <link href="home.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Forum - Coding factory</title>
 </head>
 
@@ -19,21 +20,25 @@
     include "../header/header.php"; ?>
 
     <!-- Header -->
-    <div class="header d-flex align-items-center" style="padding-top: 59px">
+    <header class="header bg-white d-flex justify-content-center align-items-center flex-column">
+        <h1 class="header-title text-white fw-bold text-center">Un site internet rien que pour vous !</h1>
+        <div class="hr-title-header bg-white rounded-pill mt-5"></div>
+        <a href="http://localhost:8888/website_creation/home.php#les-offres">
+            <button class="btn btn-light rounded-pill text-danger fs-6 px-5 py-3 fw-bold mt-5 text-uppercase"><i class="fa fa-layer"></i>Inscris-toi</button>
+        </a>
+    </header>
+
+    <!--  <div class="header d-flex align-items-center">
         <div class="container">
             <div class="row">
                 <div class="col text-center">
                     <div class="bg-dark p-3 opacity-bg">
                         <h1 class="text-white">Learn, Together</h1>
                     </div>
-                    <form class="form-inline my-5 w-100 d-none d-md-flex justify-content-md-center fz-text">
-                        <input class="form-control me-sm-2 w-75" type="search" placeholder="Recherche un sujet" aria-label="Search">
-                        <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Body Page -->
     <div class="container pt-5">
@@ -90,8 +95,10 @@
     <?php include "../footer/footer.html"; ?>
 
     <!-- Javascript -->
+    <script src="../header/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="home.js"></script>
+   
 </body>
 
 </html>
