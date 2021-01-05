@@ -65,6 +65,25 @@
         .page-link:hover {
             color: #dc3545;
         }
+
+        .header-forum {
+            background: no-repeat center/cover url(../../img/back-forum.jpg);
+            height: 500px;
+            filter: grayscale(100%);
+            transition: all 0.5s;
+        }
+
+        .header-forum:hover {
+            filter: grayscale(0%);
+        }
+
+        .last-topics-title {
+            transition: all 1s;
+        }
+
+        .last-topics-title:hover {
+            color: #dc3545;
+        }
     </style>
 </head>
 
@@ -93,20 +112,56 @@
     ?>
 
     <!-- Design du forum -->
-    <div class="container-fluid" style="padding-top: 59px">
+    <div class="container-fluid">
         <div class="row d-flex flex-column">
-            <h1 class="pt-5 text-center">Espace forum</h1>
-            <div class="hr-body mx-auto mb-3 mt-1"></div>
+            <div class="header-forum shadow d-flex justify-content-center align-items-center">
+                <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Bienvenue dans l'espace forum</h1>
+            </div>
 
             <!-- Si aucune catégorie a été choisie -->
             <?php if (!isset($_GET['category']) || !isset($_GET['id'])) : ?>
 
-                <div class="d-flex flex-column fz-text">
-                    <div class="col-12 mt-5 d-flex flex-column">
+                <div class="d-flex flex-column">
+                    <div class="col-12 mt-5 d-flex flex-column align-items-center">
 
-                        <h2 class="text-center py-2 px-4 mb-5 border border-danger border-3 rounded mx-auto w-25">Développement</h2>
+                        <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics</h2>
 
-                        <div class="d-flex flex-row flex-wrap justify-content-center">
+                        <?php
+
+                        $req2 = $pdo->prepare('SELECT * FROM topics RIGHT JOIN users ON topics.idCreator = users.id ORDER BY creationDate DESC LIMIT 10');
+
+                        $req2->execute();
+
+                        ?>
+
+                        <div class="col-12 d-flex flex-column align-items-center mt-5 fz-text">
+
+                            <?php while ($resultat2 = $req2->fetch()) : ?>
+                                    <table class="table table-striped table-hover w-50">
+                                        <tbody>
+                                            <tr>
+                                                <td class="d-flex align-items-center justify-content-between rounded">
+                                                    <div class="d-flex flex-row">
+                                                        <div class="d-flex align-items-center justify-content-center" style="width:3em">
+                                                            <i class="fa fa-times text-secondary fs-2"></i>
+                                                        </div>
+                                                        <div class="ms-2">
+                                                        <a href="/forum-coding-factory/public/forum/topic.php?id=<?= $resultat2->idTopic ?>" style="text-decoration:none"><h4 class="mb-1 mt-2 text-primary"><?= $resultat2->titleTopic ?></h4></a>
+                                                            <p class="text-muted" style="font-size:14px"><?= $resultat2->pseudo ?></p>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-muted me-1" style="font-size:14px"><?= timeAgo($resultat2->creationDate) ?></p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            <?php endwhile; ?>
+                        </div>
+
+
+                        <!-- <div class="d-flex flex-row flex-wrap justify-content-center">
 
 
 
@@ -141,7 +196,7 @@
                                     <?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -394,7 +449,7 @@
         </div>
     </div>
 
-    
+
 
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
