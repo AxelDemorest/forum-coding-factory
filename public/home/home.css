@@ -11,19 +11,48 @@
     width: 8em;
     border-radius: 10px;
     background-color: #dc3545;
+    transition: 0.5s;
 }
 
 .header {
     background: no-repeat center/cover url(../../img/carousel/carousel2.jpg);
     height: 500px;
+    filter: grayscale(100%);
+    transition: all 0.5s;
 }
 
-.header h1 {
-    font-size: 70px;
-    letter-spacing: 5px;
+.header:hover {
+    filter: grayscale(0%);
 }
 
 .opacity-bg {
     opacity: .5;
     border-radius: 10px;
+}
+
+.img-point {
+    transition: transform .2s;
+}
+
+.img-point:hover {
+    -ms-transform: scale(1.2);
+    /* IE 9 */
+    -webkit-transform: scale(1.2);
+    /* Safari 3-8 */
+    transform: scale(1.2);
+}
+
+.sp-line {
+    height: 10px;
+    width: 100%;
+    background-color: #E6E6E6;
+    position: relative;
+}
+
+.intext-line {
+    position: absolute;
+    top: -11px;
+    border: solid #E6E6E6 2px;
+    width: 30px;
+    height: 30px;
 }

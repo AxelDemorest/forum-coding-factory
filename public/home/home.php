@@ -20,33 +20,18 @@
     include "../header/header.php"; ?>
 
     <!-- Header -->
-    <header class="header bg-white d-flex justify-content-center align-items-center flex-column">
-        <h1 class="header-title text-white fw-bold text-center">Un site internet rien que pour vous !</h1>
+    <header class="header shadow d-flex justify-content-center align-items-center flex-column">
+        <h1 class="text-white fw-bold text-center" style="font-size:6em;letter-spacing:1px">Bienvenue sur BlackBoard Factory</h1>
         <div class="hr-title-header bg-white rounded-pill mt-5"></div>
-        <a href="http://localhost:8888/website_creation/home.php#les-offres">
-            <button class="btn btn-light rounded-pill text-danger fs-6 px-5 py-3 fw-bold mt-5 text-uppercase"><i class="fa fa-layer"></i>Inscris-toi</button>
-        </a>
     </header>
 
-    <!--  <div class="header d-flex align-items-center">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="bg-dark p-3 opacity-bg">
-                        <h1 class="text-white">Learn, Together</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
     <!-- Body Page -->
-    <div class="container pt-5">
+    <div class="container py-5">
         <div class="row">
-            <div class="col-12 col-lg-6 text-center d-flex flex-column justify-content-center">
+            <div class="description-website col-12 col-lg-6 text-center d-flex flex-column justify-content-center">
                 <h1>Forum Factory</h1>
                 <div class="hr-body mx-auto mb-3 mt-1"></div>
-                <p class="fz-text pt-3">Le forum a été conçu pour les élèves de la Coding Factory de Paris et Cergy. Les
+                <p class="fz-text pt-3 fs-5">Le forum a été conçu pour les élèves de la Coding Factory de Paris et Cergy. Les
                     élèves pourront répondre aux questions de leurs camarades avec le forum proposé sur ce site.
                     Différentes fonctionnalités sont dispnibles pour que l'expérience utilisateur soit la meilleure
                     possible. Les élèves pourront avancer ensemble et progresser rapidement avec l'entraide.</p>
@@ -57,9 +42,54 @@
         </div>
     </div>
 
+    <div class="sp-line d-flex justify-content-center">
+        <a href="http://localhost:8888/forum-coding-factory/public/home/home.php#list-points">
+            <div class="intext-line rounded-circle bg-white d-flex justify-content-center align-items-center">
+                <img src="../../img/icon-home/arrow.png" width="12">
+            </div>
+        </a>
+    </div>
+
+    <!-- Principal points of the website -->
+    <div class="container-fluid pt-5" id="list-points">
+            <div class="row d-flex justify-content-center align-items-center justify-content-center flex-wrap mx-4 py-5">
+                <div class="col-3 me-4 d-flex flex-column align-items-center pb-5">
+                    <img src="../../img/icon-home/discussion.png" class="img-point" width="30%" alt="">
+                    <p class="fz-text mt-4 text-center fs-5">
+                        Un espace forum a été mis en place pour tous les élèves. Si vous avez des questions, ou si vous avez un quelconque problème, n'hésitez pas à vous renseigner auprès des autres élèves ou des PO dans l'espace dédié.
+                    </p>
+                </div>
+                <div class="col-3 mx-4 d-flex flex-column align-items-center pb-5">
+                    <img src="../../img/icon-home/blog.png" class="img-point" width="30%" alt="">
+                    <p class="fz-text mt-4 text-center fs-5">
+                    Un espace Blog est disponible pour tous, toute l'actualité de la Coding Factory y est partagée. Une équipe de rédacteur se charge de rédiger les articles. N'hésitez pas à aller écrire un petit commentaire !
+                    </p>
+                </div>
+                <div class="col-3 mx-4 d-flex flex-column align-items-center pb-5">
+                    <img src="../../img/icon-home/voice-search.png" class="img-point" width="30%" alt="">
+                    <p class="fz-text mt-4 text-center fs-5">
+                    Vous souhaitez discuter avec vos camarades sans aller sur discord ? C'est possible, un espace discussion est dédié pour cela. Vous pouvez rejoindre des salons vocaux pour discuter avec les personnes connectées.
+                    </p>
+                </div>
+                <div class="col-3 mx-4 d-flex flex-column align-items-center">
+                    <img src="../../img/icon-home/ranking.png" class="img-point" width="30%" alt="">
+                    <p class="fz-text mt-4 text-center fs-5">
+                    Vous souhaitez être récompenser de votre activité ? Nous avons confectionné pour vous, un classement des utilisateurs les plus actifs et les plus populaires.
+                    </p>
+                </div>
+                <div class="col-3 ms-4 d-flex flex-column align-items-center">
+                    <img src="../../img/icon-home/levels.png" class="img-point" width="30%" alt="">
+                    <p class="fz-text mt-4 text-center fs-5">
+                    Gagnez des niveaux tout en postant des messages sur le forum. Ces niveaux vous permettent de gagner des badges pour votre profil et débloquer des petites fonctionnalités dans l'onglet "Boutique" !
+                    </p>
+                </div>
+            </div>
+    </div>
+
+
     <?php
 
-    require_once '../../database/db.php';
+    /* require_once '../../database/db.php';
 
     $req = $pdo->prepare("SELECT * FROM users ORDER BY dateInscription DESC LIMIT 0, 4");
 
@@ -67,12 +97,12 @@
 
     $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
 
-    require '../../functions/functions.php'
+    require '../../functions/functions.php' */
 
     ?>
 
     <!-- Container de la liste des nouveaux utilisateurs -->
-    <div class="bg-light">
+    <!--  <div class="bg-light">
         <div class="container-fluid">
             <h1 class="text-center py-4">Les derniers utilisateurs inscrits !</h1>
             <div class="row justify-content-center">
@@ -90,7 +120,7 @@
                 <?php endforeach; ?>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <?php include "../footer/footer.html"; ?>
 
@@ -98,7 +128,7 @@
     <script src="../header/header.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="home.js"></script>
-   
+
 </body>
 
 </html>
