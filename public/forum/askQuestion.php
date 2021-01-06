@@ -98,8 +98,6 @@
 
                         $redirect = $req2->fetch(PDO::FETCH_ASSOC);
 
-                        echo $redirect['idTopic'];
-
                         header('Location: /forum-coding-factory/public/forum/topic.php?id=' . $redirect['idTopic']);
 
                         exit;

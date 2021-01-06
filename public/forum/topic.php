@@ -191,7 +191,11 @@
 
                                         $reqReply = $pdo->prepare("INSERT INTO messages(idTopicMessage, idUser, contentMessage) VALUES (?, ?, ?)");
 
+                                        /* $reqReply2 = $pdo->prepare("INSERT INTO topics(updateTopic) VALUES (NOW())"); */
+
                                         $reqReply->execute([$_GET['id'], $_SESSION['auth']->id, $replyContent]);
+
+                                        /* $reqReply2->execute(); */
 
                                         echo '<div class="alert alert-success">Réponse envoyée avec succès.</div>';
                                     } else {
@@ -284,7 +288,7 @@
         //Je crée l'éditeur markdown SimpleMDE
         var simplemde = new SimpleMDE({
             //Je récupère la textArea ayant l'id "replyPost"
-            element: document.getElementById("replyPost"),
+            element: document.getElementyId("replyPost"),
             //J'insère dans la toolbar tous boutons d'édition que je souhaite
             toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
         });
