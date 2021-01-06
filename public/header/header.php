@@ -8,7 +8,7 @@ if (isset($_SESSION['auth'])) : ?>
     <nav class="navbar sticky-top navbar-light navbar-expand-xl bg-white fz-text shadow-sm d-flex align-items-center">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="/forum-coding-factory/public/home/home.php">
-                <img class="ms-4" src="../../img/logocodingfactory-ptt.jpg" width="250" alt="" loading="lazy">
+                <img class="ms-4" src="../../img/logo-bb.png" width="150" alt="" loading="lazy">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -56,7 +56,7 @@ if (isset($_SESSION['auth'])) : ?>
     <nav class="navbar sticky-top navbar-light navbar-expand-xl bg-white fz-text shadow-sm d-flex align-items-center">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="/forum-coding-factory/public/home/home.php">
-                <img class="ms-4" src="../../img/logocodingfactory-ptt.jpg" width="250" alt="" loading="lazy">
+                <img class="ms-4" src="../../img/logo-bb.png" width="150" alt="" loading="lazy">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
