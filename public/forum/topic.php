@@ -172,8 +172,6 @@
                             </div>
                         </div>
 
-                        <?php echo $test; ?>
-
                         <hr class="mb-4 mt-0">
 
                         <div class="order-last">
@@ -191,11 +189,11 @@
 
                                         $reqReply = $pdo->prepare("INSERT INTO messages(idTopicMessage, idUser, contentMessage) VALUES (?, ?, ?)");
 
-                                        /* $reqReply2 = $pdo->prepare("INSERT INTO topics(updateTopic) VALUES (NOW())"); */
-
                                         $reqReply->execute([$_GET['id'], $_SESSION['auth']->id, $replyContent]);
 
-                                        /* $reqReply2->execute(); */
+                                        $reqReply2 = $pdo->prepare("UPDATE topics SET updateTopic=CURRENT_TIMESTAMP");
+
+                                        $reqReply2->execute();
 
                                         echo '<div class="alert alert-success">Réponse envoyée avec succès.</div>';
                                     } else {

@@ -161,7 +161,7 @@
 
                         <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics</h2>
 
-                        <?php $req2 = $pdo->query('SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id LEFT JOIN categories ON topics.idCategory = categories.id ORDER BY creationDate DESC LIMIT 10'); ?>
+                        <?php $req2 = $pdo->query('SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id LEFT JOIN categories ON topics.idCategory = categories.id ORDER BY updateTopic DESC LIMIT 10'); ?>
 
                         <div class="d-flex flex-row justify-content-center">
                             <div class="col-9 d-flex flex-column align-items-center mt-5 fz-text">
@@ -187,7 +187,7 @@
                                                         </div>
                                                     </div>
                                                     <div>
-                                                        <p class="text-muted me-1" style="font-size:14px"><?= timeAgo($resultat3->creationDate) ?></p>
+                                                        <p class="text-muted me-1" style="font-size:14px"><?= timeAgo($resultat3->updateTopic) ?></p>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -327,20 +327,12 @@
                                                     <br />
                                                     <div class="text-muted" style="font-size: 13px">
 
-                                                        <?php
-
-                                                        $lastActivityQuery = $pdo->prepare("SELECT messageDate FROM messages WHERE idTopicMessage = ? ORDER BY messageDate DESC LIMIT 1");
-
-                                                        $lastActivityQuery->execute([$value['idTopic']]);
-
-                                                        $lastActivity = $lastActivityQuery->fetch(PDO::FETCH_ASSOC);
-
-                                                        if (isset($lastActivity['messageDate'])) : ?>
-                                                            Dernière activité : <?php echo ucfirst(timeAgo($lastActivity['messageDate'])) ?></div>
-                                                <?php else : ?>
-                                                    Aucune activités
-                                                <?php endif; ?>
-
+                                                        <?php if (isset($value['updateTopic'])) : ?>
+                                                            <?= ucfirst(timeAgo($value['updateTopic'])) ?>
+                                                        <?php else : ?>
+                                                            <?= ucfirst(timeAgo($value['updateTopic'])) ?>
+                                                        <?php endif; ?>
+                                                    </div>
 
 
                                                 </td>

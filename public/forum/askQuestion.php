@@ -1,3 +1,57 @@
+<?php
+date_default_timezone_set('Europe/Paris');
+setlocale(LC_TIME, 'fra_fra');
+
+session_start();
+
+include "../header/header.php";
+
+require_once '../../functions/functions.php';
+
+require_once '../../database/db.php';
+
+if (isset($_POST['submitButtonQuestion'])) {
+
+    $contentTopic = htmlspecialchars(trim($_POST['textQuestionTopic']));
+
+    $titleTopic = htmlspecialchars(trim($_POST['titleTopic']));
+
+    $valid = true;
+
+    $errors = [];
+
+    if (isset($_SESSION['auth'])) {
+
+        if (empty($contentTopic)) {
+            $errors['content'] = "Le contenu est incorrect.";
+            $valid = false;
+        }
+
+        if (empty($titleTopic)) {
+            $errors['title'] = "Le titre est incorrect.";
+            $valid = false;
+        }
+
+        if (empty($errors) && $valid) {
+
+            $req = $pdo->prepare("INSERT INTO topics(idCreator, titleTopic, contentTopic, idCategory) VALUES (?, ?, ?, ?)");
+
+            $req->execute([$_SESSION['auth']->id, $titleTopic, $contentTopic, $_GET['id']]);
+
+            $req2 = $pdo->prepare("SELECT idTopic FROM topics WHERE idCreator = ? ORDER BY idTopic DESC LIMIT 1");
+
+            $req2->execute([$_SESSION['auth']->id]);
+
+            $redirect = $req2->fetch(PDO::FETCH_ASSOC);
+
+            header('Location: /forum-coding-factory/public/forum/topic.php?id=' . $redirect['idTopic']);
+
+            exit();
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +64,7 @@
     <script src="../../editor-simplemde/simplemde.min.js"></script>
     <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" />
     <!-- Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <title>Question - Forum Factory</title>
     <style>
@@ -44,66 +99,12 @@
 
 <body>
 
-    <?php
-    date_default_timezone_set('Europe/Paris');
-    setlocale(LC_TIME, 'fra_fra');
-
-    session_start();
-
-    include "../header/header.php";
-
-    require_once '../../functions/functions.php';
-
-    require_once '../../database/db.php';
-    ?>
-
     <div class="container-fluid" style="padding-top: 59px">
         <div class="row d-flex flex-column">
             <h1 class="pt-5 text-center">Espace forum</h1>
             <div class="hr-body mx-auto mb-3 mt-1"></div>
 
             <?php
-
-            if (isset($_POST['submitButtonQuestion'])) {
-
-                $contentTopic = htmlspecialchars(trim($_POST['textQuestionTopic']));
-
-                $titleTopic = htmlspecialchars(trim($_POST['titleTopic']));
-
-                $valid = true;
-
-                $errors = [];
-
-                if (isset($_SESSION['auth'])) {
-
-                    if (empty($contentTopic)) {
-                        $errors['content'] = "Le contenu est incorrect.";
-                        $valid = false;
-                    }
-
-                    if (empty($titleTopic)) {
-                        $errors['title'] = "Le titre est incorrect.";
-                        $valid = false;
-                    }
-
-                    if (empty($errors) && $valid) {
-
-                        $req = $pdo->prepare("INSERT INTO topics(idCreator, titleTopic, contentTopic, idCategory) VALUES (?, ?, ?, ?)");
-
-                        $req->execute([$_SESSION['auth']->id, $titleTopic, $contentTopic, $_GET['id']]);
-
-                        $req2 = $pdo->prepare("SELECT idTopic FROM topics WHERE idCreator = ? ORDER BY idTopic DESC LIMIT 1");
-
-                        $req2->execute([$_SESSION['auth']->id]);
-
-                        $redirect = $req2->fetch(PDO::FETCH_ASSOC);
-
-                        header('Location: /forum-coding-factory/public/forum/topic.php?id=' . $redirect['idTopic']);
-
-                        exit;
-                    }
-                }
-            }
 
             $req2 = $pdo->prepare("SELECT * FROM categories WHERE id = ?");
 
@@ -150,10 +151,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="contentTopic" class="form-label">Contenu de ton sujet</label>
-                        <textarea name="textQuestionTopic" type="hidden" placeholder="Écrivez votre question" id="contentTopic" class="form-control" rows="3" ></textarea>
-                        <p class="text-muted">Si tu écris du code dans un langage, écris :<br/>
-                            ```langage<br/>
-                                 //ton code<br/>
+                        <textarea name="textQuestionTopic" type="hidden" placeholder="Écrivez votre question" id="contentTopic" class="form-control" rows="3"></textarea>
+                        <p class="text-muted">Si tu écris du code dans un langage, écris :<br />
+                            ```langage<br />
+                            //ton code<br />
                             ```</p>
                     </div>
 
@@ -167,7 +168,7 @@
     </div>
 
 
-    
+    <script src="../header/header.js"></script>
     <script>
         var simplemde = new SimpleMDE({
             element: document.getElementById("contentTopic"),
