@@ -25,9 +25,25 @@
             background-color: #dc3545;
         }
 
+        .header-forum {
+            background: no-repeat center/cover url(../../img/back-forum.jpg);
+            height: 500px;
+            filter: grayscale(100%);
+            transition: all 0.5s;
+        }
+
+        .header-forum:hover {
+            filter: grayscale(0%);
+        }
+
         .link-owner-topic {
-            color: black;
+            color: #545454;
             text-decoration: none !important;
+        }
+
+        .link-owner-topic:hover {
+            color: #545454;
+            text-decoration: underline !important;
         }
 
         .breadcrumb-item a {
@@ -43,7 +59,7 @@
             opacity: 0.6;
         }
 
-        p > img {
+        p>img {
             max-width: 80%;
         }
     </style>
@@ -77,10 +93,11 @@
     ?>
 
     <!-- Création du container principal -->
-    <div class="container-fluid" style="padding-top: 59px">
+    <div class="container-fluid bg-light">
         <div class="row d-flex flex-column">
-            <h1 class="pt-5 text-center">Espace forum</h1>
-            <div class="hr-body mx-auto mb-3 mt-1"></div>
+            <div class="header-forum shadow d-flex justify-content-center align-items-center">
+                <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Espace forum</h1>
+            </div>
 
 
             <?php
@@ -130,29 +147,41 @@
                         </nav>
 
                         <!-- Création du bloc affichant le post de l'utilisateur -->
-                        <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
-                            <div class="d-flex flex-row align-items-center">
-                                <a class="link-owner-topic" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?php echo $array_topics['pseudo'] ?></a>
-                                <div class="ms-2 fz-text">
-                                    <?php badge_color($array_topics['status']) ?>
-                                    <?php if_admin_user($array_topics['rank']) ?>
+                        <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                            <div class="d-flex flex-column align-items-center me-5">
+                                <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $array_topics['pseudo'] ?></a>
+                                <div class="ms-2 d-flex flex-column align-items-center">
+                                    <div class="mb-2">
+                                        <?= badge_color($array_topics['status']) ?>
+                                    </div>
+                                    <div>
+                                        <?= if_admin_user($array_topics['rank']) ?>
+                                    </div>
                                 </div>
                             </div>
-                            <hr>
-                            <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                            <p class="mt-2 fz-text text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
-                            <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                            <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($array_topics['creationDate']); ?>
-                                <span class="fz-text link-edit-topic" style="font-size: 13px">
-                                    <?php if ($array_topics['id'] == isset($_SESSION['auth']->id)) : ?>
-                                        <a onclick="" class="text-muted"> | <i class="fa fa-edit"></i> Éditer</a>
-                                        <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"> | <i class="fa fa-trash"></i> Supprimer</a>
-                                    <?php endif; ?>
-                                </span>
-                            </p>
 
+                            <div class="w-100">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
+                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- J'affiche le temps du message depuis laquel il a été posté -->
+                                <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
+                                    <?php if ($array_topics['id'] == isset($_SESSION['auth']->id)) : ?>
+                                        <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
+                                        <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                    <?php endif; ?>
+                                </div>
+                                </p>
+                            </div>
                         </div>
-                        
+
                         <!-- Modal suppression topic -->
                         <div class="modal fade fz-text" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -166,7 +195,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button onclick="<?php $test="coucou" ?>" type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+                                        <button onclick="<?php $test = "coucou" ?>" type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +240,13 @@
                                     <form method="POST">
                                         <div class="mb-3">
                                             <h5 class="mb-3">Répondre</h5>
-                                            <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="replyPost" class="form-control" rows="1"></textarea>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Marquer le sujet comme résolu
+                                                </label>
+                                            </div>
+                                            <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="contentTopic" class="form-control" rows="3"></textarea>
                                         </div>
                                         <input type="submit" name="submitReplyPost" class="btn btn-danger mt-2" value="Répondre">
                                     </form>
@@ -234,18 +269,39 @@
                     //Je parcours tous les résultats
                     foreach ($list_messages_topic as $a => $b) : ?>
 
-                        <div class="border border-secondary rounded shadow-sm p-3 mb-4 w-100">
-
-                            <div class="d-flex flex-row align-items-center">
-                                <a class="link-owner-topic" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?php echo $b['pseudo'] ?></a>
-                                <div class="ms-2 fz-text">
-                                    <?php badge_color($b['status']) ?>
-                                    <?php if_admin_user($b['rank']) ?>
+                        <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                            <div class="d-flex flex-column align-items-center me-5">
+                                <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $b['pseudo'] ?></a>
+                                <div class="ms-2 d-flex flex-column align-items-center">
+                                    <div class="mb-2">
+                                        <?= badge_color($b['status']) ?>
+                                    </div>
+                                    <div>
+                                        <?= if_admin_user($b['rank']) ?>
+                                    </div>
                                 </div>
                             </div>
-                            <hr>
-                            <p class="mt-2 fz-text"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
-                            <p class="mb-0 text-muted" style="font-size:14px"><?php echo timeAgo($b['messageDate']); ?></p>
+
+                            <div class="w-100">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
+                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
+                                    </div>
+                                    <div>
+                                        <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($b['messageDate']); ?>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- J'affiche le temps du message depuis laquel il a été posté -->
+                                <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
+                                    <?php if ($b['id'] == isset($_SESSION['auth']->id)) : ?>
+                                        <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
+                                        <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                    <?php endif; ?>
+                                </div>
+                                </p>
+                            </div>
                         </div>
 
                     <?php endforeach; ?>
@@ -283,11 +339,8 @@
             }
         });
 
-        //Je crée l'éditeur markdown SimpleMDE
         var simplemde = new SimpleMDE({
-            //Je récupère la textArea ayant l'id "replyPost"
-            element: document.getElementyId("replyPost"),
-            //J'insère dans la toolbar tous boutons d'édition que je souhaite
+            element: document.getElementById("contentTopic"),
             toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
         });
     </script>
