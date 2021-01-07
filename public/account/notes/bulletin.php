@@ -13,13 +13,31 @@
     <title>Document</title>
 </head>
 
-<body>
+   
 
+    <!-- -------------------------------- -->   
+    
     <?php session_start();
 
     include "../../header/header.php"; ?>
 
     <!-- Tu peux coder ici -->
+
+    <form method="GET" action="">
+        <input type="text" name="valeur" placeholder="Note de l'élève"/>
+        <input type="text" name="eleve" placeholder="Nom de l'élève"/>
+        <input type="submit" value="Valider" />
+    </form> 
+    <br/>
+    <?php
+    
+        if(isset($_GET['note']) AND isset($_GET['eleve']))
+        {
+            echo $_GET['note'];
+            echo $_GET['eleve'];
+        }
+        
+    ?>
 
     <!-- Footer -->
     <?php include "../../footer/footer.html"; ?>
