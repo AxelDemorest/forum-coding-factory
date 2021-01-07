@@ -62,6 +62,10 @@
         p>img {
             max-width: 80%;
         }
+
+        .vote-img:hover {
+            opacity: 0.6;
+        }
     </style>
 
 </head>
@@ -147,40 +151,49 @@
                         </nav>
 
                         <!-- Création du bloc affichant le post de l'utilisateur -->
-                        <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
-                            <div class="d-flex flex-column align-items-center me-5">
-                                <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $array_topics['pseudo'] ?></a>
-                                <div class="ms-2 d-flex flex-column align-items-center">
-                                    <div class="mb-2">
-                                        <?= badge_color($array_topics['status']) ?>
-                                    </div>
-                                    <div>
-                                        <?= if_admin_user($array_topics['rank']) ?>
-                                    </div>
-                                </div>
+                        <div class="d-flex flex-row">
+                            <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
+                                <a href=""><img src="../../img/up-arrow.png" class="mb-1 vote-img" alt=""></a>
+                                <p class="text-center m-0 fz-text">0</p>
+                                <a href=""><img src="../../img/down-arrow.png" class="mt-1 vote-img" alt=""></a>
                             </div>
 
-                            <div class="w-100">
-                                <div class="d-flex flex-row justify-content-between align-items-center">
-                                    <div>
-                                        <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
-                                    </div>
-                                    <div>
-                                        <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
+                            <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                                <div class="d-flex flex-column align-items-center me-5">
+                                    <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $array_topics['pseudo'] ?></a>
+                                    <div class="ms-2 d-flex flex-column align-items-center">
+                                        <div class="mb-2">
+                                            <?= badge_color($array_topics['status']) ?>
+                                        </div>
+                                        <div>
+                                            <?= if_admin_user($array_topics['rank']) ?>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                                <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
-                                    <?php if ($array_topics['id'] == isset($_SESSION['auth']->id)) : ?>
-                                        <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                        <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
-                                    <?php endif; ?>
+
+                                <div class="w-100">
+                                    <div class="d-flex flex-row justify-content-between align-items-center">
+                                        <div>
+                                            <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
+                                            <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- J'affiche le temps du message depuis laquel il a été posté -->
+                                    <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
+                                        <?php if (isset($_SESSION['auth']->id) && ($array_topics['id'] === $_SESSION['auth']->id)) : ?>
+                                            <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
+                                            <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                        <?php endif; ?>
+                                    </div>
+                                    </p>
                                 </div>
-                                </p>
                             </div>
                         </div>
+
 
                         <!-- Modal suppression topic -->
                         <div class="modal fade fz-text" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -204,7 +217,6 @@
                         <hr class="mb-4 mt-0">
 
                         <div class="order-last">
-                            <hr>
 
                             <?php
 
@@ -236,16 +248,20 @@
                             //Si l'utilisateur est connecté
                             if (isset($_SESSION['auth'])) :
                             ?>
+                                <hr>
+
                                 <div class="mb-3">
                                     <form method="POST">
                                         <div>
                                             <h5 class="mb-3">Répondre</h5>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Marquer le sujet comme résolu
-                                                </label>
-                                            </div>
+                                            <?php if (isset($_SESSION['auth']->id) && ($array_topics['idCreator'] === $_SESSION['auth']->id)) : ?>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                        Marquer le sujet comme résolu
+                                                    </label>
+                                                </div>
+                                            <?php endif; ?>
                                             <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="contentTopic" class="form-control" rows="3"></textarea>
                                         </div>
                                         <input type="submit" name="submitReplyPost" class="btn btn-danger mt-2" value="Répondre">
@@ -269,38 +285,45 @@
                     //Je parcours tous les résultats
                     foreach ($list_messages_topic as $a => $b) : ?>
 
-                        <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
-                            <div class="d-flex flex-column align-items-center me-5">
-                                <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $b['pseudo'] ?></a>
-                                <div class="ms-2 d-flex flex-column align-items-center">
-                                    <div class="mb-2">
-                                        <?= badge_color($b['status']) ?>
-                                    </div>
-                                    <div>
-                                        <?= if_admin_user($b['rank']) ?>
-                                    </div>
-                                </div>
+                        <div class="d-flex flex-row">
+                            <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
+                                <a href=""><img src="../../img/up-arrow.png" class="mb-1 vote-img" alt=""></a>
+                                <p class="text-center m-0 fz-text">0</p>
+                                <a href=""><img src="../../img/down-arrow.png" class="mt-1 vote-img" alt=""></a>
                             </div>
 
-                            <div class="w-100">
-                                <div class="d-flex flex-row justify-content-between align-items-center">
-                                    <div>
-                                        <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
-                                    </div>
-                                    <div>
-                                        <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($b['messageDate']); ?>
+                            <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                                <div class="d-flex flex-column align-items-center me-5">
+                                    <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $b['pseudo'] ?></a>
+                                    <div class="ms-2 d-flex flex-column align-items-center">
+                                        <div class="mb-2">
+                                            <?= badge_color($b['status']) ?>
+                                        </div>
+                                        <div>
+                                            <?= if_admin_user($b['rank']) ?>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                                <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
-                                    <?php if ($b['id'] == isset($_SESSION['auth']->id)) : ?>
-                                        <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                        <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
-                                    <?php endif; ?>
+                                <div class="w-100">
+                                    <div class="d-flex flex-row justify-content-between align-items-center">
+                                        <div>
+                                            <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
+                                            <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($b['messageDate']); ?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- J'affiche le temps du message depuis laquel il a été posté -->
+                                    <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
+                                        <?php if (isset($_SESSION['auth']->id) && ($b['id'] === $_SESSION['auth']->id)) : ?>
+                                            <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
+                                            <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                        <?php endif; ?>
+                                    </div>
+                                    </p>
                                 </div>
-                                </p>
                             </div>
                         </div>
 
