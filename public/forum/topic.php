@@ -220,9 +220,9 @@
 
                                         $reqReply->execute([$_GET['id'], $_SESSION['auth']->id, $replyContent]);
 
-                                        $reqReply2 = $pdo->prepare("UPDATE topics SET updateTopic=CURRENT_TIMESTAMP");
+                                        $reqReply2 = $pdo->prepare("UPDATE topics SET updateTopic = CURRENT_TIMESTAMP WHERE idTopic = ?");
 
-                                        $reqReply2->execute();
+                                        $reqReply2->execute([$_GET['id']]);
 
                                         echo '<div class="alert alert-success">Réponse envoyée avec succès.</div>';
                                     } else {
@@ -238,7 +238,7 @@
                             ?>
                                 <div class="mb-3">
                                     <form method="POST">
-                                        <div class="mb-3">
+                                        <div>
                                             <h5 class="mb-3">Répondre</h5>
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

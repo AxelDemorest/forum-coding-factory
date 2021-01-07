@@ -159,7 +159,7 @@
 
                         </div>
 
-                        <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics</h2>
+                        <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics actifs</h2>
 
                         <?php $req2 = $pdo->query('SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id LEFT JOIN categories ON topics.idCategory = categories.id ORDER BY updateTopic DESC LIMIT 10'); ?>
 
