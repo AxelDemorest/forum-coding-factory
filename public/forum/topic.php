@@ -80,6 +80,10 @@
         .hljs-ln-n {
             color: #969696;
         }
+
+        .tr-table-code {
+            height: 25px;
+        }
     </style>
 
 </head>
@@ -153,10 +157,10 @@
             ?>
 
                     <div class="col-9 mx-auto mt-5 d-flex flex-column">
-                        <h2 class="mb-5 ms-3"><?= $array_topics['titleTopic'] ?></h2>
+                        <h2 class="mb-5 ms-5"><?= $array_topics['titleTopic'] ?></h2>
                         <!-- BreadCrumb  -->
                         <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
+                            <ol class="breadcrumb ms-5">
                                 <li class="breadcrumb-item"><a href="/forum-coding-factory/public/home/home.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php">Forum</a></li>
                                 <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($name_category['name']) ?>&id=<?= $name_category['id'] ?>"><?= $name_category['name'] ?></a></li>
@@ -173,7 +177,8 @@
                             </div>
 
                             <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
-                                <div class="d-flex flex-column align-items-center me-5">
+                                <div class="d-flex flex-column align-items-center pe-2 me-3" style="width:9em">
+                                    <img src="../../img/crown.png" width="40" alt="">
                                     <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $array_topics['pseudo'] ?></a>
                                     <div class="ms-2 d-flex flex-column align-items-center">
                                         <div class="mb-2">

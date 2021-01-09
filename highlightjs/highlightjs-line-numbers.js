@@ -212,7 +212,7 @@
 
             for (var i = 0, l = lines.length; i < l; i++) {
                 html += format(
-                    '<tr>' +
+                    '<tr class="tr-table-code">' +
                         '<td class="{0} {1}" {3}="{5}">' +
                             '<div class="{2}" {3}="{5}"></div>' +
                         '</td>' +
