@@ -443,7 +443,7 @@ class Parsedown
                  */
                 $language = substr($matches[1], 0, strcspn($matches[1], " \t\n\f\r"));
 
-                $class = 'language-'.$language;
+                $class = 'bg-light p-4 hljs language-'.$language; //Class de la balise de code
 
                 $Element['attributes'] = array(
                     'class' => $class,

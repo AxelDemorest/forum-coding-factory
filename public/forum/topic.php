@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../header/header.css" rel="stylesheet" />
     <link href="../footer/footer.css" rel="stylesheet" />
-    <link href="../../prism/prism.css" rel="stylesheet" />
-    <script src="../../prism/prism.js"></script>
-    <script src="../../editor-simplemde/simplemde.min.js"></script>
-    <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" />
-    <title>Forum - Coding Factory</title>
+    <link rel="stylesheet" href="../../editormd/css/editormd.css" />
+    <link rel="stylesheet" href="../../editormd/css/editormd.preview.css" />
+    <!-- <script src="../../editor-simplemde/simplemde.min.js"></script>
+    <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="../../highlightjs/styles/Googlecode.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Forum - BlackBoard Factory</title>
     <style>
         .fz-text {
             font-family: 'Quicksand', sans-serif;
@@ -65,6 +67,18 @@
 
         .vote-img:hover {
             opacity: 0.6;
+        }
+
+        pre {
+            border-radius: 5px;
+        }
+
+        .hljs-ln-numbers {
+            padding-right: 14px !important;
+        }
+
+        .hljs-ln-n {
+            color: #969696;
         }
     </style>
 
@@ -139,14 +153,14 @@
             ?>
 
                     <div class="col-9 mx-auto mt-5 d-flex flex-column">
-                        <h2 class="mb-5 ms-3"><?php echo $array_topics['titleTopic'] ?></h2>
+                        <h2 class="mb-5 ms-3"><?= $array_topics['titleTopic'] ?></h2>
                         <!-- BreadCrumb  -->
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/forum-coding-factory/public/home/home.php">Home</a></li>
                                 <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php">Forum</a></li>
-                                <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($name_category['name']) ?>&id=<?= $name_category['id'] ?>"><?php echo $name_category['name'] ?></a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Topic n°<?php echo $_GET['id'] ?></li>
+                                <li class="breadcrumb-item"><a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($name_category['name']) ?>&id=<?= $name_category['id'] ?>"><?= $name_category['name'] ?></a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Topic n°<?= $_GET['id'] ?></li>
                             </ol>
                         </nav>
 
@@ -172,14 +186,12 @@
                                 </div>
 
                                 <div class="w-100">
-                                    <div class="d-flex flex-row justify-content-between align-items-center">
-                                        <div>
-                                            <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                                            <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
-                                        </div>
+                                    <div class="d-flex justify-content-start">
+                                        <p class="mb-0 text-muted fst-italic" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
+                                    </div>
+                                    <div class="me-5">
+                                        <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
+                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
@@ -262,7 +274,9 @@
                                                     </label>
                                                 </div>
                                             <?php endif; ?>
-                                            <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" id="contentTopic" class="form-control" rows="3"></textarea>
+                                            <div id="contentTopic">
+                                                <textarea name="reponseText" type="hidden" placeholder="Écrivez votre réponse" class="form-control" rows="3"></textarea>
+                                            </div>
                                         </div>
                                         <input type="submit" name="submitReplyPost" class="btn btn-danger mt-2" value="Répondre">
                                     </form>
@@ -272,7 +286,7 @@
                     <?php endif;
 
                             //J'effectue une jointure entre les messages des topics et les utilisateurs
-                            $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ?");
+                            $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ? ORDER BY messageDate ASC");
 
                             $reqListMessages->execute([$_GET['id']]);
 
@@ -305,14 +319,12 @@
                                     </div>
                                 </div>
                                 <div class="w-100">
-                                    <div class="d-flex flex-row justify-content-between align-items-center">
-                                        <div>
-                                            <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                                            <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
-                                        </div>
-                                        <div>
-                                            <p class="mb-0 text-muted fst-italic me-2" style="font-size:14px"><?= timeAgo($b['messageDate']); ?>
-                                        </div>
+                                    <div class="d-flex justify-content-start">
+                                        <p class="mb-0 text-muted fst-italic" style="font-size:14px"><?= timeAgo($b['messageDate']); ?>
+                                    </div>
+                                    <div class="me-5 parse-text">
+                                        <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
+                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
@@ -349,9 +361,22 @@
 
 
     <!-- Javascript -->
+    <script src="../header/header.js"></script>
+    <script src="../../editormd/editormd.min.js"></script>
+    <script src="../../editormd/languages/fr.js"></script>
+    <script src="../../editormd/plugins/image-dialog/image-dialog.js"></script>
+    <script src="../../editormd/plugins/code-block-dialog/code-block-dialog.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="../../highlightjs/highlight.pack.js"></script>
+    <script src="../../highlightjs/highlightjs-line-numbers.js"></script>
     <script>
-        //Je récupère toutes les balises <code>
+        if (typeof hljs !== 'undefined') {
+            hljs.initHighlightingOnLoad();
+            hljs.initLineNumbersOnLoad();
+
+        }
+
+        /* //Je récupère toutes les balises <code>
         let codeBlockList = document.querySelectorAll("code");
 
         //Je parcours tous la liste des balises <code>
@@ -360,11 +385,39 @@
             if (codeBlock.classList.length == 0) {
                 codeBlock.classList.add("language-markup");
             }
-        });
+        }); */
 
-        var simplemde = new SimpleMDE({
+        /* var simplemde = new SimpleMDE({
             element: document.getElementById("contentTopic"),
             toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
+        }); */
+
+        $(function() {
+            var editor = editormd("contentTopic", {
+                // width  : "100%",
+                // height : "100%",
+                path: "../../editormd/lib/",
+                autoFocus: false,
+                placeholder: "Votre message...",
+                pluginPath: "../../editormd/plugins/",
+                language: "fr",
+                width: "100%",
+                height: 300,
+                lineNumbers: false,
+                //autoHeight: true,
+                watch: false,
+                toolbarAutoFixed: false,
+                toolbarIcons: function() {
+                    // Or return editormd.toolbarModes[name]; // full, simple, mini
+                    // Using "||" set icons align right.
+                    return ["undo", "redo", "|", "code", "code-block", "|", "bold", "del", "italic", "|", "list-ul", "list-ol", "hr", "|", "link", "image", "||", "watch"]
+                },
+                codeFold: true,
+                syncScrolling: true,
+                dialogLockScreen: false,
+                searchReplace: true,
+                tex: false,
+            });
         });
     </script>
 </body>

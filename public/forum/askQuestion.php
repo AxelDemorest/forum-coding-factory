@@ -61,8 +61,10 @@ if (isset($_POST['submitButtonQuestion'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link href="../header/header.css" rel="stylesheet" />
-    <script src="../../editor-simplemde/simplemde.min.js"></script>
-    <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" />
+    <!-- <script src="../../editor-simplemde/simplemde.min.js"></script>
+    <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="../../editormd/css/editormd.css" />
+    <link rel="stylesheet" href="../../editormd/css/editormd.preview.css" />
     <!-- Javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -151,13 +153,10 @@ if (isset($_POST['submitButtonQuestion'])) {
                     </div>
                     <div class="mb-3">
                         <label for="contentTopic" class="form-label">Contenu de ton sujet</label>
-                        <textarea name="textQuestionTopic" type="hidden" placeholder="Écrivez votre question" id="contentTopic" class="form-control" rows="3"></textarea>
-                        <p class="text-muted">Si tu écris du code dans un langage, écris :<br />
-                            ```langage<br />
-                            //ton code<br />
-                            ```</p>
+                        <div id="contentTopic">
+                            <textarea name="textQuestionTopic" type="hidden" placeholder="Écrivez votre question" class="form-control" rows="3"></textarea>
+                        </div>
                     </div>
-
                     <input type="submit" class="btn btn-danger" name="submitButtonQuestion" value="Envoyer la question">
                     <div class="form-text text-muted">
                         La question sera envoyée dans la catégorie <?php echo $value['name'] ?>.
@@ -169,10 +168,42 @@ if (isset($_POST['submitButtonQuestion'])) {
 
 
     <script src="../header/header.js"></script>
+    <script src="../../editormd/editormd.min.js"></script>
+    <script src="../../editormd/languages/fr.js"></script>
+    <script src="../../editormd/plugins/image-dialog/image-dialog.js"></script>
+    <script src="../../editormd/plugins/code-block-dialog/code-block-dialog.js"></script>
     <script>
-        var simplemde = new SimpleMDE({
+        /* var simplemde = new SimpleMDE({
             element: document.getElementById("contentTopic"),
             toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
+        }); */
+
+        $(function() {
+            var editor = editormd("contentTopic", {
+                // width  : "100%",
+                // height : "100%",
+                path: "../../editormd/lib/",
+                autoFocus: false,
+                placeholder: "Votre message...",
+                pluginPath: "../../editormd/plugins/",
+                language: "fr",
+                width: "100%",
+                height: 300,
+                lineNumbers: false,
+                //autoHeight: true,
+                watch: false,
+                toolbarAutoFixed: false,
+                toolbarIcons: function() {
+                    // Or return editormd.toolbarModes[name]; // full, simple, mini
+                    // Using "||" set icons align right.
+                    return ["undo", "redo", "|", "code", "code-block", "|", "bold", "del", "italic", "|", "list-ul", "list-ol", "hr", "|", "link", "image", "||", "watch"]
+                },
+                codeFold: true,
+                syncScrolling: true,
+                dialogLockScreen: false,
+                searchReplace: true,
+                tex: false,
+            });
         });
     </script>
 </body>

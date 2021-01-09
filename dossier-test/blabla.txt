@@ -1,0 +1,35 @@
+ça ça marche :
+
+je fais un test
+
+```php
+foreach ($list_topics as $key => $value) :
+
+                    foreach ($value as $a => $b) {
+
+                        $array_topics[$a] = $b;
+                    }
+
+                endforeach;
+```
+
+-----------------
+
+je fais un test
+
+```php
+foreach ($list_topics as $key => $value) :
+
+                    foreach ($value as $a => $b) {
+
+                        $array_topics[$a] = $b;
+                    }
+
+                endforeach;```
+
+
+
+
+
+
+
