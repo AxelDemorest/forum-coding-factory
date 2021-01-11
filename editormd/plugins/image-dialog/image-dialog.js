@@ -69,7 +69,7 @@
                 dialog = this.createDialog({
                     title      : imageLang.title,
                     width      : (settings.imageUpload) ? 465 : 430,
-                    height     : 300,
+                    height     : 310,
                     name       : dialogName,
                     content    : dialogContent,
                     mask       : settings.dialogShowMask,

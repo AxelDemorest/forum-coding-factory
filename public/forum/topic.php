@@ -4,17 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- Header et Footer -->
     <link href="../header/header.css" rel="stylesheet" />
-    <link href="../footer/footer.css" rel="stylesheet" />
+
+    <!-- Éditeur markdown -->
     <link rel="stylesheet" href="../../editormd/css/editormd.css" />
     <link rel="stylesheet" href="../../editormd/css/editormd.preview.css" />
+
     <!-- <script src="../../editor-simplemde/simplemde.min.js"></script>
     <link href="../../editor-simplemde/simplemde.min.css" rel="stylesheet" /> -->
+
+    <!-- Color syntaxing -->
     <link rel="stylesheet" href="../../highlightjs/styles/Googlecode.css">
+
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <title>Forum - BlackBoard Factory</title>
+
+    <!-- Style de la page -->
     <style>
         .fz-text {
             font-family: 'Quicksand', sans-serif;
@@ -168,17 +183,63 @@
                             </ol>
                         </nav>
 
+                        <?php
+
+                        //--------------------------------------//
+                        // Si l'utilisateur a déjà up le topic  //
+                        //--------------------------------------//
+
+                        if (isset($_SESSION['auth'])) {
+
+                            $querySelectVoteUser = $pdo->prepare("SELECT * FROM votesTopics WHERE votesTopicsIdUser = ? AND votesTopicsIdContentTopic = ? AND votesTopicsStatus = ? ");
+
+                            $querySelectVoteUser->execute([$_SESSION['auth']->id, $_GET['id'], "up"]);
+
+                            if ($value = $querySelectVoteUser->fetch()) {
+
+                                $img = "../../img/up-arrow-already.png";
+                            } else {
+
+                                $img = "../../img/up-arrow.png";
+                            }
+
+                            //----------------------------------------//
+                            // Si l'utilisateur a déjà down le topic  //
+                            //----------------------------------------//
+
+                            $querySelectVoteUser = $pdo->prepare("SELECT * FROM votesTopics WHERE votesTopicsIdUser = ? AND votesTopicsIdContentTopic = ? AND votesTopicsStatus = ? ");
+
+                            $querySelectVoteUser->execute([$_SESSION['auth']->id, $_GET['id'], "down"]);
+
+                            if ($value = $querySelectVoteUser->fetch()) {
+
+                                $img2 = "../../img/down-arrow-already.png";
+                            } else {
+
+                                $img2 = "../../img/down-arrow.png";
+                            }
+                        }
+
+                        ?>
+
                         <!-- Création du bloc affichant le post de l'utilisateur -->
                         <div class="d-flex flex-row">
-                            <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
-                                <a href=""><img src="../../img/up-arrow.png" class="mb-1 vote-img" alt=""></a>
-                                <p class="text-center m-0 fz-text">0</p>
-                                <a href=""><img src="../../img/down-arrow.png" class="mt-1 vote-img" alt=""></a>
-                            </div>
 
-                            <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
-                                <div class="d-flex flex-column align-items-center pe-2 me-3" style="width:9em">
-                                    <img src="../../img/crown.png" width="40" alt="">
+                            <?php if (isset($_SESSION['auth'])) : ?>
+                                <!-- Vote content topic -->
+                                <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
+                                    <a href="javascript:void(0)" id="linkVoteUp" onclick="voteTopic(<?= $_GET['id'] ?>, 'up', <?= $_SESSION['auth']->id ?>)"><img src="<?= $img ?>" class="mb-1 vote-img" id="vote-img-up-topic" alt=""></a>
+                                    <p class="text-center m-0 fz-text" id="voteNumberContentTopic"><?= $array_topics['topicVote'] ?></p>
+                                    <a href="javascript:void(0)" onclick="voteTopic(<?= $_GET['id'] ?>, 'down', <?= $_SESSION['auth']->id ?>)"><img src="<?= $img2 ?>" class="mt-1 vote-img" id="vote-img-down-topic" alt=""></a>
+                                </div>
+
+                            <?php endif; ?>
+
+                            <div class="bg-white rounded shadow-sm px-3 pt-3 pb-1 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                                <div class="d-flex flex-column align-items-center pe-2 pb-4 me-3" style="width:9em">
+                                    <?php if ($array_topics['rank'] == 1) : ?>
+                                        <img src="../../img/crown.png" width="40" alt="">
+                                    <?php endif; ?>
                                     <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $array_topics['pseudo'] ?></a>
                                     <div class="ms-2 d-flex flex-column align-items-center">
                                         <div class="mb-2">
@@ -189,10 +250,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="w-100">
                                     <div class="d-flex justify-content-start">
                                         <p class="mb-0 text-muted fst-italic" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
+                                            <!--  <?= ($array_topics['updateTopic'] !== $array_topics['creationDate']) ? "- (Sujet modifié " . timeAgo($array_topics['updateTopic']) . ")" : "" ?> -->
+                                        </p>
                                     </div>
                                     <div class="me-5">
                                         <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
@@ -200,7 +262,7 @@
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                                    <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
+                                    <div class="link-edit-topic d-flex justify-content-end me-3 pt-2" style="font-size: 15px">
                                         <?php if (isset($_SESSION['auth']->id) && ($array_topics['id'] === $_SESSION['auth']->id)) : ?>
                                             <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
                                             <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
@@ -225,7 +287,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button onclick="<?php $test = "coucou" ?>" type="button" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+                                        <button type="button" onclick="deleteTopic(<?= $_GET['id'] ?>)" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
                                     </div>
                                 </div>
                             </div>
@@ -302,17 +364,62 @@
                     <?php
 
                     //Je parcours tous les résultats
-                    foreach ($list_messages_topic as $a => $b) : ?>
+                    foreach ($list_messages_topic as $a => $b) :
+
+                        //--------------------------------------//
+                        // Si l'utilisateur a déjà up le topic  //
+                        //--------------------------------------//
+
+                        if (isset($_SESSION['auth'])) {
+
+                            $querySelectVoteUser = $pdo->prepare("SELECT * FROM votesComments WHERE votesCommentsIdUser = ? AND votesCommentsidMessage = ? AND votesCommentsStatus = ? ");
+
+                            $querySelectVoteUser->execute([$_SESSION['auth']->id, $b['idMessage'], "up"]);
+
+                            if ($value = $querySelectVoteUser->fetch()) {
+
+                                $imgComments = "../../img/up-arrow-already.png";
+                            } else {
+
+                                $imgComments = "../../img/up-arrow.png";
+                            }
+
+                            //----------------------------------------//
+                            // Si l'utilisateur a déjà down le topic  //
+                            //----------------------------------------//
+
+                            $querySelectVoteUser = $pdo->prepare("SELECT * FROM votesComments WHERE votesCommentsIdUser = ? AND votesCommentsidMessage = ? AND votesCommentsStatus = ? ");
+
+                            $querySelectVoteUser->execute([$_SESSION['auth']->id, $b['idMessage'], "down"]);
+
+                            if ($value = $querySelectVoteUser->fetch()) {
+
+                                $imgComments2 = "../../img/down-arrow-already.png";
+                            } else {
+
+                                $imgComments2 = "../../img/down-arrow.png";
+                            }
+                        }
+
+                    ?>
 
                         <div class="d-flex flex-row">
-                            <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
-                                <a href=""><img src="../../img/up-arrow.png" class="mb-1 vote-img" alt=""></a>
-                                <p class="text-center m-0 fz-text">0</p>
-                                <a href=""><img src="../../img/down-arrow.png" class="mt-1 vote-img" alt=""></a>
-                            </div>
 
-                            <div class="bg-white rounded shadow-sm p-3 mb-4 w-100 fz-text d-flex flex-row mt-3">
-                                <div class="d-flex flex-column align-items-center me-5">
+                            <?php if (isset($_SESSION['auth'])) : ?>
+
+                                <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
+                                    <a href="javascript:void(0)" onclick="voteMessage(<?= $b['idMessage'] ?>, 'up', <?= $b['id'] ?>)"><img src="<?= $imgComments ?>" class="mb-1 vote-img" id="vote-img-up-comments<?= $b['idMessage'] ?>" alt=""></a>
+                                    <p class="text-center m-0 fz-text" id="vote-number-message<?= $b['idMessage'] ?>"><?= $b['messageVote'] ?></p>
+                                    <a href="javascript:void(0)" onclick="voteMessage(<?= $b['idMessage'] ?>, 'down', <?= $b['id'] ?>)"><img src="<?= $imgComments2 ?>" class="mt-1 vote-img" id="vote-img-down-comments<?= $b['idMessage'] ?>" alt=""></a>
+                                </div>
+
+                            <?php endif; ?>
+
+                            <div class="bg-white rounded shadow-sm px-3 pt-3 pb-1 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                                <div class="d-flex flex-column align-items-center pe-2 pb-4 me-3" style="width:9em">
+                                    <?php if ($b['rank'] == 1) : ?>
+                                        <img src="../../img/crown.png" width="40" alt="">
+                                    <?php endif; ?>
                                     <a class="link-owner-topic ms-2 mb-1" style="font-size: 19px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"><?= $b['pseudo'] ?></a>
                                     <div class="ms-2 d-flex flex-column align-items-center">
                                         <div class="mb-2">
@@ -333,7 +440,7 @@
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                                    <div class="link-edit-topic d-flex justify-content-end me-3" style="font-size: 15px">
+                                    <div class="link-edit-topic d-flex justify-content-end me-3 pt-2" style="font-size: 15px">
                                         <?php if (isset($_SESSION['auth']->id) && ($b['id'] === $_SESSION['auth']->id)) : ?>
                                             <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
                                             <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
@@ -366,12 +473,24 @@
 
 
     <!-- Javascript -->
+
+    <!-- Fichier ajax -->
+    <script src="javascript/app.js"></script>
+
+    <!-- Barre de navigation -->
     <script src="../header/header.js"></script>
+
+    <!-- Éditeur markdowwn -->
     <script src="../../editormd/editormd.min.js"></script>
     <script src="../../editormd/languages/fr.js"></script>
+    <script src="../../editormd/plugins/link-dialog/link-dialog.js"></script>
     <script src="../../editormd/plugins/image-dialog/image-dialog.js"></script>
     <script src="../../editormd/plugins/code-block-dialog/code-block-dialog.js"></script>
+
+    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Color syntaxing -->
     <script src="../../highlightjs/highlight.pack.js"></script>
     <script src="../../highlightjs/highlightjs-line-numbers.js"></script>
     <script>
@@ -397,6 +516,7 @@
             toolbar: ["bold", "italic", "heading", "|", "code", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "guide"],
         }); */
 
+        //Éditeur markdown
         $(function() {
             var editor = editormd("contentTopic", {
                 // width  : "100%",
