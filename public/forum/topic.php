@@ -67,6 +67,10 @@
             text-decoration: none !important;
         }
 
+        .link-best-answer {
+            text-decoration: none !important;
+        }
+
         .link-edit-topic a {
             text-decoration: none !important;
             color: black;
@@ -353,7 +357,7 @@
                     <?php endif;
 
                             //J'effectue une jointure entre les messages des topics et les utilisateurs
-                            $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id WHERE idTopicMessage = ? ORDER BY messageDate ASC");
+                            $reqListMessages = $pdo->prepare("SELECT * FROM messages LEFT JOIN users ON messages.idUser = users.id LEFT JOIN topics ON messages.idTopicMessage = topics.idTopic WHERE idTopicMessage = ? ORDER BY messageDate ASC");
 
                             $reqListMessages->execute([$_GET['id']]);
 
@@ -401,6 +405,19 @@
                             }
                         }
 
+                        if($b['bestReply'] == 0) {
+
+                            $contentText = "<i class='fa fa-check'></i> Choisir comme meilleure solution";
+                            $colorText = "#0d6efd";
+                            $colorBorder = "";
+
+                        } else {
+
+                            $contentText = "<i class='fa fa-star'></i></i> Meilleure solution";
+                            $colorText = "#64C43F";
+                            $colorBorder = "border: #64C43F solid 1px";
+
+                        }
                     ?>
 
                         <div class="d-flex flex-row">
@@ -415,7 +432,7 @@
 
                             <?php endif; ?>
 
-                            <div class="bg-white rounded shadow-sm px-3 pt-3 pb-1 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                            <div class="bg-white rounded shadow-sm px-3 pt-3 pb-1 mb-4 w-100 fz-text d-flex flex-row mt-3" id="content-message<?= $b['idMessage'] ?>" style="<?= $colorBorder ?>">
                                 <div class="d-flex flex-column align-items-center pe-2 pb-4 me-3" style="width:9em">
                                     <?php if ($b['rank'] == 1) : ?>
                                         <img src="../../img/crown.png" width="40" alt="">
@@ -440,10 +457,17 @@
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
-                                    <div class="link-edit-topic d-flex justify-content-end me-3 pt-2" style="font-size: 15px">
+                                    <div class="d-flex justify-content-between me-3 pt-2" style="font-size: 15px">
+                                        <?php if (isset($_SESSION['auth']->id) && ($b['idCreator'] === $_SESSION['auth']->id)) : ?>
+                                            <div>
+                                                <a href="javascript:void(0)" onclick="bestReply(<?= $b['idMessage'] ?>, <?= $b['idTopic'] ?>)" class="link-best-answer" id="link-best-answer<?= $b['idMessage'] ?>" style="color: <?= $colorText ?>"><?= $contentText ?></a>
+                                            </div>
+                                        <?php endif; ?>
                                         <?php if (isset($_SESSION['auth']->id) && ($b['id'] === $_SESSION['auth']->id)) : ?>
-                                            <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                            <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                            <div class="link-edit-topic">
+                                                <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
+                                                <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                            </div>
                                         <?php endif; ?>
                                     </div>
                                     </p>

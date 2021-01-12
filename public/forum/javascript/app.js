@@ -59,3 +59,39 @@ function voteMessage(messageID, status, userID) {
     xhr.send("id=" + messageID + "&status=" + status + "&userID=" + userID);
 
 }
+
+function bestReply(messageID, topicID) {
+
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            let dataElements = JSON.parse(xhr.responseText);
+
+            if(typeof(dataElements.valeur1) != 'undefined') {
+
+                document.getElementById('content-message' + dataElements.valeur1).style.border = "none";
+
+                document.getElementById('link-best-answer' + dataElements.valeur1).style.color = "#0d6efd";
+
+                document.getElementById('link-best-answer' + dataElements.valeur1).innerHTML = "<i class='fa fa-check'></i> Choisir comme meilleure solution";
+            }
+
+            document.getElementById('link-best-answer' + messageID).style.color = dataElements.valeur2;
+
+            document.getElementById('link-best-answer' + messageID).innerHTML = dataElements.valeur3;
+
+            document.getElementById('content-message' + messageID).style.border = dataElements.valeur4;
+
+        }
+    };
+
+    xhr.open("POST", 'ajax-folder-message/bestReply.php', true);
+
+    xhr.responseType = "text";
+
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.send("messageID=" + messageID + "&topicID=" + topicID);
+
+}
