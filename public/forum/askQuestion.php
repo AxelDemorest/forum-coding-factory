@@ -101,15 +101,27 @@ if (isset($_POST['submitButtonQuestion'])) {
             opacity: 0.8;
             font-size: 14px;
         }
+
+        .header-forum {
+            background: no-repeat center/cover url(../../img/back-forum.jpg);
+            height: 500px;
+            filter: grayscale(100%);
+            transition: all 0.5s;
+        }
+
+        .header-forum:hover {
+            filter: grayscale(0%);
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="container-fluid" style="padding-top: 59px">
+    <div class="container-fluid">
         <div class="row d-flex flex-column">
-            <h1 class="pt-5 text-center">Espace forum</h1>
-            <div class="hr-body mx-auto mb-3 mt-1"></div>
+            <div class="header-forum shadow d-flex justify-content-center align-items-center">
+                <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Espace forum</h1>
+            </div>
 
             <?php
 
@@ -120,7 +132,7 @@ if (isset($_POST['submitButtonQuestion'])) {
             $value = $req2->fetch(PDO::FETCH_ASSOC);
             ?>
 
-            <div class="d-flex justify-content-center mt-4">
+            <div class="d-flex justify-content-center mt-5">
                 <img class="imgCategory" src="../../img/imgCategory/<?= strtolower($value['image']) ?>" style="width: 10%">
             </div>
 

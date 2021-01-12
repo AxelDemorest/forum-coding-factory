@@ -250,7 +250,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-100">
+                                <div style="width:85%">
                                     <div class="d-flex justify-content-start">
                                         <p class="mb-0 text-muted fst-italic" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
                                             <!--  <?= ($array_topics['updateTopic'] !== $array_topics['creationDate']) ? "- (Sujet modifié " . timeAgo($array_topics['updateTopic']) . ")" : "" ?> -->
