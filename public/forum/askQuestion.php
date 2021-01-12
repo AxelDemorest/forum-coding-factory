@@ -96,6 +96,11 @@ if (isset($_POST['submitButtonQuestion'])) {
         .breadcrumb-item a {
             text-decoration: none !important;
         }
+
+        #titleSubject::placeholder {
+            opacity: 0.8;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -128,9 +133,11 @@ if (isset($_POST['submitButtonQuestion'])) {
                     <li class="breadcrumb-item active" aria-current="page">Poser une question</li>
                 </ol>
             </nav>
-            <div class="col-6 border border-danger mx-auto fz-text rounded shadow-sm">
 
-                <form action="" method="POST" class="mb-3 p-4">
+            <div class="col-9 mx-auto fz-text mb-5">
+
+
+                <form action="" method="POST" class="mt-4">
 
                     <?php if (!empty($errors)) : ?>
                         <div class="alert alert-danger pb-0" role="alert">
@@ -147,19 +154,24 @@ if (isset($_POST['submitButtonQuestion'])) {
 
                     <?php endif; ?>
 
-                    <div class="mb-3">
-                        <label for="titleSubject" class="form-label">Titre de ton sujet</label>
-                        <input name="titleTopic" type="text" class="form-control" id="titleSubject" required>
+
+                    <div class="mb-3 bg-white rounded shadow-sm border border-2 p-4">
+                        <label for="titleSubject" class="form-label text-muted text-uppercase ms-1" style="font-size:12px;opacity:0.5">Titre de votre sujet</label>
+                        <input name="titleTopic" type="text" class="form-control" id="titleSubject" placeholder="Quel est le titre de votre sujet ?" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="contentTopic" class="form-label">Contenu de ton sujet</label>
-                        <div id="contentTopic">
-                            <textarea name="textQuestionTopic" type="hidden" placeholder="Écrivez votre question" class="form-control" rows="3"></textarea>
+
+                    <div class="bg-white rounded shadow-sm border border-2 p-4">
+                        <div class="mb-3">
+                            <label for="contentTopic" class="form-label text-muted text-uppercase ms-1" style="font-size:12px;opacity:0.5">Contenu de votre sujet</label>
+                            <div id="contentTopic">
+                                <textarea name="textQuestionTopic" type="hidden" placeholder="Écrivez votre question" class="form-control" rows="3"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <input type="submit" class="btn btn-danger" name="submitButtonQuestion" value="Envoyer la question">
-                    <div class="form-text text-muted">
-                        La question sera envoyée dans la catégorie <?php echo $value['name'] ?>.
+                        <hr>
+                        <input type="submit" class="btn btn-danger" name="submitButtonQuestion" value="Envoyer la question">
+                        <div class="form-text text-muted" style="opacity:0.6">
+                            La question sera envoyée dans la catégorie <?php echo $value['name'] ?>.
+                        </div>
                     </div>
                 </form>
             </div>
