@@ -37,6 +37,18 @@ if ($valueMessageBestReply['bestReply'] == 0) {
 
     $response['valeur4'] = "#64C43F solid 1px";
 
+} else {
+
+    $queryUpdateMessage = $pdo->prepare("UPDATE messages SET bestReply = 0 WHERE idMessage = ?");
+
+    $queryUpdateMessage->execute([$_POST['messageID']]);
+
+    $response['valeur2'] = "#0d6efd";
+
+    $response['valeur3'] = "<i class='fa fa-check'></i> Choisir comme meilleure solution";
+
+    $response['valeur4'] = "none";
+
 }
 
 echo json_encode($response);

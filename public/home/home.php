@@ -29,7 +29,7 @@
     <div class="container py-5">
         <div class="row">
             <div class="description-website col-12 col-lg-6 text-center d-flex flex-column justify-content-center">
-                <h1>Forum Factory</h1>
+                <h1>BlackBoard Factory</h1>
                 <div class="hr-body mx-auto mb-3 mt-1"></div>
                 <p class="fz-text pt-3 fs-5">Le forum a été conçu pour les élèves de la Coding Factory de Paris et Cergy. Les
                     élèves pourront répondre aux questions de leurs camarades avec le forum proposé sur ce site.
