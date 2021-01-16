@@ -103,6 +103,10 @@
         .tr-table-code {
             height: 25px;
         }
+
+        .mention-link-user {
+            text-decoration: none !important;
+        }
     </style>
 
 </head>
@@ -224,6 +228,24 @@
                             }
                         }
 
+                        function mentionUser($matches)
+                        {
+
+                            global $pdo;
+
+                            $reqSearchUser = $pdo->prepare('SELECT pseudo FROM users WHERE pseudo = ?');
+                            $reqSearchUser->execute([$matches[1]]);
+
+                            // C'est dans cette fonction qu'on enverra la notification
+
+                            if ($reqSearchUser->rowCount() == 1) {
+                                $pseudoUser = $reqSearchUser->fetch()->pseudo;
+                                return '<a class="mention-link-user" href="/forum-coding-factory/public/account/account.php?pseudo=' . $pseudoUser . '">' . $matches[0] . '</a>';
+                            }
+
+                            return $matches[0];
+                        }
+
                         ?>
 
                         <!-- Création du bloc affichant le post de l'utilisateur -->
@@ -260,9 +282,9 @@
                                             <!--  <?= ($array_topics['updateTopic'] !== $array_topics['creationDate']) ? "- (Sujet modifié " . timeAgo($array_topics['updateTopic']) . ")" : "" ?> -->
                                         </p>
                                     </div>
-                                    <div class="me-5">
+                                    <div class="me-5 text-user-topic">
                                         <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($array_topics['contentTopic'])) ?></p>
+                                        <p class="mt-2"><?php echo $parsedown->text(html_entity_decode(preg_replace_callback('#@([A-Za-z0-9]+)#', 'mentionUser', $array_topics['contentTopic']))) ?></p>
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
@@ -405,18 +427,16 @@
                             }
                         }
 
-                        if($b['bestReply'] == 0) {
+                        if ($b['bestReply'] == 0) {
 
                             $contentText = "<i class='fa fa-check'></i> Choisir comme meilleure solution";
                             $colorText = "#0d6efd";
                             $colorBorder = "";
-
                         } else {
 
                             $contentText = "<i class='fa fa-star'></i></i> Meilleure solution";
                             $colorText = "#64C43F";
                             $colorBorder = "border: #64C43F solid 1px";
-
                         }
                     ?>
 
@@ -453,7 +473,7 @@
                                     </div>
                                     <div class="me-5 parse-text">
                                         <!-- Je parse le message de la base de donnée et je décode tous les caractères HTML en utf-8 -->
-                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode($b['contentMessage'])) ?></p>
+                                        <p class="mt-2 text-user-topic"><?php echo $parsedown->text(html_entity_decode(preg_replace_callback('#@([A-Za-z0-9]+)#', 'mentionUser', $b['contentMessage']))) ?></p>
                                     </div>
                                     <hr>
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->

@@ -116,7 +116,7 @@
     ?>
 
     <!-- Design du forum -->
-    <div class="container-fluid px-0">
+    <div class="container-fluid">
         <div class="row d-flex flex-column">
             <div class="header-forum shadow d-flex justify-content-center align-items-center">
                 <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Espace forum</h1>
@@ -125,7 +125,7 @@
             <!-- Si aucune catégorie a été choisie -->
             <?php if (!isset($_GET['category']) || !isset($_GET['id'])) : ?>
 
-                <div class="row w-100 bg-light d-flex justify-content-center align-items-center">
+                <div class="w-100 bg-light d-flex justify-content-center align-items-center">
                     <div class="col-8 bg-white rounded shadow-sm fz-text mb-1 mt-5 p-4">
                         <p class="text-center">Bienvenue sur le forum officiel de <strong class="text-danger">BlackBoard Factory</strong>, ce forum vous est dédié pour vous aider dans votre développement. Si vous avez besoin d'aide, un élève ou un PO de la <em>Coding Factory</em> vous répondra et vous aidera à trouver une solution à votre problème. Vous pourrez trouver sur ce forum, différentes catégories afin de cibler vos questions. Nous vous demandons donc de <strong class="text-danger">bien référencer vos questions</strong> sous peine d'un avertissement.</p>
                         <?php if (!isset($_SESSION['auth'])) : ?>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <div class="row w-100 bg-light d-flex flex-row justify-content-center">
+                <div class="w-100 bg-light d-flex flex-row justify-content-center">
                     <div class="col-7 py-5 d-flex flex-column align-items-center ">
                         <?php foreach ($ListinCategory as $key => $ListinCategoryValues) :
 
