@@ -95,3 +95,45 @@ function bestReply(messageID, topicID) {
     xhr.send("messageID=" + messageID + "&topicID=" + topicID);
 
 }
+
+function deleteTopic(topicID) {
+
+    xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            document.location.href = "/forum-coding-factory/public/forum/forum.php";
+
+        }
+    };
+
+    xhr.open("POST", 'ajax-folder-topic/deleteTopic.php', true);
+
+    xhr.responseType = "text";
+
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.send("topicID=" + topicID);
+
+}
+
+function deleteMessage(messageID) {
+
+    xhr.onreadystatechange = function() {
+
+        if (xhr.readyState == 4 && xhr.status == 200) {
+
+            document.location.reload();
+
+        }
+    };
+
+    xhr.open("POST", 'ajax-folder-message/deleteMessage.php', true);
+
+    xhr.responseType = "text";
+
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.send("messageID=" + messageID);
+
+}

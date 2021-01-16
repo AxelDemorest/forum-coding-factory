@@ -261,7 +261,7 @@
 
                             <?php endif; ?>
 
-                            <div class="bg-white rounded shadow-sm px-3 pt-3 pb-1 mb-4 w-100 fz-text d-flex flex-row mt-3">
+                            <div class="bg-white rounded shadow-sm px-3 pt-3 pb-1 mb-4 w-100 fz-text d-flex flex-row mt-3" style="max-width: 96.5%;">
                                 <div class="d-flex flex-column align-items-center pe-2 pb-4 me-3" style="width:9em">
                                     <?php if ($array_topics['rank'] == 1) : ?>
                                         <img src="../../img/crown.png" width="40" alt="">
@@ -276,7 +276,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="width:85%">
+                                <div style="width:85%" id="content-right-bloc-topic">
                                     <div class="d-flex justify-content-start">
                                         <p class="mb-0 text-muted fst-italic" style="font-size:14px"><?= timeAgo($array_topics['creationDate']); ?>
                                             <!--  <?= ($array_topics['updateTopic'] !== $array_topics['creationDate']) ? "- (Sujet modifié " . timeAgo($array_topics['updateTopic']) . ")" : "" ?> -->
@@ -291,7 +291,9 @@
                                     <div class="link-edit-topic d-flex justify-content-end me-3 pt-2" style="font-size: 15px">
                                         <?php if (isset($_SESSION['auth']->id) && ($array_topics['id'] === $_SESSION['auth']->id)) : ?>
                                             <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                            <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                            <?php if ($_SESSION['auth']->rank > 0) : ?>
+                                                <a href="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     </div>
                                     </p>
@@ -305,11 +307,11 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer le topic</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer le sujet</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Êtes-vous certain de vouloir supprimer votre message ?
+                                        Êtes-vous certain de vouloir supprimer ce sujet ?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -440,6 +442,25 @@
                         }
                     ?>
 
+                        <!-- Modal suppression topic -->
+                        <div class="modal fade fz-text" id="exampleModalMessage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer ce message</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Êtes-vous certain de vouloir supprimer ce message ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <button type="button" onclick="deleteMessage(<?= $b['idMessage'] ?>)" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="d-flex flex-row">
 
                             <?php if (isset($_SESSION['auth'])) : ?>
@@ -486,7 +507,9 @@
                                         <?php if (isset($_SESSION['auth']->id) && ($b['id'] === $_SESSION['auth']->id)) : ?>
                                             <div class="link-edit-topic">
                                                 <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                                <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
+                                                <?php if ($_SESSION['auth']->rank > 0) : ?>
+                                                    <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModalMessage"><i class="fa fa-trash"></i> Supprimer</a>
+                                                <?php endif; ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>
