@@ -116,8 +116,8 @@
     ?>
 
     <!-- Design du forum -->
-    <div class="container-fluid">
-        <div class="d-flex flex-column">
+    <div class="container-fluid px-0">
+        <div class="row d-flex flex-column">
             <div class="header-forum shadow d-flex justify-content-center align-items-center">
                 <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Espace forum</h1>
             </div>
@@ -128,11 +128,13 @@
                 <div class="row w-100 bg-light d-flex justify-content-center align-items-center">
                     <div class="col-8 bg-white rounded shadow-sm fz-text mb-1 mt-5 p-4">
                         <p class="text-center">Bienvenue sur le forum officiel de <strong class="text-danger">BlackBoard Factory</strong>, ce forum vous est dédié pour vous aider dans votre développement. Si vous avez besoin d'aide, un élève ou un PO de la <em>Coding Factory</em> vous répondra et vous aidera à trouver une solution à votre problème. Vous pourrez trouver sur ce forum, différentes catégories afin de cibler vos questions. Nous vous demandons donc de <strong class="text-danger">bien référencer vos questions</strong> sous peine d'un avertissement.</p>
+                        <?php if (!isset($_SESSION['auth'])) : ?>
                         <div class="d-flex justify-content-center align-items-center">
                             <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Se connecter</a>
                             <p class="mb-0 mx-4">ou</p>
                             <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -184,7 +186,7 @@
                                             <tr class="border-bottom tr-table">
                                                 <td class="py-4 ps-4" style="width:45em">
                                                     <div>
-                                                        <a class="td-link text-dark d-flex flex-row" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= strtolower($value['id']) ?>"><img class="imgCategory me-4" src="../../img/imgCategory/<?= $value['image']; ?>" height="30">
+                                                        <a class="td-link text-dark d-flex flex-row" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= strtolower($value['id']) ?>"><span class="d-flex justify-content-center me-3" style="width:4em"><img class="imgCategory" src="../../img/imgCategory/<?= $value['image']; ?>" height="30"></span>
                                                             <h5 class="fw-normal"><?= $value['name'] ?></h5>
                                                         </a>
                                                     </div>

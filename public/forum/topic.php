@@ -232,9 +232,9 @@
                             <?php if (isset($_SESSION['auth'])) : ?>
                                 <!-- Vote content topic -->
                                 <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
-                                    <a href="javascript:void(0)" id="linkVoteUp" onclick="voteTopic(<?= $_GET['id'] ?>, 'up', <?= $_SESSION['auth']->id ?>)"><img src="<?= $img ?>" class="mb-1 vote-img" id="vote-img-up-topic" alt=""></a>
+                                    <a href="javascript:void(0)" id="linkVoteUp" onclick="voteTopic(<?= $_GET['id'] ?>, 'up', <?= $_SESSION['auth']->id ?>, <?= $array_topics['idCreator'] ?>)"><img src="<?= $img ?>" class="mb-1 vote-img" id="vote-img-up-topic" alt=""></a>
                                     <p class="text-center m-0 fz-text" id="voteNumberContentTopic"><?= $array_topics['topicVote'] ?></p>
-                                    <a href="javascript:void(0)" onclick="voteTopic(<?= $_GET['id'] ?>, 'down', <?= $_SESSION['auth']->id ?>)"><img src="<?= $img2 ?>" class="mt-1 vote-img" id="vote-img-down-topic" alt=""></a>
+                                    <a href="javascript:void(0)" onclick="voteTopic(<?= $_GET['id'] ?>, 'down', <?= $_SESSION['auth']->id ?>, <?= $array_topics['idCreator'] ?>)"><img src="<?= $img2 ?>" class="mt-1 vote-img" id="vote-img-down-topic" alt=""></a>
                                 </div>
 
                             <?php endif; ?>
@@ -425,9 +425,9 @@
                             <?php if (isset($_SESSION['auth'])) : ?>
 
                                 <div class="d-flex flex-column justify-content-center me-3 py-3 mb-4 mt-3">
-                                    <a href="javascript:void(0)" onclick="voteMessage(<?= $b['idMessage'] ?>, 'up', <?= $b['id'] ?>)"><img src="<?= $imgComments ?>" class="mb-1 vote-img" id="vote-img-up-comments<?= $b['idMessage'] ?>" alt=""></a>
+                                    <a href="javascript:void(0)" onclick="voteMessage(<?= $b['idMessage'] ?>, 'up', <?= $b['id'] ?>, <?= $b['idUser'] ?>)"><img src="<?= $imgComments ?>" class="mb-1 vote-img" id="vote-img-up-comments<?= $b['idMessage'] ?>" alt=""></a>
                                     <p class="text-center m-0 fz-text" id="vote-number-message<?= $b['idMessage'] ?>"><?= $b['messageVote'] ?></p>
-                                    <a href="javascript:void(0)" onclick="voteMessage(<?= $b['idMessage'] ?>, 'down', <?= $b['id'] ?>)"><img src="<?= $imgComments2 ?>" class="mt-1 vote-img" id="vote-img-down-comments<?= $b['idMessage'] ?>" alt=""></a>
+                                    <a href="javascript:void(0)" onclick="voteMessage(<?= $b['idMessage'] ?>, 'down', <?= $b['id'] ?>, <?= $b['idUser'] ?>)"><img src="<?= $imgComments2 ?>" class="mt-1 vote-img" id="vote-img-down-comments<?= $b['idMessage'] ?>" alt=""></a>
                                 </div>
 
                             <?php endif; ?>

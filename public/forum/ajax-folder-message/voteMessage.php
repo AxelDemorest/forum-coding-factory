@@ -59,9 +59,9 @@ if ($_POST['status'] == "up") {
 
         // On ajoute l'user à votesTopics up
 
-        $reqUserVote = $pdo->prepare("INSERT INTO votesComments(votesCommentsIdUser, votesCommentsidMessage, votesCommentsStatus) VALUES (?, ?, ?)");
+        $reqUserVote = $pdo->prepare("INSERT INTO votesComments(votesCommentsIdUser, votesCommentsidMessage, votesCommentsStatus, votesCommentsIdCreator) VALUES (?, ?, ?, ?)");
 
-        $reqUserVote->execute([$_POST['userID'], $_POST['id'], $_POST['status']]);
+        $reqUserVote->execute([$_POST['userID'], $_POST['id'], $_POST['status'], $_POST['idCreatorMessage']]);
 
         // On change le src des images
 
@@ -131,9 +131,9 @@ if ($_POST['status'] == "down") {
 
         // On ajoute l'user à votesTopics down
 
-        $reqUserVote = $pdo->prepare("INSERT INTO votesComments(votesCommentsIdUser, votesCommentsidMessage, votesCommentsStatus) VALUES (?, ?, ?)");
+        $reqUserVote = $pdo->prepare("INSERT INTO votesComments(votesCommentsIdUser, votesCommentsidMessage, votesCommentsStatus, votesCommentsIdCreator) VALUES (?, ?, ?, ?)");
 
-        $reqUserVote->execute([$_POST['userID'], $_POST['id'], $_POST['status']]);
+        $reqUserVote->execute([$_POST['userID'], $_POST['id'], $_POST['status'], $_POST['idCreatorMessage']]);
 
         // On change le src des images
 

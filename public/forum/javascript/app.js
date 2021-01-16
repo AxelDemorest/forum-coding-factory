@@ -4,11 +4,11 @@ var voteNumber = document.getElementById("voteNumberContentTopic");
 
 var linkVoteUp = document.getElementById("linkVoteUp");
 
-function voteTopic(topicID, status, userID) {
+function voteTopic(topicID, status, userID, idCreatorTopic) {
 
     /* var buttonVoteUp = document.getElementById("linkVoteUp"); */
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
 
         if (xhr.readyState == 4 && xhr.status == 200) {
 
@@ -29,13 +29,13 @@ function voteTopic(topicID, status, userID) {
 
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.send("id=" + topicID + "&status=" + status + "&userID=" + userID);
+    xhr.send("id=" + topicID + "&status=" + status + "&userID=" + userID + "&idCreatorTopic=" + idCreatorTopic);
 
 }
 
-function voteMessage(messageID, status, userID) {
+function voteMessage(messageID, status, userID, idCreatorMessage) {
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
 
         if (xhr.readyState == 4 && xhr.status == 200) {
 
@@ -43,7 +43,7 @@ function voteMessage(messageID, status, userID) {
 
             document.getElementById('vote-number-message' + messageID).innerHTML = dataElements2.valeur1;
 
-            document.getElementById('vote-img-up-comments' +  messageID).src = dataElements2.srcUp;
+            document.getElementById('vote-img-up-comments' + messageID).src = dataElements2.srcUp;
 
             document.getElementById('vote-img-down-comments' + messageID).src = dataElements2.srcDown;
 
@@ -56,19 +56,19 @@ function voteMessage(messageID, status, userID) {
 
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.send("id=" + messageID + "&status=" + status + "&userID=" + userID);
+    xhr.send("id=" + messageID + "&status=" + status + "&userID=" + userID + "&idCreatorMessage=" + idCreatorMessage);
 
 }
 
 function bestReply(messageID, topicID) {
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
 
         if (xhr.readyState == 4 && xhr.status == 200) {
 
             let dataElements = JSON.parse(xhr.responseText);
 
-            if(typeof(dataElements.valeur1) != 'undefined') {
+            if (typeof(dataElements.valeur1) != 'undefined') {
 
                 document.getElementById('content-message' + dataElements.valeur1).style.border = "none";
 

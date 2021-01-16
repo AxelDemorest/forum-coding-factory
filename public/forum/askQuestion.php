@@ -44,7 +44,7 @@ if (isset($_POST['submitButtonQuestion'])) {
 
             $redirect = $req2->fetch(PDO::FETCH_ASSOC);
 
-            header('Location: /forum-coding-factory/public/forum/topic.php?id=' . $redirect['idTopic']);
+            header('Location: /forum-coding-factory/public/forum/topic.php?idCategory='. $_GET['id'] .'&id=' . $redirect['idTopic']);
 
             exit();
         }
