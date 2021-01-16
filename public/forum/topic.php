@@ -144,7 +144,7 @@
             <?php
 
             //Si la variable id existe
-            if (isset($_GET['id'])) :
+            if (isset($_GET['id']) && isset($_GET['idCategory'])) :
 
                 //J'effectue une jointure entre les topics et les users
                 $req = $pdo->prepare("SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id WHERE topics.idTopic = ?");
@@ -166,7 +166,7 @@
                 endforeach;
 
                 //Si l'id existe dans les résultats de la jointure
-                if (in_array($_GET['id'], $array_topics)) :
+                if (in_array($_GET['id'], $array_topics) && in_array($_GET['idCategory'], $array_topics)) :
 
                     $name_categoryQuery = $pdo->prepare("SELECT * FROM topics LEFT JOIN categories ON topics.idCategory = categories.id WHERE topics.idCategory = ? AND topics.idTopic = ?");
 
@@ -311,9 +311,9 @@
                                 if (isset($_SESSION['auth'])) {
                                     if (!empty($replyContent)) {
 
-                                        $reqReply = $pdo->prepare("INSERT INTO messages(idTopicMessage, idUser, contentMessage) VALUES (?, ?, ?)");
+                                        $reqReply = $pdo->prepare("INSERT INTO messages(idTopicMessage, idUser, contentMessage, idMessagecategory) VALUES (?, ?, ?, ?)");
 
-                                        $reqReply->execute([$_GET['id'], $_SESSION['auth']->id, $replyContent]);
+                                        $reqReply->execute([$_GET['id'], $_SESSION['auth']->id, $replyContent, $_GET['idCategory']]);
 
                                         $reqReply2 = $pdo->prepare("UPDATE topics SET updateTopic = CURRENT_TIMESTAMP WHERE idTopic = ?");
 

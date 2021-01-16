@@ -38,13 +38,12 @@
             text-decoration: none !important;
         }
 
-        .td-link {
-            color: black;
-            text-decoration: none !important;
+        .tr-table:last-child {
+            border: none !important;
         }
 
-        .td-link:hover {
-            text-decoration: underline !important;
+        .td-link {
+            text-decoration: none !important;
         }
 
         .link-content {
@@ -82,12 +81,12 @@
             color: #dc3545;
         }
 
-        .category-block {
-            background-color: #F4F4F4
-        }
-
         .category-block:hover {
             background-color: #ECECEC;
+        }
+
+        .link-last-topics:hover {
+            color: #0d6efd !important;
         }
     </style>
 </head>
@@ -106,15 +105,19 @@
 
     require_once '../../database/db.php';
 
-    $req = $pdo->query("SELECT * FROM categories ORDER BY name DESC");
+    $reqInCategory = $pdo->query("SELECT * FROM in_category");
 
-    $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+    $ListinCategory = $reqInCategory->fetchAll(PDO::FETCH_ASSOC);
+
+    $reqCategories = $pdo->query("SELECT * FROM categories ORDER BY name ASC");
+
+    $resultatCategories = $reqCategories->fetchAll(PDO::FETCH_ASSOC);
 
     ?>
 
     <!-- Design du forum -->
     <div class="container-fluid">
-        <div class="row d-flex flex-column">
+        <div class="d-flex flex-column">
             <div class="header-forum shadow d-flex justify-content-center align-items-center">
                 <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Espace forum</h1>
             </div>
@@ -122,26 +125,119 @@
             <!-- Si aucune catégorie a été choisie -->
             <?php if (!isset($_GET['category']) || !isset($_GET['id'])) : ?>
 
-                <div class="d-flex flex-column">
+                <div class="row w-100 bg-light d-flex justify-content-center align-items-center">
+                    <div class="col-8 bg-white rounded shadow-sm fz-text mb-1 mt-5 p-4">
+                        <p class="text-center">Bienvenue sur le forum officiel de <strong class="text-danger">BlackBoard Factory</strong>, ce forum vous est dédié pour vous aider dans votre développement. Si vous avez besoin d'aide, un élève ou un PO de la <em>Coding Factory</em> vous répondra et vous aidera à trouver une solution à votre problème. Vous pourrez trouver sur ce forum, différentes catégories afin de cibler vos questions. Nous vous demandons donc de <strong class="text-danger">bien référencer vos questions</strong> sous peine d'un avertissement.</p>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Se connecter</a>
+                            <p class="mb-0 mx-4">ou</p>
+                            <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row w-100 bg-light d-flex flex-row justify-content-center">
+                    <div class="col-7 py-5 d-flex flex-column align-items-center ">
+                        <?php foreach ($ListinCategory as $key => $ListinCategoryValues) :
+
+                            $req = $pdo->prepare("SELECT * FROM categories WHERE in_category = ? ORDER BY name ASC");
+
+                            $req->execute([$ListinCategoryValues['in_categoryId']]);
+
+                            $resultat = $req->fetchAll(PDO::FETCH_ASSOC);
+
+                            if (!empty($resultat)) :
+
+                        ?>
+                                <table class="bg-white table-list-category shadow-sm rounded fz-text mb-5">
+                                    <tbody>
+                                        <!-- Mettre la boucle de grosse catégorie ici -->
+                                        <tr class="border-bottom tr-table">
+                                            <td class="py-3 ps-4" colspan="3">
+                                                <h4 class="mb-0"><?= $ListinCategoryValues['in_categoryName'] ?></h4>
+                                            </td>
+                                        </tr>
+                                        <?php foreach ($resultat as $key => $value) :
+
+                                            $req2 = $pdo->prepare("SELECT * FROM categories RIGHT JOIN topics ON categories.id = topics.idCategory WHERE categories.id = ? ORDER BY topics.updateTopic DESC LIMIT 1");
+
+                                            $req2->execute([$value['id']]);
+
+                                            $resultat2 = $req2->fetch(PDO::FETCH_ASSOC);
+
+                                            $reqNumberTopic = $pdo->prepare("SELECT COUNT(*) AS 'nb_topics_categories' FROM topics WHERE idCategory = ?");
+
+                                            $reqNumberTopic->execute([$value['id']]);
+
+                                            $resultTopics = $reqNumberTopic->fetch(PDO::FETCH_ASSOC);
+
+                                            $resultNumberTopic = $resultTopics['nb_topics_categories'];
+
+                                            $reqNumberTotalMessages = $pdo->prepare("SELECT COUNT(*) AS nbMessagesOfCategory FROM messages WHERE messages.idMessagecategory = ?");
+
+                                            $reqNumberTotalMessages->execute([$value['id']]);
+
+                                            $resultNumberTotalMessages = $reqNumberTotalMessages->fetch(PDO::FETCH_ASSOC);
+
+                                            $nbMessagesOfCategory = $resultNumberTotalMessages['nbMessagesOfCategory'];
+                                        ?>
+                                            <tr class="border-bottom tr-table">
+                                                <td class="py-4 ps-4" style="width:45em">
+                                                    <div>
+                                                        <a class="td-link text-dark d-flex flex-row" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= strtolower($value['id']) ?>"><img class="imgCategory me-4" src="../../img/imgCategory/<?= $value['image']; ?>" height="30">
+                                                            <h5 class="fw-normal"><?= $value['name'] ?></h5>
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-muted mb-0 mt-2 w-75" style="font-size:13px"><?= $value['categoriesOverview'] ?></p>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4" style="width:5em">
+                                                    <p class="mb-0 text-end" style="font-size:18px"><?= $resultNumberTopic ?></p>
+                                                    <p class="mb-0 text-end text-muted" style="font-size:16px"><?= $resultNumberTopic < 2 ? "sujet" : "sujets" ?></p>
+                                                </td>
+                                                <td class="ps-4 pe-5" style="width:10em">
+                                                    <p class="mb-0 text-end" style="font-size:18px"><?= $nbMessagesOfCategory ?></p>
+                                                    <p class="mb-0 text-end text-muted" style="font-size:16px"><?= $nbMessagesOfCategory < 2 ? "réponse" : "réponses" ?></p>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <?php $req2 = $pdo->query('SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id LEFT JOIN categories ON topics.idCategory = categories.id ORDER BY updateTopic DESC LIMIT 5'); ?>
+
+                    <div class="col-3 mt-5 ms-5 fz-text">
+                        <div class="bg-white text-center rounded shadow-sm">
+                            <h5 class="py-3 border-bottom mb-0">Derniers sujets actifs</h5>
+                            <?php while ($resultat3 = $req2->fetch()) : ?>
+                                <div class="d-flex flex-row border-bottom">
+                                    <div class="d-flex align-items-center justify-content-center w-25" style="width:4em">
+                                        <a class="td-link text-dark d-flex flex-row" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($resultat3->name) ?>&id=<?= strtolower($resultat3->idCategory) ?>"><img class="imgCategory" src="../../img/imgCategory/<?= $resultat3->image ?>" height="30"></a>
+                                    </div>
+                                    <div class="d-flex flex-column py-3 text-start w-75">
+                                        <a class="link-last-topics text-dark text-break pe-3" href="/forum-coding-factory/public/forum/topic.php?idCategory=<?= $resultat3->idCategory ?>&id=<?= $resultat3->idTopic ?>" style="text-decoration:none;font-size:15px"><?= tronque($resultat3->titleTopic, 35) ?></a>
+                                        <p class="mb-0" style="font-size:13px">Crée par <?= $resultat3->pseudo ?></p>
+                                        <p class="text-muted mb-0" style="font-size:13px">Création <?= strtolower(timeAgo($resultat3->updateTopic)) ?></p>
+                                    </div>
+                                </div>
+                            <?php endwhile; ?>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="d-flex flex-column">
                     <div class="col-12 mt-5 d-flex flex-column">
 
                         <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Catégories</h2>
 
                         <div class="d-flex flex-row w-75 flex-wrap justify-content-center mt-5 mb-5 mx-auto">
 
-                            <?php
-
-                            foreach ($resultat as $key => $value) :
-
-                                $req2 = $pdo->prepare("SELECT * FROM categories RIGHT JOIN topics ON categories.id = topics.idCategory WHERE categories.id = ? ORDER BY topics.updateTopic DESC LIMIT 1");
-
-                                $req2->execute([$value['id']]);
-
-                                $resultat2 = $req2->fetch(PDO::FETCH_ASSOC);
-
-                            ?>
-
-                                <div class="d-flex flex-column py-3 px-2 m-3 mx-4 rounded fz-text border border-3 category-block" style="width:13em">
+                                <div class="d-flex flex-column py-3 px-2 m-3 mx-4 rounded fz-text bg-white shadow-sm category-block" style="width:13em">
                                     <div class="mx-auto mb-3" style="height: 70px;">
                                         <a href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($value['name']) ?>&id=<?= strtolower($value['id']) ?>"><img class="imgCategory" src="../../img/imgCategory/<?= $value['image']; ?>" height="60"></a>
                                     </div>
@@ -150,54 +246,67 @@
                                     </a>
                                     <?php
                                     if (!empty($resultat2)) : ?>
-                                        <a class="text-center text-muted link-content mt-2 text-break" style="font-size:17px;opacity:0.6" href="/forum-coding-factory/public/forum/topic.php?id=<?= $resultat2['idTopic'] ?>"><?php echo tronque($resultat2['titleTopic'], 40) ?></a>
+                                        <a class="text-center text-muted link-content mt-2 text-break" style="font-size:15px;opacity:0.6" href="/forum-coding-factory/public/forum/topic.php?id=<?= $resultat2['idTopic'] ?>"><?php echo tronque($resultat2['titleTopic'], 40) ?></a>
                                     <?php else : ?>
-                                        <p class="text-center text-muted mt-2" style="font-size:17px;opacity:0.6">Aucun topic</p>
+                                        <p class="text-center text-muted mt-2" style="font-size:15px;opacity:0.6">Aucun topic</p>
                                     <?php endif; ?>
                                 </div>
-                            <?php endforeach; ?>
 
                         </div>
 
-                        <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics actifs</h2>
+                        <hr class="w-50 mx-auto">
 
-                        <?php $req2 = $pdo->query('SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id LEFT JOIN categories ON topics.idCategory = categories.id ORDER BY updateTopic DESC LIMIT 10'); ?>
+                        <div class="d-flex flex-row justify-content-center mt-5">
+                            <div>
+                                <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics actifs</h2>
 
-                        <div class="d-flex flex-row justify-content-center">
-                            <div class="col-9 d-flex flex-column align-items-center mt-5 fz-text">
+                                <?php $req2 = $pdo->query('SELECT * FROM topics LEFT JOIN users ON topics.idCreator = users.id LEFT JOIN categories ON topics.idCategory = categories.id ORDER BY updateTopic DESC LIMIT 10'); ?>
 
-                                <?php while ($resultat3 = $req2->fetch()) : ?>
-                                    <table class="table table-striped table-hover" style="width:45em">
-                                        <tbody>
-                                            <tr>
-                                                <td class="d-flex align-items-center justify-content-between rounded">
-                                                    <div class="d-flex flex-row">
-                                                        <div class="d-flex align-items-center justify-content-center" style="width:3em">
-                                                            <?php if ($resultat3->resolution == 0) : ?>
-                                                                <i class="fa fa-times text-secondary fs-2"></i>
-                                                            <?php else : ?>
-                                                                <i class="fa fa-check text-secondary fs-2"></i>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                        <div class="ms-2">
-                                                            <a href="/forum-coding-factory/public/forum/topic.php?id=<?= $resultat3->idTopic ?>" style="text-decoration:none">
-                                                                <h4 class="mb-1 mt-2 text-danger"><?= $resultat3->titleTopic ?></h4>
-                                                            </a>
-                                                            <p class="text-muted me-3" style="font-size:14px"><?= $resultat3->pseudo ?> | <a class="text-danger" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($resultat3->name) ?>&id=<?= strtolower($resultat3->idCategory) ?>" style="text-decoration:none"><?= $resultat3->name ?></a></p>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <p class="text-muted me-1" style="font-size:14px"><?= timeAgo($resultat3->updateTopic) ?></p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                <?php endwhile; ?>
+                                <div class="d-flex flex-row justify-content-center mb-5">
+                                    <div class="col-9 d-flex flex-column align-items-center mt-5 fz-text">
+
+                                        <?php while ($resultat3 = $req2->fetch()) : ?>
+                                            <table class="table table-hover shadow-sm mb-3" style="width:45em">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="d-flex align-items-center justify-content-between rounded">
+                                                            <div class="d-flex flex-row">
+                                                                <div class="d-flex align-items-center justify-content-center" style="width:3em">
+                                                                    <?php if ($resultat3->resolution == 0) : ?>
+                                                                        <i class="fa fa-times text-secondary fs-2"></i>
+                                                                    <?php else : ?>
+                                                                        <i class="fa fa-check text-secondary fs-2"></i>
+                                                                    <?php endif; ?>
+                                                                </div>
+                                                                <div class="ms-2">
+                                                                    <a href="/forum-coding-factory/public/forum/topic.php?id=<?= $resultat3->idTopic ?>" style="text-decoration:none">
+                                                                        <h4 class="mb-1 mt-2 text-danger"><?= $resultat3->titleTopic ?></h4>
+                                                                    </a>
+                                                                    <p class="text-muted me-3" style="font-size:14px"><?= $resultat3->pseudo ?> | <a class="text-danger" href="/forum-coding-factory/public/forum/forum.php?category=<?= strtolower($resultat3->name) ?>&id=<?= strtolower($resultat3->idCategory) ?>" style="text-decoration:none"><?= $resultat3->name ?></a></p>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <p class="text-muted me-1" style="font-size:14px"><?= timeAgo($resultat3->updateTopic) ?></p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        <?php endwhile; ?>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="col-3 d-flex align-items-start" style="margin-top:8.3em;margin-left:13em">
+                                <h2 class="last-topics-title text-black fw-bold text-center fst-italic" style="font-size:4em;letter-spacing:1px">Derniers topics actifs</h2>
+                                <div class="shadow-sm p-3">
+                                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia eveniet numquam placeat nulla asperiores! Deserunt praesentium non, nesciunt fugiat, provident voluptatibus error ex neque, eos harum iusto recusandae corporis expedita!</p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <?php include "../footer/footer.html"; ?>
 
@@ -209,7 +318,7 @@
                 <?php $array_category_id = []; ?>
 
                 <!-- Je parcours le résultat de la requête SQL et je push dans le tableau l'id qui correspond au nom de la catégorie -->
-                <?php foreach ($resultat as $key => $value) : ?>
+                <?php foreach ($resultatCategories as $key => $value) : ?>
 
                     <?php $array_category[$value['id']] = strtolower($value['name']); ?>
                     <?php array_push($array_category_id, $value['id']); ?>
@@ -231,11 +340,11 @@
                             $currentPage = 1;
                         } */
 
-                        $sql = 'SELECT COUNT(*) AS nb_topics FROM `topics`';
+                        $sql = 'SELECT COUNT(*) AS nb_topics FROM topics WHERE idCategory = ?';
 
                         $query = $pdo->prepare($sql);
 
-                        $query->execute();
+                        $query->execute([$_GET['id']]);
 
                         $result = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -249,8 +358,6 @@
 
                         $totalPages = ceil($totalItems / $perPage);
 
-                        /* echo $totalPages; */
-
                         $currentPage = min(max(1, $currentPage), $totalPages);
 
                         $premier = ($currentPage * $perPage) - $perPage; ?>
@@ -259,6 +366,12 @@
                             <a class="mt-5 d-flex justify-content-center" style="text-decoration: none !important" href="/forum-coding-factory/public/forum/askQuestion.php?id=<?= $_GET['id'] ?>">
                                 <div class="btn btn-outline-danger fz-text" style="width: 20%">Poser une question</div>
                             </a>
+                        <?php else : ?>
+                            <div class="d-flex justify-content-center align-items-center mt-5">
+                                <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Se connecter</a>
+                                <p class="mb-0 mx-4">ou</p>
+                                <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
+                            </div>
                         <?php endif; ?>
 
                         <?php
@@ -322,7 +435,7 @@
 
                                                 </td>
 
-                                                <td class="align-middle"><a class="td-link" href="topic.php?id=<?= $value['idTopic'] ?>"><?php echo $value['titleTopic'] ?></a>
+                                                <td class="align-middle"><a class="td-link" href="topic.php?idCategory=<?= $_GET['id'] ?>&id=<?= $value['idTopic'] ?>"><?php echo $value['titleTopic'] ?></a>
 
                                                     <br />
                                                     <div class="text-muted" style="font-size: 13px">
