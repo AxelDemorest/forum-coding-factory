@@ -88,23 +88,26 @@
                 <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
                 <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
                 <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
+                <td colspan="2">  <input type="submit" name="submit"> </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
+                <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
+                <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
+                <td colspan="2">  <input type="submit" name="submit"> </td>
             </tr>
 
             <tr>
                 <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
                 <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
                 <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
-            </tr>
-
-            <tr>
-                <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
-                <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
+                <td colspan="2">  <input type="submit" name="submit"> </td>
             </tr>
         </tbody>
           
      </table>
-     <button >Valider</button>
+     
 </div>
 
 
