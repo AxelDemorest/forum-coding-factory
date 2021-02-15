@@ -1,0 +1,29 @@
+.block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    width: 650px;
+    height: 500px;
+    border-radius: 10px;
+    border: 2px solid white;
+    padding: 20px;
+}
+
+button{
+    margin-left: 35%;
+}
+.Age{
+    margin-left:9% ;
+}
+
+.Li{
+    margin-left:6% ;
+}
+.Ps{
+    margin-right: 60px;
+}
+.Cl{
+    margin-left: 2%;
+}

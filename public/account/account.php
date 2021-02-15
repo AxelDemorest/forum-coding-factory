@@ -18,13 +18,14 @@
 
 
     <div class="container-fluid d-flex p-2 justify-content-center">
-        <div class="block ">
-            <div class="d-flex p-2 justify-content-center align-items-center flex-column">
+        <div class="block">
+            <div class="d-flex  justify-content-center align-items-center flex-column">
                 <img src="../../img/avatar.jpg" alt="" class="cercle">
-                <h2><?php echo $_SESSION['auth']->pseudo; ?> </h2>
-                <p>Classe :  <?php echo $_SESSION['auth']->status; ?></p>
-                <p>Age : <?php echo $_SESSION['auth']->age; ?> </p>
-                <p>Lieux de l'ecole: <?php echo $_SESSION['auth']->position; ?></p>
+                <h2><?php echo $_SESSION['auth']->pseudo; ?>  </h2>
+                <p>Classe :  <?php echo $_SESSION['auth']->status; ?>  </p>
+                <p>Age : <?php echo $_SESSION['auth']->age; ?>  </p>
+                <p>Lieux de l'ecole: <?php echo $_SESSION['auth']->position; ?> </p>
+                <a href="accountModif.php"><button>Modifier profil</button></a>
             </div>
 
         </div>

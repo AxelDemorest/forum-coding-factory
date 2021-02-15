@@ -8,16 +8,12 @@
 
 
 .block{
-    display:  flex;
-    justify-content: center;
-    flex-direction: column;
-    
-    align-items: center;
     background-color: whitesmoke;
-    height: 400px;
-    width: 600px;
-    border-radius: 0px;
-    border: 2px solid whitesmoke;
+    width: 650px;
+    height: 500px;
+    border-radius: 10px;
+    border: 2px solid white;
+    padding: 15px;
 }
 
 .cercle{
@@ -30,4 +26,5 @@
     max-width:120px;
     max-height: 121px ;
   }
+
   
