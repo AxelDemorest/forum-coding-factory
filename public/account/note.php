@@ -15,7 +15,7 @@
 
 
 </head>
-
+<body>
    
 
     <!-- -------------------------------- -->   
@@ -37,67 +37,70 @@
         
     ?>
 
+<div class="matiere">   
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="6">Choisir sa matière </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td colspan="2"> <button>HTML/CSS</button></td>
+            <td colspan="2"> <button>Python</button></td>
+            <td colspan="2"> <button>JavaScript</button></td>
+            <td colspan="2"> <button>Java</button></td>
+            <td colspan="2"> <button>PHP</button></td>
+            <td colspan="2"> <button>JavaScriptAvancer</button></td>
+            <td colspan="2"> <button>JavaAvancer</button></td>
+            <td colspan="2"> <button>Labday</button></td>
+            <td colspan="2"> <button>Anglais</button></td>
+            <td colspan="2"> <button>PojetWeb</button></td>
+            <td colspan="2"> <button>agil</button></td>
+
+
+
+        </tr>
+    </tbody>
+
+</table>
+</div>
+
+
+
+
+
 <div class="tableauNote "> 
      <table>
             <tread>
                 <tr>
-                    <th colspan="2">Nom de la matière :</th>
                     <th colspan="2">Note de l'élève :</th>
-                    <th colspan="2">Nom de l'élève :</th>
                     <th colspan="2">Commentaire :</th>
-                    <th colspan="2">Moyen de classe  :</th>
+                    <th colspan="2">Moyenne de classe  :</th>
 
                 </tr>
             </tread>
         <tbody>
+
             <tr>
-                <td colspan="2">  <input type="text" name="matiere" placeholder="Matière"/> </td>
                 <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="eleve" placeholder="Nom de l'élève"/> </td>
                 <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
                 <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
             </tr>
 
             <tr>
-                <td colspan="2">  <input type="text" name="matiere" placeholder="Matière"/> </td>
                 <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="eleve" placeholder="Nom de l'élève"/> </td>
                 <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
-                <td colspan="2">  <input type="text" name="moyenne" placeholder="moyenne de classe"/> </td>
-            </tr>
-            
-            <tr>
-                <td colspan="2">  <input type="text" name="matiere" placeholder="Matière"/> </td>
-                <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="eleve" placeholder="Nom de l'élève"/> </td>
-                <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
-                <td colspan="2">  <input type="text" name="moyenne" placeholder="moyenne de classe"/> </td>
+                <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
             </tr>
 
             <tr>
-                <td colspan="2">  <input type="text" name="matiere" placeholder="Matière"/> </td>
                 <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="eleve" placeholder="Nom de l'élève"/> </td>
                 <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
-                <td colspan="2">  <input type="text" name="moyenne" placeholder="moyenne de classe"/> </td>
+                <td colspan="2">  <input type="text" name="moyenne" placeholder="Moyenne de classe"/> </td>
             </tr>
-
-            <tr>
-                <td colspan="2">  <input type="text" name="matiere" placeholder="Matière"/> </td>
-                <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="eleve" placeholder="Nom de l'élève"/> </td>
-                <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
-                <td colspan="2">  <input type="text" name="moyenne" placeholder="moyenne de classe"/> </td>
-            </tr>
-
-            <tr>
-                <td colspan="2">  <input type="text" name="matiere" placeholder="Matière"/> </td>
-                <td colspan="2" > <input type="text" name="valeur" placeholder="Note de l'élève"/>  </td>
-                <td colspan="2">  <input type="text" name="eleve" placeholder="Nom de l'élève"/> </td>
-                <td colspan="2">  <input type="text" name="commentaire" placeholder="Commentaire"/> </td>
-                <td colspan="2">  <input type="text" name="moyenne" placeholder="moyenne de classe"/> </td>
-            </tr>
-            
         </tbody>
           
      </table>

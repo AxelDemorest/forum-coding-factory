@@ -27,9 +27,12 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link text-dark" href="#">Prestige</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
+                    
                     <li class="nav-item d-flex flex-column px-lg-3">
-                        <a class="nav-link text-dark" href="#">Autres</a>
+                        <a class="nav-link text-dark" href="/forum-coding-factory/public/account/note.php">Notes</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
+                    </li>
+
                     </li>
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/account/account.php">Profil</a>
@@ -75,10 +78,15 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link text-dark" href="#">Prestige</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
+                
                     <li class="nav-item d-flex flex-column px-lg-3">
-                        <a class="nav-link text-dark" href="#">Autres</a>
+                        <a class="nav-link text-dark" href="/forum-coding-factory/public/account/note.php">Notes</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
+
+
+
+
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/inscription-connexion/connexion.php">Connexion</a>
                         <span class="border-li bg-warning rounded-pill ms-2"></span>
