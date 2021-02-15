@@ -290,33 +290,10 @@
                                     <!-- J'affiche le temps du message depuis laquel il a été posté -->
                                     <div class="link-edit-topic d-flex justify-content-end me-3 pt-2" style="font-size: 15px">
                                         <?php if (isset($_SESSION['auth']->id) && ($array_topics['id'] === $_SESSION['auth']->id)) : ?>
-                                            <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                            <?php if ($_SESSION['auth']->rank > 0) : ?>
-                                                <a href="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-trash"></i> Supprimer</a>
-                                            <?php endif; ?>
+                                            <a onclick="" class="text-muted"><i class="fa fa-edit"></i> Éditer</a>
                                         <?php endif; ?>
                                     </div>
                                     </p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Modal suppression topic -->
-                        <div class="modal fade fz-text" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer le sujet</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Êtes-vous certain de vouloir supprimer ce sujet ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button type="button" onclick="deleteTopic(<?= $_GET['id'] ?>)" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -442,25 +419,6 @@
                         }
                     ?>
 
-                        <!-- Modal suppression topic -->
-                        <div class="modal fade fz-text" id="exampleModalMessage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Supprimer ce message</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Êtes-vous certain de vouloir supprimer ce message ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button type="button" onclick="deleteMessage(<?= $b['idMessage'] ?>)" class="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="d-flex flex-row">
 
                             <?php if (isset($_SESSION['auth'])) : ?>
@@ -506,10 +464,7 @@
                                         <?php endif; ?>
                                         <?php if (isset($_SESSION['auth']->id) && ($b['id'] === $_SESSION['auth']->id)) : ?>
                                             <div class="link-edit-topic">
-                                                <a onclick="" class="text-muted me-3"><i class="fa fa-edit"></i> Éditer</a>
-                                                <?php if ($_SESSION['auth']->rank > 0) : ?>
-                                                    <a href="" onclick="" class="text-muted" data-bs-toggle="modal" data-bs-target="#exampleModalMessage"><i class="fa fa-trash"></i> Supprimer</a>
-                                                <?php endif; ?>
+                                                <a onclick="" class="text-muted"><i class="fa fa-edit"></i> Éditer</a>
                                             </div>
                                         <?php endif; ?>
                                     </div>
