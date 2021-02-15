@@ -21,19 +21,14 @@
         <div class="block ">
             <div class="d-flex p-2 justify-content-center align-items-center flex-column">
                 <img src="../../img/avatar.jpg" alt="" class="cercle">
-                <h2>NOM  ET  PRENOM </h2>
-                <p>Classe : </p>
-                <p>Age :</p>
-                <p>Lieux de l'ecole (Paris ou Cergy)</p>
+                <h2><?php echo $_SESSION['auth']->pseudo; ?> </h2>
+                <p>Classe :  <?php echo $_SESSION['auth']->status; ?></p>
+                <p>Age : <?php echo $_SESSION['auth']->age; ?> </p>
+                <p>Lieux de l'ecole: <?php echo $_SESSION['auth']->position; ?></p>
             </div>
 
         </div>
     </div>
-
-                                                        
-                            
-
-
      <?php include "../footer/footer.html";?>       
 </body>
 </html>
