@@ -128,12 +128,22 @@
                     <div class="col-8 bg-white rounded shadow-sm fz-text mb-1 mt-5 p-4">
                         <p class="text-center">Bienvenue sur le forum officiel de <strong class="text-danger">BlackBoard Factory</strong>, ce forum vous est dédié pour vous aider dans votre développement. Si vous avez besoin d'aide, un élève ou un PO de la <em>Coding Factory</em> vous répondra et vous aidera à trouver une solution à votre problème. Vous pourrez trouver sur ce forum, différentes catégories afin de cibler vos questions. Nous vous demandons donc de <strong class="text-danger">bien référencer vos questions</strong> sous peine d'un avertissement.</p>
                         <?php if (!isset($_SESSION['auth'])) : ?>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Se connecter</a>
+                                <p class="mb-0 mx-4">ou</p>
+                                <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="w-100 bg-light d-flex justify-content-center align-items-center">
+                    <div class="col-8 bg-white rounded shadow-sm fz-text mb-1 mt-5 p-4">
                         <div class="d-flex justify-content-center align-items-center">
                             <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Se connecter</a>
                             <p class="mb-0 mx-4">ou</p>
                             <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
                         </div>
-                        <?php endif; ?>
                     </div>
                 </div>
 
