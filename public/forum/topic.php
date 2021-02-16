@@ -233,14 +233,14 @@
 
                             global $pdo;
 
-                            $reqSearchUser = $pdo->prepare('SELECT pseudo FROM users WHERE pseudo = ?');
+                            $reqSearchUser = $pdo->prepare('SELECT id FROM users WHERE pseudo = ?');
                             $reqSearchUser->execute([$matches[1]]);
 
                             // C'est dans cette fonction qu'on enverra la notification
 
                             if ($reqSearchUser->rowCount() == 1) {
-                                $pseudoUser = $reqSearchUser->fetch()->pseudo;
-                                return '<a class="mention-link-user" href="/forum-coding-factory/public/account/account.php?pseudo=' . $pseudoUser . '">' . $matches[0] . '</a>';
+                                $idUser = $reqSearchUser->fetch()->id;
+                                return '<a class="mention-link-user" href="/forum-coding-factory/public/account/account.php?id=' . $idUser . '">' . $matches[0] . '</a>';
                             }
 
                             return $matches[0];
