@@ -6,10 +6,7 @@ require_once '../../database/db.php';
 
 /**
  * TODO:
- * - Lister les élèves par classe (good)
  * - Afficher les notes de chaque élève quand il regarde son profil
- * - Faire un panel facile à utiliser pour modifier les notes pour les PO (good)
- * - Pouvoir modifier une note pour un élève (good)
  */
 
 if (isset($_POST['submit'])) {
