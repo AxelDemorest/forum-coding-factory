@@ -185,6 +185,49 @@
 
             </div> <!-- FIN CONTENT -->
 
+            <!-- debut nouveauter alexis -->
+
+                <hr class="mx-auto my-5 w-75 rounded" style="height: 10px; background-color: white !important;">
+
+                <div class="main-content text-white" style="margin-top: 60px;">
+                <div class="container">
+                    <div class="row">
+                        <h1 class="pt-4 text-center">Les Nouveautés</h1>
+                    </div>
+                    <div class="row pt-5">
+                        <div class="col-4 p-5 rounded" style="background-color: #323232">
+                            <h2 class="pb-4">Ajouter une nouveautés</h2>
+                            <?php if (isset($resultat) && $resultat) : echo '<div class="alert alert-success">La catégorie ' . $nameCategory . ' a bien été ajoutée avec succès !</div>';
+                            endif; ?>
+                            <?php if (!empty($errors)) : ?>
+                                <div class="alert alert-danger">
+                                    <ul>
+
+                                        <?php foreach ($errors as $error) : ?>
+
+                                            <li><?= $error; ?></li>
+
+                                        <?php endforeach; ?>
+
+                                    </ul>
+                                </div>
+
+                            <?php endif; ?>
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="addCategoryForum" class="form-label">Nom de la nouveauté</label>
+                                    <input name="nameCategory" type="text" class="form-control" id="addCategoryForum" required>
+                                </div>
+                                
+                                <button name="addCategoryForumSubmit" type="submit" class="btn btn-primary">Envoyer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>                    
+                                
+                <!-- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,-->
+
+
         <?php endif; ?>
 
     <?php endif; ?>
