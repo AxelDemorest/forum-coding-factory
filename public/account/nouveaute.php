@@ -85,17 +85,93 @@ if (isset($_POST['submit'])) {
 
     ?>
 
-
-    <div class="card" style="width: 20rem;">
+<!--
+    <div class="card " style="width: 20rem;">
         <img src="new.gif" class="card-img-top row align-items-center " alt="gifNew">
             <div class="card-body">
                 <p class="card-text" > BIenvenue sur la page 1 des nouveauter en essaie ajzbfzaibdizab doauzbdoaz bdoazdboazidbazodbazldbazdlbazdjazjdkbazkj</p>
             </div>
     </div>
-
+-->
 
 
             
+    
+
+    <div class="card mySlides " style="width: 20rem;">
+  <img class=" card-img-top row align-items-center " src="new.gif" alt="gifNew" >
+    <div class="card-body">
+                <p class="card-text  " > BIenvenue sur la padadazdazdge 2 des nouveauter en essaie ajzbfzaibdizab doauzbdoaz bdoazdboazidbazodbazldbazdlbazdjazjdkbazkj</p>
+            </div>
+    </div>
+</div>
+
+
+<div class="card mySlides " style="width: 20rem;">
+  <img class=" card-img-top row align-items-center " src="new.gif" alt="gifNew" >
+    <div class="card-body">
+                <p class="card-text  " > BIenvenue sur la padadazdazdge 3 des nouveauter en essaie ajzbfzaibdizab doauzbdoaz bdoazdboazidbazodbazldbazdlbazdjazjdkbazkj</p>
+            </div>
+    </div>
+</div>
+
+<div class="card mySlides " style="width: 20rem;">
+  <img class=" card-img-top row align-items-center " src="new.gif" alt="gifNew" >
+    <div class="card-body">
+                <p class="card-text  " > BIenvenue sur la padadazdazdge 5 dajzdblaz dnaklz dnaz ldnazkldnlakz</p>
+            </div>
+    </div>
+</div>
+
+
+<div class="w3-center">
+  <div class="w3-section">
+    <button class="w3-button w3-light-grey" onclick="plusDivs(-1)">❮ Prev</button>
+    <button class="w3-button w3-light-grey" onclick="plusDivs(1)">Next ❯</button>
+  </div>
+  <button class="w3-button demo" onclick="currentDiv(1)">1</button> 
+  <button class="w3-button demo" onclick="currentDiv(2)">2</button> 
+  <button class="w3-button demo" onclick="currentDiv(3)">3</button> 
+</div>
+
+    <script>
+         var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+        showDivs(slideIndex += n);
+            }
+
+        function currentDiv(n) {
+        showDivs(slideIndex = n);
+            }
+
+            function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = x.length}
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-red", "");
+            }
+            x[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " w3-red";
+            }
+    </script>
+
+
+
+
+
+
+
+
+
+
 
     <!-- Footer -->
     <?php include "../footer/footer.html"; ?>
