@@ -197,8 +197,6 @@
                     <div class="row pt-5">
                         <div class="col-4 p-5 rounded" style="background-color: #323232">
                             <h2 class="pb-4">Ajouter une nouveautés</h2>
-                            <?php if (isset($resultat) && $resultat) : echo '<div class="alert alert-success">La catégorie ' . $nameCategory . ' a bien été ajoutée avec succès !</div>';
-                            endif; ?>
                             <?php if (!empty($errors)) : ?>
                                 <div class="alert alert-danger">
                                     <ul>
@@ -215,16 +213,38 @@
                             <?php endif; ?>
                             <form method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="addCategoryForum" class="form-label">Nom de la nouveauté</label>
-                                    <input name="nameCategory" type="text" class="form-control" id="addCategoryForum" required>
+                                    <label for="addNouveauteForum" class="form-label">Nom de la nouveauté</label>
+                                    <input name="nameNouveaute" type="text" class="form-control" id="addNouveauteForum" required>
                                 </div>
                                 
-                                <button name="addCategoryForumSubmit" type="submit" class="btn btn-primary">Envoyer</button>
+                                <div class="mb-3">
+                                    <label for="contentNouveaute" class="form-label">Contenue de la nouveauté</label>
+                                    <input name="contentNouveaute" type="text" class="form-control" id="contentNouveaute" required>
+                                </div>
+
+                                <button name="addNouveauteSubmit" type="submit" class="btn btn-primary">Envoyer</button>
                             </form>
                         </div>
                     </div>
-                </div>                    
-                                
+                </div>            
+
+            <?php
+
+                if (isset($_POST["addNouveauteSubmit"])) {
+                               $updateNouveaute = $pdo->prepare("
+                                INSERT INTO nouveaute(titleNouveaute , contentNouveaute )
+                                VALUES (:titleNouveaute, :contentNouveaute)
+                                ");    
+                             
+                  $updateNouveaute->execute([
+                                        'titleNouveaute' => $_POST["nameNouveaute"],
+                                        'contentNouveaute' => $_POST["contentNouveaute"], 
+                                    ]);  
+                  }
+
+                    ?>
+
+                    
                 <!-- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,-->
 
 
