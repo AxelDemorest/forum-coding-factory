@@ -53,7 +53,6 @@ if (isset($_SESSION['auth'])) : ?>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
-                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/noteEleve.php">Notes pour les élèves </a></li>
 
                                 </ul>
                                 </li>
@@ -136,7 +135,6 @@ if (isset($_SESSION['auth'])) : ?>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
-                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/noteEleve.php">Notes pour les élèves </a></li>
                                 </ul>
                                 </li>
                             </ul>
