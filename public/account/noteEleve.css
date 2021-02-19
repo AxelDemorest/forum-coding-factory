@@ -1,0 +1,18 @@
+table {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30%;
+}
+
+
+    
+    td {
+        border: 1px solid #333;
+        background-color: white;
+        color: black;
+    }
+
+    tr {
+        background-color: #333;
+        color: #fff;
+    }

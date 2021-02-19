@@ -38,7 +38,7 @@ if (isset($_SESSION['auth'])) : ?>
                     </li>
 
 
-
+        <!-- deroulant -->
                     <nav class="navbar navbar-expand-lg  ">
                         <div class="container-fluid">
                            
@@ -53,6 +53,8 @@ if (isset($_SESSION['auth'])) : ?>
                                 <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/noteEleve.php">Notes pour les élèves </a></li>
+
                                 </ul>
                                 </li>
                             </ul>
@@ -119,6 +121,28 @@ if (isset($_SESSION['auth'])) : ?>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
 
+            <!-- deroulant -->
+                    <nav class="navbar navbar-expand-lg  ">
+                        <div class="container-fluid">
+                           
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                            <ul class="navbar-nav">
+                            
+                                <a class="nav-link dropdown-toggle text-dark " href="#" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" >
+                                    Autres
+                                </a>
+                               <!-- <span class="border-li bg-danger rounded-pill "></span> -->
+                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
+                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/noteEleve.php">Notes pour les élèves </a></li>
+                                </ul>
+                                </li>
+                            </ul>
+                            </div>
+                        </div>
+                        </nav>
 
 
                     <li class="nav-item d-flex flex-column px-lg-3">
