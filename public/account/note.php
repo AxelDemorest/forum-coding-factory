@@ -163,7 +163,7 @@ if (isset($_POST['submit'])) {
                                 <tr>
                                     <td class="text-center"> <?= $_GET['matiere'] ?> </td>
                                     <form action="" method="POST">
-                                        <td> <input type="hidden" name="pseudo" placeholder="Note de l'élève" value="<?= $value['pseudo'] ?>" /> <input type="text" name="pseudo" placeholder="Note de l'élève" value="<?= strtoupper($value['nom']) ?> <?= $value['prenom'] ?>" readonly /> </td>
+                                        <td> <input type="hidden" name="pseudo" placeholder="Note de l'élève" value="<?= $value['pseudo'] ?>" /> <p><?= strtoupper($value['nom']) ?> <?= $value['prenom'] ?></p></td>
                                         <td> <input type="text" name="note" placeholder="Note de l'élève" /> </td>
                                         <td> <input type="submit" name="submit" class="btn btn-danger"></td>
                                     </form>

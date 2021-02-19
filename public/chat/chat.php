@@ -1,24 +1,15 @@
 <?php
 session_start();
 
-//Création de la base de donnée
-$servname = "localhost"; // Je travail en local donc localhost
-$dbname = "chatDirect"; // nom de la base de donnée
-$user = "root"; // Toujours ça sur mac
-$pass = "root"; // Toujours ça sur mac
-
-$pdo = new PDO("mysql:host=$servname;dbname=$dbname", $user, $pass); // je me connecte
-
-//On gère les exceptions
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-
-
+require_once "../../database/db.php";
 
 if (isset($_POST['messages']) and !empty($_POST['messages'])) {
+
     $pseudo = htmlspecialchars($_SESSION['auth']->pseudo);
     $msg = htmlspecialchars($_POST['messages']);
+
     $insertmsg = $pdo->prepare('INSERT INTO chat(pseudo, msg) VALUES (?,?)');
+    
     $insertmsg->execute(array($pseudo, $msg));
 }
 
@@ -43,6 +34,7 @@ if (isset($_POST['messages']) and !empty($_POST['messages'])) {
     <?php
 
     include "../header/header.php"; ?>
+
     <div id="body">
 
         <div id="chat-circle" class="btn btn-raised">

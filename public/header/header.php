@@ -24,7 +24,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
                     <li class="nav-item d-flex flex-column px-lg-3">
-                        <a class="nav-link text-dark" href="#">Prestige</a>
+                        <a class="nav-link text-dark" href="http://localhost:8888/forum-coding-factory/public/battles/battle.php">Battles</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
                     </li>
@@ -112,7 +112,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
                     <li class="nav-item d-flex flex-column px-lg-3">
-                        <a class="nav-link text-dark" href="#">Prestige</a>
+                        <a class="nav-link text-dark" href="http://localhost:8888/forum-coding-factory/public/battles/battle.php">Battles</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
 

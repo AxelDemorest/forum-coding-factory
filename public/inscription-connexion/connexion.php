@@ -1,82 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php session_start();
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link href="connexion.css" rel="stylesheet" />
-    <link href="../header/header.css" rel="stylesheet" />
-    <link href="../footer/footer.css" rel="stylesheet" />
-    <title>Forum - Coding factory</title>
-</head>
+require_once '../../database/db.php'; 
 
-<body class="bg-light">
+if (!empty($_POST)) {
 
-    <!-- Navbar -->
-    <?php session_start();
+    $errors = array();
 
-    include "../header/header.php";
+    $valid = true;
 
-    if (isset($_SESSION['auth'])) : ?>
+    if (isset($_POST['formConnexionSubmit'])) {
 
-        <?php header('Location: /forum-coding-factory/public/account/account.php') ?>
+        $identifiant  = htmlspecialchars(trim($_POST['userId']));
+        $password = trim($_POST['password']); // On récupère le password
 
-    <?php else : ?>
+        if (empty($identifiant)) {
+            $errors['identifiant'] = "l'identifiant est incorrect.";
+            $valid = false;
+        }
 
-        <?php
+        if (empty($password)) {
+            $errors['password'] = "Le mot de passe est incorrect.";
+            $valid = false;
+        }
 
-        require_once '../../database/db.php';
+        if ($valid) {
 
-        if (!empty($_POST)) {
+            $req = $pdo->prepare('SELECT * FROM users WHERE mail = :username OR pseudo = :username');
 
-            $errors = array();
+            $req->execute(['username' => $identifiant]);
 
-            $valid = true;
+            $result = $req->fetch();
 
-            if (isset($_POST['formConnexionSubmit'])) {
+            if (empty($result)) {
 
-                $identifiant  = htmlspecialchars(trim($_POST['userId']));
-                $password = trim($_POST['password']); // On récupère le password
+                $errors['error'] = "Utilisateur ou mot de passe incorrect.";
+            } else {
 
-                if (empty($identifiant)) {
-                    $errors['identifiant'] = "l'identifiant est incorrect.";
-                    $valid = false;
-                }
+                if (password_verify($password, $result->password)) {
 
-                if (empty($password)) {
-                    $errors['password'] = "Le mot de passe est incorrect.";
-                    $valid = false;
-                }
+                    $_SESSION['auth'] = $result;
 
-                if ($valid) {
+                    header('Location: /forum-coding-factory/public/home/home.php');
+                } else {
 
-                    $req = $pdo->prepare('SELECT * FROM users WHERE mail = :username OR pseudo = :username');
-
-                    $req->execute(['username' => $identifiant]);
-
-                    $result = $req->fetch();
-
-                    if (empty($result)) {
-
-                        $errors['error'] = "Utilisateur ou mot de passe incorrect.";
-                    } else {
-
-                        if (password_verify($password, $result->password)) {
-
-                            $_SESSION['auth'] = $result;
-
-                            header('Location: /forum-coding-factory/public/home/home.php');
-                        } else {
-
-                            $errors['bddPassword'] = "Utilisateur ou mot de passe incorrect.";
-                        }
-                    }
+                    $errors['bddPassword'] = "Utilisateur ou mot de passe incorrect.";
                 }
             }
         }
+    }
+}
 
+if (isset($_SESSION['auth'])) : ?>
+
+    <?php header('Location: /forum-coding-factory/public/account/account.php') ?>
+
+<?php else : ?>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link href="connexion.css" rel="stylesheet" />
+        <link href="../header/header.css" rel="stylesheet" />
+        <link href="../footer/footer.css" rel="stylesheet" />
+        <title>Forum - Coding factory</title>
+    </head>
+
+    <body class="bg-light">
+
+        <!-- Navbar -->
+
+        <?php
+
+        include "../header/header.php";
 
         ?>
 
@@ -129,6 +129,6 @@
 
     <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-</body>
+    </body>
 
-</html>
+    </html>

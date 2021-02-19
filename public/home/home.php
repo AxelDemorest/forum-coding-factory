@@ -21,7 +21,7 @@
 
     <!-- Header -->
     <header class="header shadow d-flex justify-content-center align-items-center flex-column">
-        <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px">Bienvenue sur BlackBoard Factory</h1>
+        <h1 class="text-white fw-bold text-center fst-italic" style="font-size:6em;letter-spacing:1px;text-shadow:1px 1px 2px black">Bienvenue sur BlackBoard Factory</h1>
         <div class="hr-title-header bg-white rounded-pill mt-5"></div>
     </header>
 

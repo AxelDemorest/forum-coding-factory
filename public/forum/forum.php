@@ -133,17 +133,11 @@
                                 <p class="mb-0 mx-4">ou</p>
                                 <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
                             </div>
+                        <?php else : ?>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Accéder aux classement</a>
+                            </div>
                         <?php endif; ?>
-                    </div>
-                </div>
-
-                <div class="w-100 bg-light d-flex justify-content-center align-items-center">
-                    <div class="col-8 bg-white rounded shadow-sm fz-text mb-1 mt-5 p-4">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <a href="/forum-coding-factory/public/inscription-connexion/connexion.php" class="btn btn-danger">Se connecter</a>
-                            <p class="mb-0 mx-4">ou</p>
-                            <a href="/forum-coding-factory/public/inscription-connexion/inscription.php" class="btn btn-danger">S'inscrire</a>
-                        </div>
                     </div>
                 </div>
 

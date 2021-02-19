@@ -38,7 +38,7 @@
 
                     if (empty($selectUserGet)) : ?>
 
-                    <h2>Utilisateur introuvable</h2>
+                        <h2>Utilisateur introuvable</h2>
 
                     <?php exit;
 
@@ -143,6 +143,54 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Note de l'élève -->
+                    <?php
+
+                    $selectNotes = $pdo->prepare('SELECT * FROM note WHERE userId = ?');
+
+                    $selectNotes->execute([$_SESSION['auth']->id]);
+
+                    $selectNotes = $selectNotes->fetchAll(PDO::FETCH_ASSOC);
+
+                    ?>
+
+
+                    <div class="d-flex flex-column align-items-center bg-white shadow-sm border border-1 rounded <?= !isset($_GET['id']) ? "mt-5" : null ?>">
+                        <div class="d-flex flex-column align-items-center w-100 mb-3">
+                            <h3 class="mt-4 mb-4">Liste des notes</h3>
+
+                            <table class="table table-bordered w-50">
+                                <thead>
+                                    <tr>
+                                        <th>Matières</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($selectNotes as $key => $value) : ?>
+
+                                        <?php
+
+                                        $selectmatiere = $pdo->prepare('SELECT matiereName FROM matiere WHERE matiereId = ?');
+
+                                        $selectmatiere->execute([$value['matiereId']]);
+
+                                        $selectmatiere = $selectmatiere->fetch(PDO::FETCH_ASSOC);
+
+                                        ?>
+
+                                        <tr>
+                                            <td><?= $selectmatiere['matiereName'] ?></td>
+                                            <td><?= $value['note'] ?></td>
+                                        </tr>
+
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
                 <?php
                 endif;
 
@@ -187,7 +235,7 @@
                                 </div>
                                 <div class="bg-white shadow-sm border border-1 rounded p-3 mb-5 ms-4">
                                     <h5>Nombre de votes positifs</h5>
-                                    <p style="font-size:13px" class="text-muted">Nombre des votes positifs donnés par d'autres<br /> utilisateurs aux topics/réponses</p>
+                                    <p style="font-size:13px" class="text-muted">Nombre de votes positifs donnés par d'autres<br /> utilisateurs aux topics/réponses</p>
                                     <h6><?= $totalVotesUser ?></h6>
                                 </div>
                             </div>
@@ -238,7 +286,7 @@
                                 </div>
                                 <div class="bg-white shadow-sm border border-1 rounded p-3 mb-5 ms-4">
                                     <h5>Nombre de votes positifs</h5>
-                                    <p style="font-size:13px" class="text-muted">Nombre des votes positifs donnés par d'autres<br /> utilisateurs aux topics/réponses</p>
+                                    <p style="font-size:13px" class="text-muted">Nombre de votes positifs donnés par d'autres<br /> utilisateurs aux topics/réponses</p>
                                     <h6><?= $totalVotesUser ?></h6>
                                 </div>
                             </div>
