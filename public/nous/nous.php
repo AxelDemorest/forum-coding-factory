@@ -67,7 +67,7 @@
              <div class="col-md-4 col-lg-3 item">
                  <div class="box" style="background-image:url(alexis.png)">
                      <div class="cover">
-                     <a href="/forum-coding-factory/public/message/message.php" >
+                     <a href="/forum-coding-factory/public/nous/alexis.php" >
                          <h3 class="name">Majchrzak Alexis </h3>
                          <p class="title">Son Profil </p>
                          <div class="social"> <a href="#"> <i class="fa fa-github"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>  <a href="#"><i class="fa fa-twitter"></i></a> </div>
