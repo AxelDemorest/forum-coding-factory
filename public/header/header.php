@@ -23,6 +23,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/forum/forum.php">Forum</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
+
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="http://localhost:8888/forum-coding-factory/public/battles/battle.php">Battles</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
@@ -30,38 +31,36 @@ if (isset($_SESSION['auth'])) : ?>
                     </li>
 
 
-
-                    <li class="nav-item d-flex flex-column px-lg-3">
-                        <a class="nav-link text-dark" href="#">Autres </a>
-                        <span class="border-li bg-danger rounded-pill ms-2"></span>
-                    </li>
-                    </li>
-
-
         <!-- deroulant -->
-                    <nav class="navbar navbar-expand-lg  ">
-                        <div class="container-fluid">
-                           
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                            <ul class="navbar-nav">
-                            
-                                <a class="nav-link dropdown-toggle text-dark " href="#" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" >
-                                    Autres
-                                </a>
-                               <!-- <span class="border-li bg-danger rounded-pill "></span> -->
-                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
-                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                  
+                
+                    <li class="nav-item dropdown  ">
+                    <li class="nav-item d-flex flex-column px-lg-3">
+                    
+                    <a class="nav-link dropdown-toggle nav-link text-dark px-lg-4 " data-bs-toggle="dropdown"
+                    
+                        href="#" role="button" aria-expanded="false">Autres</a>
+                    <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li> <!-- ligne séparatrice -->
+                        <li><a class="dropdown-item  " href="/forum-coding-factory/public/message/message.php"> Chat </a></li>
+                    </ul>          
+                            <span class="border-li bg-danger rounded-pill ms-2"></span>
+              
+                    </li>
+                    </li>
+            
 
-                                </ul>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </nav>
 
 
+                 
+
+
+
+                     
 
 
 
@@ -120,27 +119,33 @@ if (isset($_SESSION['auth'])) : ?>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
 
-            <!-- deroulant -->
-                    <nav class="navbar navbar-expand-lg  ">
-                        <div class="container-fluid">
-                           
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                            <ul class="navbar-nav">
-                            
-                                <a class="nav-link dropdown-toggle text-dark " href="#" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" >
-                                    Autres
-                                </a>
-                               <!-- <span class="border-li bg-danger rounded-pill "></span> -->
-                                <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
-                                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
-                                </ul>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                        </nav>
+
+
+
+        <!-- deroulant -->
+                  
+                
+        <li class="nav-item dropdown  ">
+                    <li class="nav-item d-flex flex-column px-lg-3">
+                    
+                    <a class="nav-link dropdown-toggle nav-link text-dark px-lg-4 " data-bs-toggle="dropdown"
+                    
+                        href="#" role="button" aria-expanded="false">Autres</a>
+                    <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li> <!-- ligne séparatrice -->
+                        <li><a class="dropdown-item  " href=""> Chat </a></li>
+                    </ul>          
+                            <span class="border-li bg-danger rounded-pill ms-2"></span>
+              
+                    </li>
+                    </li>
+            
+
+
 
 
                     <li class="nav-item d-flex flex-column px-lg-3">

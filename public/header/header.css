@@ -23,3 +23,6 @@
 }
 
 
+.dropdown-menu {                   /* voir pour changer quand sa grandit le header*/ 
+    position:static !important ;
+}
