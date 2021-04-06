@@ -43,10 +43,15 @@ if (isset($_SESSION['auth'])) : ?>
                     <ul class="dropdown-menu" >
                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
-                        <li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/message/message.php">Chat </a></li>
+
+                       
+                    
+                         <li>
                             <hr class="dropdown-divider">
                         </li> <!-- ligne séparatrice -->
-                        <li><a class="dropdown-item  " href="/forum-coding-factory/public/message/message.php"> Chat </a></li>
+
+                        <li><a class="dropdown-item  " href="/forum-coding-factory/public/nous/nous.php"> Nous  </a></li>
                     </ul>          
                             <span class="border-li bg-danger rounded-pill ms-2"></span>
               
