@@ -42,7 +42,7 @@ if (isset($_SESSION['auth'])) : ?>
                         href="#" role="button" aria-expanded="false">Autres</a>
                     <ul class="dropdown-menu" >
                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
-                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/nouveaute/nouveaute.php">Nouveautées</a></li>
                     <li><a class="dropdown-item" href="/forum-coding-factory/public/message/message.php">Chat </a></li>
 
                        
@@ -58,18 +58,6 @@ if (isset($_SESSION['auth'])) : ?>
                     </li>
                     </li>
             
-
-
-
-                 
-
-
-
-                     
-
-
-
-
 
 
 
@@ -131,7 +119,7 @@ if (isset($_SESSION['auth'])) : ?>
                         href="#" role="button" aria-expanded="false">Autres</a>
                     <ul class="dropdown-menu" >
                     <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
-                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/nouveaute/nouveaute.php">Nouveautées</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li> <!-- ligne séparatrice -->
