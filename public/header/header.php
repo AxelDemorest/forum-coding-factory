@@ -119,13 +119,6 @@ if (isset($_SESSION['auth'])) : ?>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
 
-                    <li class="nav-item d-flex flex-column px-lg-3">
-                        <a class="nav-link text-dark" href="#">Autres</a>
-                        <span class="border-li bg-danger rounded-pill ms-2"></span>
-                    </li>
-
-
-
 
         <!-- deroulant -->
                   
