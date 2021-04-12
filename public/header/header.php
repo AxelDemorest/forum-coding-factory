@@ -36,6 +36,7 @@ if (isset($_SESSION['auth'])) : ?>
 
                     <li class="nav-item dropdown  ">
                     <li class="nav-item d-flex flex-column px-lg-3">
+<<<<<<< HEAD
 
                         <a class="nav-link dropdown-toggle nav-link text-dark px-lg-4 " data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
@@ -53,11 +54,33 @@ if (isset($_SESSION['auth'])) : ?>
                         </ul>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
 
+=======
+                    
+                    <a class="nav-link dropdown-toggle nav-link text-dark px-lg-4 " data-bs-toggle="dropdown"
+                    
+                        href="#" role="button" aria-expanded="false">Autres</a>
+                    <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/nouveaute/nouveaute.php">Nouveautées</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/message/message.php">Chat </a></li>
+
+                       
+                    
+                         <li>
+                            <hr class="dropdown-divider">
+                        </li> <!-- ligne séparatrice -->
+
+                        <li><a class="dropdown-item  " href="/forum-coding-factory/public/nous/nous.php"> Nous  </a></li>
+                    </ul>          
+                            <span class="border-li bg-danger rounded-pill ms-2"></span>
+              
+>>>>>>> caaacba6b9f5b744bed3dd507dc1200999b562c3
                     </li>
                     </li>
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -71,6 +94,8 @@ if (isset($_SESSION['auth'])) : ?>
 
 
 
+=======
+>>>>>>> caaacba6b9f5b744bed3dd507dc1200999b562c3
 
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/account/account.php">Profil</a>
@@ -117,6 +142,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
 
+<<<<<<< HEAD
                     <!-- deroulant -->
 
 
@@ -132,6 +158,28 @@ if (isset($_SESSION['auth'])) : ?>
                             <li><a class="dropdown-item  " href=""> Chat </a></li>
                         </ul>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
+=======
+
+        <!-- deroulant -->
+                  
+                
+        <li class="nav-item dropdown  ">
+                    <li class="nav-item d-flex flex-column px-lg-3">
+                    
+                    <a class="nav-link dropdown-toggle nav-link text-dark px-lg-4 " data-bs-toggle="dropdown"
+                    
+                        href="#" role="button" aria-expanded="false">Autres</a>
+                    <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
+                    <li><a class="dropdown-item" href="/forum-coding-factory/public/nouveaute/nouveaute.php">Nouveautées</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li> <!-- ligne séparatrice -->
+                        <li><a class="dropdown-item  " href=""> Chat </a></li>
+                    </ul>          
+                            <span class="border-li bg-danger rounded-pill ms-2"></span>
+              
+>>>>>>> caaacba6b9f5b744bed3dd507dc1200999b562c3
                     </li>
                     </li>
                     <li class="nav-item d-flex flex-column px-lg-3">
