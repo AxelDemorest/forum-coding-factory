@@ -25,12 +25,12 @@
 
     ?>
 
-    <div class="container">
+    <div class="container-fluid fz-text">
         <div class="block-battles">
 
         </div>
         <div class="list-battles-on">
-            
+            <h4 class="mx-auto text-center mt-4">Battles en cours</h4>
         </div>
     </div>
 
