@@ -46,13 +46,13 @@
 <div class="team-grid">
      <div class="container">
          <div class="intro">
-             <h2 class="text-center">Nous </h2>   <!-- titre -->
-             <p class="text-center"> oueoue blabla l'ekip  </p>   <!-- si on veut sous titre -->
+             <h2 class="text-center"> Qui sommes Nous ? </h2>   <!-- titre -->
+             <p class="text-center">  </p>   <!-- si on veut sous titre -->
          </div>
          <div class="row people d-flex justify-content-center">
 
             <div class="col-md-4 col-lg-3 item"> 
-                 <div class="box" style="background-image:url(axel.png)">
+                 <div class="box" style="background-image:url(axel.jpg)">
                      <div class="cover"  >
                      <a href="" >
                          <h3 class="name">Demorest Axel </h3>
@@ -78,10 +78,10 @@
 
 
              <div class="col-md-4 col-lg-3 item">
-                 <div class="box" style="background-image:url(angel.png)">
+                 <div class="box" style="background-image:url(angel.jpg)">
                  <div class="cover"  >
                      <a href="" >
-                         <h3 class="name">Demorest Axel </h3>
+                         <h3 class="name">Moreau Angel </h3>
                          <p class="title">Son Profil </p>
                          <div class="social"> <a href="#"> <i class="fa fa-github"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>  <a href="#"><i class="fa fa-twitter"></i></a> </div>
                         </a> </div>
@@ -89,10 +89,10 @@
              </div>
 
              <div class="col-md-4 col-lg-3 item">
-                 <div class="box" style="background-image:url(merwan.png)">
+                 <div class="box" style="background-image:url(merwan.JPG)">
                  <div class="cover"  >
                      <a href="" >
-                         <h3 class="name">Demorest Axel </h3>
+                         <h3 class="name">Laouni Merwan </h3>
                          <p class="title">Son Profil </p>
                          <div class="social"> <a href="#"> <i class="fa fa-github"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>  <a href="#"><i class="fa fa-twitter"></i></a> </div>
                         </a> </div>
