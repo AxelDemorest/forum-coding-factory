@@ -37,7 +37,7 @@ if (isset($_SESSION['auth'])) : ?>
                     <li class="nav-item dropdown  ">
                     <li class="nav-item d-flex flex-column px-lg-3">
 
-                        <a class="nav-link dropdown-toggle nav-link text-dark px-lg-4 " data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
+                        <a class="nav-link dropdown-toggle nav-link text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
