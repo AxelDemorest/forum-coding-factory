@@ -24,5 +24,12 @@
 
 
 .dropdown-menu {                   /* voir pour changer quand sa grandit le header*/ 
-    position:static !important ;
+    position: absolute !important ;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }
+
+
+
+
+

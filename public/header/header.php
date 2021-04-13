@@ -19,6 +19,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link text-dark" aria-current="page" href="/forum-coding-factory/public/home/home.php">Accueil</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
                     </li>
+                    
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/forum/forum.php">Forum</a>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
@@ -35,14 +36,14 @@ if (isset($_SESSION['auth'])) : ?>
 
 
                     <li class="nav-item dropdown  ">
-                    <li class="nav-item d-flex flex-column px-lg-3">
+                    <li class="nav-item d-flex flex-column ">
 
+                    <li class="nav-item dropdown px-lg-3 ">
                         <a class="nav-link dropdown-toggle nav-link text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
-                            <li><a class="dropdown-item" href="/forum-coding-factory/public/message/message.php">Chat </a></li>
-
+                            <li><a class="dropdown-item" href="/forum-coding-factory/public/message/chatgeneral.php">Chat </a></li>
 
 
                             <li>
@@ -50,11 +51,27 @@ if (isset($_SESSION['auth'])) : ?>
                             </li> <!-- ligne séparatrice -->
 
                             <li><a class="dropdown-item  " href="/forum-coding-factory/public/nous/nous.php"> Nous </a></li>
+                       
                         </ul>
-                        <span class="border-li bg-danger rounded-pill ms-2"></span>
+                       
+                        
+                    </li>
 
+                      
+                       
                     </li>
+                    
                     </li>
+                    
+  <!-- deroulant -->
+
+                     
+
+
+
+
+
+
 
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/account/account.php">Profil</a>
@@ -104,20 +121,28 @@ if (isset($_SESSION['auth'])) : ?>
                     <!-- deroulant -->
 
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown  ">
                     <li class="nav-item d-flex flex-column px-lg-3">
+
                         <a class="nav-link dropdown-toggle nav-link text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                            <li><a class="dropdown-item" href="/forum-coding-factory/public/message/chatgeneral.php">Chat </a></li>
+
+
+
                             <li>
                                 <hr class="dropdown-divider">
                             </li> <!-- ligne séparatrice -->
-                            <li><a class="dropdown-item  " href=""> Chat </a></li>
+
+                            <li><a class="dropdown-item  " href="/forum-coding-factory/public/nous/nous.php"> Nous </a></li>
                         </ul>
                         <span class="border-li bg-danger rounded-pill ms-2"></span>
+
                     </li>
                     </li>
+
                     <li class="nav-item d-flex flex-column px-lg-3">
                         <a class="nav-link text-dark" href="/forum-coding-factory/public/inscription-connexion/connexion.php">Connexion</a>
                         <span class="border-li bg-warning rounded-pill ms-2"></span>
