@@ -65,7 +65,7 @@
 
                         <div class="card card-blog">
                             <div class="card-image">
-                                <a href="#"> <img class="img" src="http://adamthemes.com/demo/code/cards/images/blog01.jpeg">
+                                <a href="#"> <img class="img" src="accueil.png">
                                     <div class="card-caption"> Quisque a bibendum magna </div>
                                 </a>
                                 <div class="ripple-cont"></div>
@@ -88,7 +88,7 @@
 
                         <div class="card card-blog">
                             <div class="card-image">
-                                <a href="#"> <img class="img" src="http://adamthemes.com/demo/code/cards/images/blog01.jpeg">
+                                <a href="#"> <img class="img" src="accueil.png">
                                     <div class="card-caption"> le Site contient maintenant un caht vocal </div>
                                 </a>
                                 <div class="ripple-cont"></div>
@@ -113,17 +113,17 @@
                         <div class="card card-blog">
 
                             <div class="card-image">
-                                <a href="#"> <img class="img" src="https://i.ytimg.com/vi/EYuAnYXl6Xg/maxresdefault.jpg"> </a>
+                                <a href="#"> <img class="img" src="statistique.png"> </a>
                                 <div class="ripple-cont"></div>
                             </div>
 
                             <div class="table">
                                 <h6 class="category text-warning">
-                                            <i class="fa fa-soundcloud"></i> Music   <!-- titre de l'article -->
+                                            <i class="fa fa-soundcloud"></i> Administration   <!-- titre de l'article -->
                                         </h6>
 
                                 <h4 class="card-caption">
-                                <a href="#">nouvelle album de ashe 22 </a> <!-- sous titre -->
+                                <a href="#">Rajout de statistique dans l'admin  </a> <!-- sous titre -->
                             </h4>
 
                                 <div class="ftr">    <!-- personne qui a ecrit l'arcticle ou commentaire -->
@@ -153,17 +153,17 @@
                         <div class="card card-blog">
 
                             <div class="card-image">
-                                <a href="#"> <img class="img" src="https://i.ytimg.com/vi/EYuAnYXl6Xg/maxresdefault.jpg"> </a>
+                                <a href="#"> <img class="img" src="statistique.png"> </a>
                                 <div class="ripple-cont"></div>
                             </div>
 
                             <div class="table">
                                 <h6 class="category text-warning">
-                                            <i class="fa fa-soundcloud"></i> Music   <!-- titre de l'article -->
+                                            <i class="fa fa-soundcloud"></i> Administration   <!-- titre de l'article -->
                                         </h6>
 
                                 <h4 class="card-caption">
-                                <a href="#">nouvelle album de ashe 22 </a> <!-- sous titre -->
+                                <a href="#">Rajout de statistique dans l'admin  </a> <!-- sous titre -->
                             </h4>
 
                                 <div class="ftr">    <!-- personne qui a ecrit l'arcticle ou commentaire -->
@@ -196,17 +196,17 @@
                         <div class="card card-blog">
 
                             <div class="card-image">
-                                <a href="#"> <img class="img" src="https://i.ytimg.com/vi/EYuAnYXl6Xg/maxresdefault.jpg"> </a>
+                                <a href="#"> <img class="img" src="statistique.png"> </a>
                                 <div class="ripple-cont"></div>
                             </div>
 
                             <div class="table">
                                 <h6 class="category text-warning">
-                                            <i class="fa fa-soundcloud"></i> Music   <!-- titre de l'article -->
+                                            <i class="fa fa-soundcloud"></i> Administration   <!-- titre de l'article -->
                                         </h6>
 
                                 <h4 class="card-caption">
-                                <a href="#">nouvelle album de ashe 22 </a> <!-- sous titre -->
+                                <a href="#">Rajout de statistique dans l'admin  </a> <!-- sous titre -->
                             </h4>
 
                                 <div class="ftr">    <!-- personne qui a ecrit l'arcticle ou commentaire -->
@@ -235,7 +235,7 @@
 
                         <div class="card card-blog">
                             <div class="card-image">
-                                <a href="#"> <img class="img" src="http://adamthemes.com/demo/code/cards/images/blog01.jpeg">
+                                <a href="#"> <img class="img" src="accueil.png">
                                     <div class="card-caption"> Quisque a bibendum magna </div>
                                 </a>
                                 <div class="ripple-cont"></div>
