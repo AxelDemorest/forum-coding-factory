@@ -122,8 +122,9 @@ if (isset($_SESSION['auth'])) : ?>
 
 
                     <li class="nav-item dropdown  ">
-                    <li class="nav-item d-flex flex-column px-lg-3">
+                    <li class="nav-item d-flex flex-column ">
 
+                    <li class="nav-item dropdown px-lg-3 ">
                         <a class="nav-link dropdown-toggle nav-link text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
@@ -131,16 +132,21 @@ if (isset($_SESSION['auth'])) : ?>
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/message/chatgeneral.php">Chat </a></li>
 
 
-
                             <li>
                                 <hr class="dropdown-divider">
                             </li> <!-- ligne séparatrice -->
 
                             <li><a class="dropdown-item  " href="/forum-coding-factory/public/nous/nous.php"> Nous </a></li>
+                       
                         </ul>
-                        <span class="border-li bg-danger rounded-pill ms-2"></span>
-
+                       
+                        
                     </li>
+
+                      
+                       
+                    </li>
+                    
                     </li>
 
                     <li class="nav-item d-flex flex-column px-lg-3">
