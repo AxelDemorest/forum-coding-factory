@@ -42,7 +42,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link dropdown-toggle nav-link text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
-                            <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                            <li><a class="dropdown-item" href="/forum-coding-factory/public/nouveaute/nouveaute.php">Nouveautées</a></li>
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/message/chatgeneral.php">Chat </a></li>
 
 
@@ -128,7 +128,7 @@ if (isset($_SESSION['auth'])) : ?>
                         <a class="nav-link dropdown-toggle nav-link text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Autres</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/account/note.php">Notes</a></li>
-                            <li><a class="dropdown-item" href="/forum-coding-factory/public/account/nouveaute.php">Nouveautées</a></li>
+                            <li><a class="dropdown-item" href="/forum-coding-factory/public/nouveaute/nouveaute.php">Nouveautées</a></li>
                             <li><a class="dropdown-item" href="/forum-coding-factory/public/message/chatgeneral.php">Chat </a></li>
 
 
