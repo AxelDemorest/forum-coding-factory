@@ -103,7 +103,7 @@ if (!empty($_POST)) {
         <div class="col-sm-9 col-xs-12 chat" style="overflow: hidden; outline: none;" tabindex="5001">
           <div class="col-inside-lg decor-default">
             <div class="chat-body">
-              <h6>Discussion</h6> <!-- meyttre le nom des salle -_>-->
+              <h6>Discussion</h6> <!-- mettre le nom des salle -_>-->
 
               <?php foreach ($fetchMessages as $key => $value) :
 
@@ -146,9 +146,6 @@ if (!empty($_POST)) {
                     <input name="content_chatMessage" type="text" placeholder="Write a message" class="px-3" style="border: 1px solid lightgrey;border-radius:10px">
                     <button name="button_submit" type="submit" class="btn btn-danger mx-4" value="Submit">Submit</button>
                   </form>
-
-                  <span class="answer-btn answer-btn-1"></span>
-                  <span class="answer-btn answer-btn-2"></span>
                 </div>
               <?php endif; ?>
 
