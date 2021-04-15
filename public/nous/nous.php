@@ -54,7 +54,7 @@
             <div class="col-md-4 col-lg-3 item"> 
                  <div class="box" style="background-image:url(axel.jpg)">
                      <div class="cover"  >
-                     <a href="" >
+                     <a href="/forum-coding-factory/public/nous/axel.php" >
                          <h3 class="name">Demorest Axel </h3>
                          <p class="title">Son Profil </p>
                          <div class="social"> <a href="#"> <i class="fa fa-github"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>  <a href="#"><i class="fa fa-twitter"></i></a> </div>
@@ -80,7 +80,7 @@
              <div class="col-md-4 col-lg-3 item">
                  <div class="box" style="background-image:url(angel.jpg)">
                  <div class="cover"  >
-                     <a href="" >
+                     <a href="/forum-coding-factory/public/nous/angel.php" >
                          <h3 class="name">Moreau Angel </h3>
                          <p class="title">Son Profil </p>
                          <div class="social"> <a href="#"> <i class="fa fa-github"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>  <a href="#"><i class="fa fa-twitter"></i></a> </div>
@@ -91,7 +91,7 @@
              <div class="col-md-4 col-lg-3 item">
                  <div class="box" style="background-image:url(merwan.JPG)">
                  <div class="cover"  >
-                     <a href="" >
+                     <a href="/forum-coding-factory/public/nous/merwan.php" >
                          <h3 class="name">Laouni Merwan </h3>
                          <p class="title">Son Profil </p>
                          <div class="social"> <a href="#"> <i class="fa fa-github"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a>  <a href="#"><i class="fa fa-twitter"></i></a> </div>
